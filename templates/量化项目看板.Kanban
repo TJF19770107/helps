@@ -1,0 +1,33 @@
+---
+kanban-plugin: basic
+---
+
+## 📋 待开始
+
+- [ ] M-P1-01 Marvis端侧模式
+- [ ] M-P1-02 本地知识库索引
+- [ ] O-P1-01 OpenClaw版本升级
+- [ ] O-P1-02 OKX WebSocket MCP
+- [ ] O-P1-04 量化Skill创建
+
+## 🟡 进行中
+
+- [ ] OB-P1-02 策略文件归档
+
+## ✅ 已完成
+
+- [ ] OB-P1-03 YAML Frontmatter注入
+- [ ] OB-P1-04 双向链接补全
+- [ ] OB-P1-05 PARA目录创建
+- [ ] OB-P1-06 插件安装配置
+- [ ] OB-P1-07 仪表盘搭建
+
+## 🔴 阻塞
+
+- [ ] O-P1-05 QuantBacktest Skill（等待OpenClaw升级）
+
+%%
+kanban-plugin: basic
+kanban-settings:
+  show-checkboxes: true
+  lane-width: 272

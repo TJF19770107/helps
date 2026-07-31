@@ -1,0 +1,20 @@
+# Obsidian配置（每台机器不同）
+.obsidian/workspace*.json
+.obsidian/workspace-mobile.json
+
+# 大文件排除（核心知识用Git，历史数据用快照）
+Archives/Quant-History/
+snapshots/*.tar.gz
+
+# 系统文件
+*.tmp
+*.bak
+Thumbs.db
+Desktop.ini
+
+# Node modules（Obsidian插件依赖）
+resources/app.asar.unpacked/node_modules/
+locales/
+*.pak
+*.dll
+LICENSES.chromium.md
