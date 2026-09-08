@@ -1,0 +1,21 @@
+# package.json
+
+原始格式: JSON
+
+```json
+{
+  "name": "@e2e-tests/cli-version",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "bun test e2e.test.ts",
+    "test:e2e:cli": "bun test e2e.test.ts"
+  },
+  "devDependencies": {
+    "@e2e-tests/utils": "workspace:*"
+  }
+}
+
+```

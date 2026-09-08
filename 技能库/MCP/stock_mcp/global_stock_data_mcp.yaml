@@ -1,0 +1,67 @@
+# Vibe-Trading MCP 连接器：美股/港股数据
+# 协议: MCP 1.28.0 | 分类: stock_mcp
+# 生成: 2026-06-19 | 基准节点: base_20260619_0424_initial_success
+# 关联技能包: global-stock-data (八层数据架构)
+
+name: "global_stock_data_mcp"
+version: "2.0.0"
+description: "全球股票数据连接器 — 美股5925+/港股18000+，全部零鉴权"
+protocol: "mcp"
+protocol_version: "1.28.0"
+
+endpoint:
+  type: "skill_adapter"
+  skill_name: "global-stock-data"
+  skill_config: "E:/龙虾AI主控中心/我的AI分身/Vibe-Trading/global-stock-data/skill_config.yaml"
+
+data_sources:
+  - name: "sina"
+    type: "rest_api"
+    coverage: ["港股行情", "港股K线"]
+    auth: "none"
+  - name: "tencent"
+    type: "rest_api"
+    coverage: ["港股分钟K线"]
+    auth: "none"
+  - name: "eastmoney"
+    type: "rest_api"
+    coverage: ["美股行情", "美股K线", "美股基本面", "美股资金流", "美股期权链"]
+    auth: "none"
+  - name: "yahoo"
+    type: "rest_api"
+    coverage: ["美股15分钟延时", "美股基本面补充"]
+    auth: "none"
+  - name: "sec_edgar"
+    type: "rest_api"
+    coverage: ["SEC Filing (10-K/10-Q/8-K/13F/S-1)"]
+    auth: "none"
+
+capabilities:
+  - get_stock_quote
+  - get_kline_data
+  - get_technical_indicators
+  - get_fundamentals
+  - get_capital_flow
+  - get_options_chain
+  - get_sec_filings
+
+coverage:
+  us_stocks: "5925+"
+  hk_stocks: "18000+"
+  delay: "实时 (港股) / 15分钟 (美股)"
+
+retry:
+  max_attempts: 3
+  backoff_strategy: "exponential"
+  base_delay_seconds: 5
+
+timeout:
+  connect_seconds: 10
+  read_seconds: 20
+  total_seconds: 30
+
+cache:
+  ttl_seconds: 300
+
+enabled: true
+auto_start: true

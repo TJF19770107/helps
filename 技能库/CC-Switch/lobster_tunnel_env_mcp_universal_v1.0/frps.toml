@@ -1,0 +1,9 @@
+bindPort = 17000
+
+log.to = "console"
+log.level = "info"
+log.maxDays = 3
+
+allowPorts = [
+  { single = 19100 }
+]

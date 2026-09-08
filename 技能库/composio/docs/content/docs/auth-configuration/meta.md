@@ -1,0 +1,19 @@
+# meta.json
+
+原始格式: JSON
+
+```json
+{
+  "title": "Authentication",
+  "defaultOpen": false,
+  "pages": [
+    "custom-auth-configs",
+    "white-labeling",
+    "programmatic-auth-configs",
+    "custom-auth-params",
+    "connected-accounts",
+    "migrating-initiate-to-link"
+  ]
+}
+
+```

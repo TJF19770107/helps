@@ -1,0 +1,163 @@
+# package.json
+
+原始格式: JSON
+
+```json
+{
+  "name": "openagents-launcher",
+  "version": "0.7.2",
+  "description": "OpenAgents Launcher — install, configure, and manage your AI agents",
+  "main": "out/main/index.js",
+  "homepage": "https://github.com/openagents-org/openagents",
+  "author": {
+    "name": "OpenAgents",
+    "email": "team@openagents.org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openagents-org/openagents.git",
+    "directory": "packages/launcher"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "build:mac": "npm run build && electron-builder --mac --x64 --arm64 --publish never",
+    "build:mac:x64": "npm run build && electron-builder --mac --x64 --publish never",
+    "build:mac:arm64": "npm run build && electron-builder --mac --arm64 --publish never",
+    "build:win": "npm run build && electron-builder --win --publish never",
+    "build:linux": "npm run build && electron-builder --linux --publish never",
+    "build:all": "npm run build && electron-builder --win --mac --linux --publish never",
+    "dist": "npm run build && electron-builder --publish always"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.460.0",
+    "posthog-js": "^1.376.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.5.2",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^20.17.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0",
+    "electron-vite": "^2.3.0",
+    "jsdom": "^29.1.1",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8",
+    "vitest": "^4.1.7"
+  },
+  "build": {
+    "appId": "com.openagents.launcher",
+    "productName": "OpenAgents Launcher",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.developer-tools",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist",
+      "identity": "ZHONGYUAN ZHU (AP69DBR725)",
+      "notarize": true
+    },
+    "dmg": {
+      "title": "${productName} ${version}"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "msi",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.png",
+      "category": "Development",
+      "desktop": {
+        "StartupNotify": "true"
+      }
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "openagents-org",
+      "repo": "openagents"
+    }
+  }
+}
+
+```

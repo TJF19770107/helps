@@ -1,0 +1,15 @@
+# tsconfig.json
+
+原始格式: JSON
+
+```json
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./tsconfig.options.json",
+  "compilerOptions": {
+    "rootDir": "."
+  },
+  "include": ["src/**/*", "test/**/*", "package.json"]
+}
+
+```

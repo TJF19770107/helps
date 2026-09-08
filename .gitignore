@@ -1,0 +1,5 @@
+
+# 病态自嵌套目录（本地技能库损坏产物，勿传）
+技能库/CC-Switch/gstack-lobster_claude_mem_gstack_bridge_v1.0/
+**/lobster_claude_mem_gstack_bridge_v1.0/lobster_claude_mem_gstack_bridge_v1.0/**
+技能库/CC-Switch/lobster_claude_mem_gstack_bridge_v1.0/lobster_claude_mem_gstack_bridge_v1.0/**

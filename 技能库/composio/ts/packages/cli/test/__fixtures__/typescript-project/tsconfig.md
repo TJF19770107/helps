@@ -1,0 +1,27 @@
+# tsconfig.json
+
+原始格式: JSON
+
+```json
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "esnext",
+    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "paths": {
+      "src/*": ["./src/*"],
+      "test/*": ["./test/*"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src"],
+  "exclude": ["**/dist", "**/node_modules", "test/__fixtures__/**"]
+}
+
+```

@@ -1,0 +1,18 @@
+# goose.yaml
+
+原始格式: YAML
+
+```yaml
+name: goose
+label: Goose
+description: An open-source AI developer agent by Block
+homepage: https://github.com/block/goose
+tags: [coding, developer, open-source]
+
+install:
+  binary: goose
+  macos: "curl -fsSL https://github.com/block/goose/releases/download/stable/download_cli.sh | bash"
+  linux: "curl -fsSL https://github.com/block/goose/releases/download/stable/download_cli.sh | bash"
+  windows: "powershell -c \"irm https://raw.githubusercontent.com/block/goose/main/download_cli.ps1 | iex\""
+
+```

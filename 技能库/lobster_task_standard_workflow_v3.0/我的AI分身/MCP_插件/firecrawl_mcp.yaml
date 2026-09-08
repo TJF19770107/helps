@@ -1,0 +1,18 @@
+# Firecrawl MCP 接入（豆包/Claude Code/Codex 通用）
+# 云端口令：codex mcp add firecrawl --url https://mcp.firecrawl.dev/v2/mcp-oauth && codex mcp login firecrawl
+# 或：单条 MCP 配置（MCP 标准 mcpServers 格式）：
+{
+  "mcpServers": {
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-在此填入你的免费Key"
+      }
+    }
+  }
+}
+# 说明：
+# 1. 免费 key 去 https://firecrawl.dev 注册获取（每月有免费额度，零花钱）。
+# 2. 云端版开箱即用；大批量抓取建议自托管（本机 E 盘仅剩 2.5GB，暂不建议，需先腾空间）。
+# 3. 无 key 时，汤小龙的 !web 工具会自动用内置抓取，仍可联网。

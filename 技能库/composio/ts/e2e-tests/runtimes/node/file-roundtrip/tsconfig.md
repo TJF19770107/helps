@@ -1,0 +1,19 @@
+# tsconfig.json
+
+原始格式: JSON
+
+```json
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["e2e.test.ts"]
+}
+
+```

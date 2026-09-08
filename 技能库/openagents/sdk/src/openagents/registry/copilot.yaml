@@ -1,0 +1,11 @@
+name: copilot
+label: GitHub Copilot CLI
+description: GitHub Copilot coding agent for the terminal
+homepage: https://github.com/features/copilot
+tags: [coding, github, cli]
+
+install:
+  binary: gh
+  macos: "gh extension install github/gh-copilot"
+  linux: "gh extension install github/gh-copilot"
+  windows: "gh extension install github/gh-copilot"

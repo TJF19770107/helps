@@ -1,0 +1,57 @@
+# __init__.py
+
+原始格式: Python
+
+```python
+"""Workspace functionality for OpenAgents."""
+
+from .project import Project, ProjectStatus, ProjectConfig, ProjectTemplate
+from .project_messages import (
+    BaseProjectMessage,
+    ProjectTemplateListMessage,
+    ProjectStartMessage,
+    ProjectStopMessage,
+    ProjectCompleteMessage,
+    ProjectGetMessage,
+    ProjectMessageSendMessage,
+    ProjectGlobalStateSetMessage,
+    ProjectGlobalStateGetMessage,
+    ProjectGlobalStateListMessage,
+    ProjectGlobalStateDeleteMessage,
+    ProjectAgentStateSetMessage,
+    ProjectAgentStateGetMessage,
+    ProjectAgentStateListMessage,
+    ProjectAgentStateDeleteMessage,
+    ProjectArtifactSetMessage,
+    ProjectArtifactGetMessage,
+    ProjectArtifactListMessage,
+    ProjectArtifactDeleteMessage,
+)
+
+__all__ = [
+    "Project",
+    "ProjectStatus", 
+    "ProjectConfig",
+    "ProjectTemplate",
+    "BaseProjectMessage",
+    "ProjectTemplateListMessage",
+    "ProjectStartMessage",
+    "ProjectStopMessage",
+    "ProjectCompleteMessage",
+    "ProjectGetMessage",
+    "ProjectMessageSendMessage",
+    "ProjectGlobalStateSetMessage",
+    "ProjectGlobalStateGetMessage",
+    "ProjectGlobalStateListMessage",
+    "ProjectGlobalStateDeleteMessage",
+    "ProjectAgentStateSetMessage",
+    "ProjectAgentStateGetMessage",
+    "ProjectAgentStateListMessage",
+    "ProjectAgentStateDeleteMessage",
+    "ProjectArtifactSetMessage",
+    "ProjectArtifactGetMessage",
+    "ProjectArtifactListMessage",
+    "ProjectArtifactDeleteMessage",
+]
+
+```

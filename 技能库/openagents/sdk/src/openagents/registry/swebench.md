@@ -1,0 +1,18 @@
+# swebench.yaml
+
+原始格式: YAML
+
+```yaml
+name: swebench
+label: SWE-bench Agent
+description: Language model agent for software engineering tasks
+homepage: https://swe-agent.com
+tags: [coding, benchmarks, research]
+
+install:
+  binary: sweagent
+  macos: "pip install sweagent"
+  linux: "pip install sweagent"
+  windows: "pip install sweagent"
+
+```

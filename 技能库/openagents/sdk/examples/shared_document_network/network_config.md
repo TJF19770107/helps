@@ -1,0 +1,27 @@
+# network_config.yaml
+
+原始格式: YAML
+
+```yaml
+network_name: "shared_document_demo"
+network_type: "centralized"
+
+discovery:
+  mod_name: "agent_discovery"
+  auto_discovery: true
+  heartbeat_interval: 30
+  
+work:
+  mod_name: "documents"
+  
+transport:
+  type: "tcp"
+  tcp:
+    host: "localhost"
+    port: 8888
+    
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+```

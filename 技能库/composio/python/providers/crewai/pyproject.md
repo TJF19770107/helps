@@ -1,0 +1,28 @@
+# pyproject.toml
+
+原始格式: TOML
+
+```toml
+[project]
+name = "composio-crewai"
+version = "0.13.1"
+description = "Use Composio to get an array of tools with your CrewAI agent."
+readme = "README.md"
+requires-python = ">=3.9,<4"
+authors = [
+    { name = "Composio", email = "tech@composio.dev" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "crewai>=0.51.0",
+    "composio",
+]
+
+[project.urls]
+Homepage = "https://github.com/ComposioHQ/composio"
+
+```

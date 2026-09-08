@@ -1,0 +1,24 @@
+# package.json
+
+原始格式: JSON
+
+```json
+{
+  "name": "@e2e-tests/node-tool-router-files",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "bun test e2e.test.ts",
+    "test:e2e:node": "bun test e2e.test.ts"
+  },
+  "dependencies": {
+    "@composio/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@e2e-tests/utils": "workspace:*"
+  }
+}
+
+```

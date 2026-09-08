@@ -1,0 +1,12 @@
+# _meta.json
+
+原始格式: JSON
+
+```json
+{
+  "ownerId": "kn76nt116qevm7zmeywkpxg7b57zxjtd",
+  "slug": "clawdefender",
+  "version": "1.0.1",
+  "publishedAt": 1769980686291
+}
+```
