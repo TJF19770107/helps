@@ -1,0 +1,703 @@
+[
+  {
+    "source": "arXiv",
+    "title": "Inference-Time Attention Steering for Vision-Language-Action Driving Models",
+    "authors": [
+      "Darshan Nagendra Prasad",
+      "Lars Ullrich",
+      "Knut Graichen"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2608.17095v1",
+    "abstract": "Vision-language-action (VLA) driving models couple a reasoning stage with a diffusion-based trajectory decoder, but do not give a direct way to redirect attention toward safety-critical actors at inference time without retraining. We studied a bounded additive pre-softmax attention bias on the visual tokens of detector localized traffic actors on Alpamayo-R1's Qwen3-VL backbone. It is applied as a fail open forward pre-hook with no weight changes. On 50 lane-change scenarios from the Physical AI World Model Synthetic dataset. The trajectory decoder shows a monotonic dose response in the bias m"
+  },
+  {
+    "source": "arXiv",
+    "title": "Aligning Cyber Space with Physical World: A Comprehensive Survey on Embodied AI",
+    "authors": [
+      "Yang Liu",
+      "Weixing Chen",
+      "Yongjie Bai",
+      "Xiaodan Liang",
+      "Guanbin Li",
+      "Wen Gao",
+      "Liang Lin"
+    ],
+    "year": "2024",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2407.06886v8",
+    "abstract": "Embodied Artificial Intelligence (Embodied AI) is crucial for achieving Artificial General Intelligence (AGI) and serves as a foundation for various applications (e.g., intelligent mechatronics systems, smart manufacturing) that bridge cyberspace and the physical world. Recently, the emergence of Multi-modal Large Models (MLMs) and World Models (WMs) have attracted significant attention due to their remarkable perception, interaction, and reasoning capabilities, making them a promising architecture for embodied agents. In this survey, we give a comprehensive exploration of the latest advanceme"
+  },
+  {
+    "source": "arXiv",
+    "title": "Survey of Vision-Language-Action Models for Embodied Manipulation",
+    "authors": [
+      "Haoran Li",
+      "Yuhui Chen",
+      "Wenbo Cui",
+      "Weiheng Liu",
+      "Kai Liu",
+      "Mingcai Zhou",
+      "Zhengtao Zhang",
+      "Dongbin Zhao"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2508.15201v2",
+    "abstract": "Embodied intelligence systems, which enhance agent capabilities through continuous environment interactions, have garnered significant attention from both academia and industry. Vision-Language-Action models, inspired by advancements in large foundation models, serve as universal robotic control frameworks that substantially improve agent-environment interaction capabilities in embodied intelligence systems. This expansion has broadened application scenarios for embodied AI robots. This survey comprehensively reviews VLA models for embodied manipulation. Firstly, it chronicles the developmenta"
+  },
+  {
+    "source": "arXiv",
+    "title": "Safety in Embodied AI: A Survey of Risks, Attacks, and Defenses",
+    "authors": [
+      "Xiao Li",
+      "Xiang Zheng",
+      "Yifeng Gao",
+      "Xinyu Xia",
+      "Yixu Wang",
+      "Xin Wang",
+      "Ye Sun",
+      "Yunhan Zhao"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2605.02900v2",
+    "abstract": "Embodied Artificial Intelligence (Embodied AI) integrates perception, cognition, planning, and interaction into agents that operate in open-world, safety-critical environments. As these systems gain autonomy and enter domains such as transportation, healthcare, and industrial or assistive robotics, ensuring their safety becomes both technically challenging and socially indispensable. Unlike digital AI systems, embodied agents must act under uncertain sensing, incomplete knowledge, and dynamic human-robot interactions, where failures can directly lead to physical harm. This survey provides a co"
+  },
+  {
+    "source": "arXiv",
+    "title": "A Survey on Vision-Language-Action Models for Embodied AI",
+    "authors": [
+      "Yueen Ma",
+      "Zixing Song",
+      "Yuzheng Zhuang",
+      "Jianye Hao",
+      "Irwin King"
+    ],
+    "year": "2024",
+    "venue": "arXiv preprint",
+    "doi": "10.1109/TNNLS.2025.3650584",
+    "url": "http://arxiv.org/abs/2405.14093v8",
+    "abstract": "Embodied AI is widely recognized as a cornerstone of artificial general intelligence (AGI) because it involves controlling embodied agents to perform tasks in the physical world. Building on the success of large language models (LLMs) and vision-language models (VLMs), a new category of multimodal models -- referred to as vision-language-action (VLA) models -- has emerged to address language-conditioned robotic tasks in embodied AI by leveraging their distinct ability to generate actions. The recent proliferation of VLAs necessitates a comprehensive survey to capture the rapidly evolving lands"
+  },
+  {
+    "source": "arXiv",
+    "title": "One Policy, Many Embodiments: Unified Camera-Centric Action Geometry Pre-training for Heterogeneous Embodied Manipulation",
+    "authors": [
+      "Xiaomi Embodied Intelligence Team",
+      "University of Macau",
+      ":",
+      "Shaoqing Xu",
+      "Fang Li",
+      "Guozhi Zhan",
+      "Zhixiang Duan",
+      "Yuhan Wang"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2608.26058v1",
+    "abstract": "Scaling generalist vision-language-action (VLA) policies is severely bottlenecked by the inherent heterogeneity of embodied data, which spans diverse robot morphologies, camera configurations, and low-level action spaces. Existing paradigms typically address this mismatch through explicit action retargeting, human-to-robot video synthesis, or dataset-specific adaptation branches, fundamentally hindering the joint learning of a unified policy. We introduce UCAG-P, a camera-centric unified action formulation that structurally aligns heterogeneous embodied datasets into a shared geometric action "
+  },
+  {
+    "source": "arXiv",
+    "title": "VLA-Thinker: Boosting Vision-Language-Action Models through Thinking-with-Image Reasoning",
+    "authors": [
+      "Chaoyang Wang",
+      "Wenrui Bao",
+      "Sicheng Gao",
+      "Bingxin Xu",
+      "Yu Tian",
+      "Yogesh S. Rawat",
+      "Yunhao Ge",
+      "Yuzhang Shang"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2603.14523v1",
+    "abstract": "Vision-Language-Action (VLA) models have shown promising capabilities for embodied intelligence, but most existing approaches rely on text-based chain-of-thought reasoning where visual inputs are treated as static context. This limits the ability of the model to actively revisit the environment and resolve ambiguities during long-horizon tasks. We propose VLA-Thinker, a thinking-with-image reasoning framework that models perception as a dynamically invocable reasoning action. To train such a system, we introduce a two-stage training pipeline consisting of (1) an SFT cold-start phase with curat"
+  },
+  {
+    "source": "arXiv",
+    "title": "PANORAMA: The Rise of Omnidirectional Vision in the Embodied AI Era",
+    "authors": [
+      "Xu Zheng",
+      "Chenfei Liao",
+      "Ziqiao Weng",
+      "Kaiyu Lei",
+      "Zihao Dongfang",
+      "Haocong He",
+      "Yuanhuiyi Lyu",
+      "Lutao Jiang"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2509.12989v1",
+    "abstract": "Omnidirectional vision, using 360-degree vision to understand the environment, has become increasingly critical across domains like robotics, industrial inspection, and environmental monitoring. Compared to traditional pinhole vision, omnidirectional vision provides holistic environmental awareness, significantly enhancing the completeness of scene perception and the reliability of decision-making. However, foundational research in this area has historically lagged behind traditional pinhole vision. This talk presents an emerging trend in the embodied AI era: the rapid development of omnidirec"
+  },
+  {
+    "source": "arXiv",
+    "title": "Compositional Context Fine-Tuning Vision-Language Model for Complex Assembly Action Understanding from Videos",
+    "authors": [
+      "Hao Zheng",
+      "Jinyi Huang",
+      "Tiantian Zheng",
+      "Xun Xu",
+      "Tuka Alhanai"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2607.10797v1",
+    "abstract": "Assembly action understanding is a key enabler for effective human-robot collaborative assembly, yet it remains challenging due to subtle motions and fine-grained hand-object interactions. We adapt vision-language models (VLMs) to this challenging domain with Compositional Context Fine-Tuning (CCFT), a method that decomposes assembly actions into semantic elements (Verb, Object, Tool) and fine-tunes VLMs to recognize each action element using templated question-answering pairs. This approach ensures near-deterministic outputs. To enable efficient and effective multi-task learning under limited"
+  },
+  {
+    "source": "arXiv",
+    "title": "Toward Maturity-Based Certification of Embodied AI: Quantifying Trustworthiness Through Measurement Mechanisms",
+    "authors": [
+      "Michael C. Darling",
+      "Alan H. Hesu",
+      "Michael A. Mardikes",
+      "Brian C. McGuigan",
+      "Reed M. Milewicz"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2601.03470v2",
+    "abstract": "We propose a maturity-based framework for certifying embodied AI systems through explicit measurement mechanisms. We argue that certifiable embodied AI requires structured assessment frameworks, quantitative scoring mechanisms, and methods for navigating multi-objective trade-offs inherent in trustworthiness evaluation. We demonstrate this approach using uncertainty quantification as an exemplar measurement mechanism and illustrate feasibility through an Uncrewed Aircraft System (UAS) detection case study."
+  },
+  {
+    "source": "arXiv",
+    "title": "Vlaser: Vision-Language-Action Model with Synergistic Embodied Reasoning",
+    "authors": [
+      "Ganlin Yang",
+      "Tianyi Zhang",
+      "Haoran Hao",
+      "Weiyun Wang",
+      "Yibin Liu",
+      "Dehui Wang",
+      "Guanzhou Chen",
+      "Zijian Cai"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2510.11027v2",
+    "abstract": "While significant research has focused on developing embodied reasoning capabilities using Vision-Language Models (VLMs) or integrating advanced VLMs into Vision-Language-Action (VLA) models for end-to-end robot control, few studies directly address the critical gap between upstream VLM-based reasoning and downstream VLA policy learning. In this work, we take an initial step toward bridging embodied reasoning with VLA policy learning by introducing Vlaser - a Vision-Language-Action Model with synergistic embodied reasoning capability, which is a foundational vision-language model designed to i"
+  },
+  {
+    "source": "arXiv",
+    "title": "Faith in AI can narrow the futures individuals consider",
+    "authors": [
+      "Aoi Naito",
+      "Hirokazu Shirado"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2603.28944v2",
+    "abstract": "Artificial intelligence (AI) predictions are increasingly used to inform human decisions. Here, using a behavioral implementation of the classic Newcomb's paradox in 1,305 participants, we show that AI predictions can also shape the reasoning people use to make a decision. In this paradigm, perceived predictive authority can alter how people reason about their future actions, leading them to forgo a guaranteed reward. Over 40% of participants treated AI as such a predictive authority about their own behavior, significantly increasing the odds of forgoing the guaranteed reward by a factor of 3."
+  },
+  {
+    "source": "arXiv",
+    "title": "BLURR: A Boosted Low-Resource Inference for Vision-Language-Action Models",
+    "authors": [
+      "Xiaoyu Ma",
+      "Zhengqing Yuan",
+      "Zheyuan Zhang",
+      "Kaiwen Shi",
+      "Lichao Sun",
+      "Yanfang Ye"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2512.11769v1",
+    "abstract": "Vision-language-action (VLA) models enable impressive zero shot manipulation, but their inference stacks are often too heavy for responsive web demos or high frequency robot control on commodity GPUs. We present BLURR, a lightweight inference wrapper that can be plugged into existing VLA controllers without retraining or changing model checkpoints. Instantiated on the pi-zero VLA controller, BLURR keeps the original observation interfaces and accelerates control by combining an instruction prefix key value cache, mixed precision execution, and a single step rollout schedule that reduces per st"
+  },
+  {
+    "source": "arXiv",
+    "title": "Foundations of GenIR",
+    "authors": [
+      "Qingyao Ai",
+      "Jingtao Zhan",
+      "Yiqun Liu"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2501.02842v1",
+    "abstract": "The chapter discusses the foundational impact of modern generative AI models on information access (IA) systems. In contrast to traditional AI, the large-scale training and superior data modeling of generative AI models enable them to produce high-quality, human-like responses, which brings brand new opportunities for the development of IA paradigms. In this chapter, we identify and introduce two of them in details, i.e., information generation and information synthesis. Information generation allows AI to create tailored content addressing user needs directly, enhancing user experience with i"
+  },
+  {
+    "source": "arXiv",
+    "title": "MiMo-Embodied: X-Embodied Foundation Model Technical Report",
+    "authors": [
+      "Xiaoshuai Hao",
+      "Lei Zhou",
+      "Zhijian Huang",
+      "Zhiwen Hou",
+      "Yingbo Tang",
+      "Lingfeng Zhang",
+      "Guang Li",
+      "Zheng Lu"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2511.16518v2",
+    "abstract": "We open-source MiMo-Embodied, the first cross-embodied foundation model to successfully integrate and achieve state-of-the-art performance in both Autonomous Driving and Embodied AI. MiMo-Embodied sets new records across 17 embodied AI benchmarks in Task Planning, Affordance Prediction and Spatial Understanding, while also excelling in 12 autonomous driving benchmarks across Environmental Perception, Status Prediction, and Driving Planning. Across these tasks, MiMo-Embodied significantly outperforms existing open-source, closed-source, and specialized baselines. Our results indicate that throu"
+  },
+  {
+    "source": "CrossRef",
+    "title": "",
+    "authors": [],
+    "year": "2026",
+    "venue": "",
+    "doi": "10.3030/101282325",
+    "url": "https://doi.org/10.3030/101282325",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "Real-Time Language Processing as Embodied and Embedded in Joint Action",
+    "authors": [
+      "Lillian Rigoli",
+      "Michael J. Spivey"
+    ],
+    "year": "2015",
+    "venue": "Attention and Vision in Language Processing",
+    "doi": "10.1007/978-81-322-2443-3_1",
+    "url": "https://doi.org/10.1007/978-81-322-2443-3_1",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "Uni-NaVid: A Video-based Vision-Language-Action Model for Unifying Embodied Navigation Tasks",
+    "authors": [
+      "Jiazhao Zhang",
+      "Kunyu Wang",
+      "Shaoan Wang",
+      "Minghan Li",
+      "Haoran Liu",
+      "Songlin Wei",
+      "Zhongyuan Wang",
+      "Zhizheng Zhang"
+    ],
+    "year": "2025",
+    "venue": "Robotics: Science and Systems XXI",
+    "doi": "10.15607/rss.2025.xxi.013",
+    "url": "https://doi.org/10.15607/rss.2025.xxi.013",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "X-DiffVLA: X-Embodied Diffusion Action Heads for Vision-Language-Action Models",
+    "authors": [
+      "Boyu Li",
+      "Chaoyi Xu",
+      "Haoqi Yuan",
+      "Xinrun Xu",
+      "Börje Karlsson",
+      "Dongbin Zhao",
+      "Haoran Li",
+      "Zongqing Lu"
+    ],
+    "year": "2026",
+    "venue": "Robotics: Science and Systems XXII",
+    "doi": "10.15607/rss.2026.xxii.081",
+    "url": "https://doi.org/10.15607/rss.2026.xxii.081",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "From metaphor to action: Embodied language cognition",
+    "authors": [
+      "Pilar Casado"
+    ],
+    "year": "2017",
+    "venue": "Metode Science Studies Journal",
+    "doi": "10.7203/metode.7.7610",
+    "url": "https://doi.org/10.7203/metode.7.7610",
+    "abstract": "Las teorías que tradicionalmente han tratado de explicar cómo la actividad cerebral da lugar a la cognición se han servido de la metáfora del ordenador para describir que el modo en que el cerebro procesa información es transformándola en un código de símbolos que pueden combinarse entre sí siguiendo un conjunto finito de reglas. Sin embargo, recientes estudios, con paradigmas actualizados y ayudándose de las técnicas de neuroimagen, nos muestran que las actividades cerebrales que registramos cuando observamos un cerebro implicado en alguna tarea cognitiva son las mismas que observaríamos si e"
+  },
+  {
+    "source": "CrossRef",
+    "title": "A formal model of visual attention in embodied language acquisition",
+    "authors": [
+      "C. Yu",
+      "D. H Ballard"
+    ],
+    "year": "2010",
+    "venue": "Journal of Vision",
+    "doi": "10.1167/3.9.309",
+    "url": "https://doi.org/10.1167/3.9.309",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "EMKG-VLN: Embodied Multimodal Knowledge Graph Vision-Language Model for Open-World Navigation",
+    "authors": [
+      "Mingyi li",
+      "Hui Liu",
+      "Jiayin Li",
+      "Lijin HAN"
+    ],
+    "year": "2025",
+    "venue": "",
+    "doi": "10.2139/ssrn.5491422",
+    "url": "https://doi.org/10.2139/ssrn.5491422",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "VLA-Forget: Vision-Language-Action Unlearning for Embodied Foundation Models",
+    "authors": [
+      "Ravi Ranjan",
+      "Agoritsa Polyzou"
+    ],
+    "year": "2026",
+    "venue": "Proceedings of the 4th Workshop on Towards Knowledgeable Foundation Models (KnowFM 2026)",
+    "doi": "10.18653/v1/2026.knowfm-1.5",
+    "url": "https://doi.org/10.18653/v1/2026.knowfm-1.5",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "Embodied cognition, communication and the language faculty",
+    "authors": [],
+    "year": "2012",
+    "venue": "Language and Action in Cognitive Neuroscience",
+    "doi": "10.4324/9780203095508-8",
+    "url": "https://doi.org/10.4324/9780203095508-8",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "Data Augmentation for Vision-Language-Action Models",
+    "authors": [
+      "Miaosen Zhou"
+    ],
+    "year": "None",
+    "venue": "",
+    "doi": "10.31979/etd.wmqy-k82w",
+    "url": "https://doi.org/10.31979/etd.wmqy-k82w",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "MODELING LANGUAGE, COGNITION AND ACTION: FROM CONNECTIONIST SIMULATIONS TO EMBODIED NEURAL COGNITIVE SYSTEMS",
+    "authors": [
+      "ANGELO CANGELOSI"
+    ],
+    "year": "2005",
+    "venue": "Modeling Language, Cognition and Action",
+    "doi": "10.1142/9789812701886_0001",
+    "url": "https://doi.org/10.1142/9789812701886_0001",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "A large language model has no body: embodied knowledge as a key distinction in human–AI interaction",
+    "authors": [
+      "Marlon Twyman",
+      "Matthew Brook O’Donnell"
+    ],
+    "year": "2026",
+    "venue": "AI &amp; SOCIETY",
+    "doi": "10.1007/s00146-026-03000-1",
+    "url": "https://doi.org/10.1007/s00146-026-03000-1",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "Vision-Language Models for Automated Reward Annotation in Embodied AI: State-of-the-Art, Challenges, and Future Directions",
+    "authors": [
+      "Nachuan Yan"
+    ],
+    "year": "2026",
+    "venue": "Applied and Computational Engineering",
+    "doi": "10.54254/2755-2721/2026.gu33541",
+    "url": "https://doi.org/10.54254/2755-2721/2026.gu33541",
+    "abstract": "With the rapid development of embodied AI, reward function engineering has become a main bottleneck in Reinforcement Learning (RL). Traditional RL highly relies on manual annotation, which is not only time-consuming, error-prone, and also difficult to handle real-world problems such as sparse rewards and cross domain data scarcity. To address this bottleneck, there are number of various automated reward labeling mechanisms leveraging Vision-Language Models (VLMs) are proposed. In this paper, a systematic survey on five state-of-the-art landmark solutions-VIP, LIV, Eureka, DrEureka and EMMA-X-a"
+  },
+  {
+    "source": "CrossRef",
+    "title": "Soccer-CLIP: Vision Language Model for Soccer Action Spotting",
+    "authors": [
+      "Yoonho Shin",
+      "Sanghoon Park",
+      "Youngsub Han",
+      "Byoung-Ki Jeon",
+      "Soonyoung Lee",
+      "Byung Jun Kang"
+    ],
+    "year": "2025",
+    "venue": "IEEE Access",
+    "doi": "10.1109/access.2025.3549293",
+    "url": "https://doi.org/10.1109/access.2025.3549293",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "Probing a Vision-Language-Action Model for Symbolic States and Integration into a Cognitive Architecture",
+    "authors": [
+      "Hong Lu",
+      "Hengxu Li",
+      "Prithviraj Singh Shahani",
+      "Stephanie Herbers",
+      "Matthias Scheutz"
+    ],
+    "year": "2025",
+    "venue": "2025 IEEE International Conference on AI and Data Analytics (ICAD)",
+    "doi": "10.1109/icad65464.2025.11114062",
+    "url": "https://doi.org/10.1109/icad65464.2025.11114062",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Six views of embodied cognition",
+    "authors": [
+      "Margaret Wilson"
+    ],
+    "year": "2002",
+    "venue": "Psychonomic Bulletin & Review",
+    "doi": "https://doi.org/10.3758/bf03196322",
+    "url": "https://doi.org/10.3758/bf03196322",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "A Survey on Vision--Language--Action Models for Embodied AI",
+    "authors": [
+      "Yueen Ma",
+      "Zixing Song",
+      "Yuzheng Zhuang",
+      "Jianye Hao",
+      "Irwin King"
+    ],
+    "year": "2026",
+    "venue": "IEEE Transactions on Neural Networks and Learning Systems",
+    "doi": "https://doi.org/10.1109/tnnls.2025.3650584",
+    "url": "https://doi.org/10.1109/tnnls.2025.3650584",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "A Survey of Large Language Models",
+    "authors": [
+      "Wayne Xin Zhao",
+      "Kun Zhou",
+      "Junyi Li",
+      "Tianyi Tang",
+      "Zican Dong",
+      "Yupeng Hou",
+      "Beichen Zhang",
+      "Yingqian Min"
+    ],
+    "year": "2026",
+    "venue": "Frontiers of Computer Science",
+    "doi": "https://doi.org/10.1007/s11704-026-60308-3",
+    "url": "https://doi.org/10.1007/s11704-026-60308-3",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Embodied Question Answering",
+    "authors": [
+      "Abhishek Das",
+      "Samyak Datta",
+      "Georgia Gkioxari",
+      "Stefan Lee",
+      "Devi Parikh",
+      "Dhruv Batra"
+    ],
+    "year": "2018",
+    "venue": "",
+    "doi": "https://doi.org/10.1109/cvpr.2018.00008",
+    "url": "https://doi.org/10.1109/cvpr.2018.00008",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "A survey on large language model based autonomous agents",
+    "authors": [
+      "Lei Wang",
+      "Chen Ma",
+      "Xueyang Feng",
+      "Zeyu Zhang",
+      "Hao Yang",
+      "Jingsen Zhang",
+      "Zhiyuan Chen",
+      "Jiakai Tang"
+    ],
+    "year": "2024",
+    "venue": "Frontiers of Computer Science",
+    "doi": "https://doi.org/10.1007/s11704-024-40231-1",
+    "url": "https://doi.org/10.1007/s11704-024-40231-1",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Translanguaging as a Practical Theory of Language",
+    "authors": [
+      "Li Wei"
+    ],
+    "year": "2017",
+    "venue": "Applied Linguistics",
+    "doi": "https://doi.org/10.1093/applin/amx039",
+    "url": "https://doi.org/10.1093/applin/amx039",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Embodied Cognition: A field guide",
+    "authors": [
+      "Michael L. Anderson"
+    ],
+    "year": "2003",
+    "venue": "Artificial Intelligence",
+    "doi": "https://doi.org/10.1016/s0004-3702(03)00054-7",
+    "url": "https://doi.org/10.1016/s0004-3702(03)00054-7",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "MiniGPT-4: Enhancing Vision-Language Understanding with Advanced Large Language Models",
+    "authors": [
+      "Deyao Zhu",
+      "Jun Chen",
+      "Xiaoqian Shen",
+      "Xiang Li",
+      "Mohamed Elhoseiny"
+    ],
+    "year": "2023",
+    "venue": "King Abdullah University of Science and Technology Repository (King Abdullah University of Science and Technology)",
+    "doi": "https://doi.org/10.48550/arxiv.2304.10592",
+    "url": "https://doi.org/10.48550/arxiv.2304.10592",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "InstructBLIP: Towards General-purpose Vision-Language Models with Instruction Tuning",
+    "authors": [
+      "Wenliang Dai",
+      "Junnan Li",
+      "Dongxu Li",
+      "Anthony Meng Huat Tiong",
+      "Junqi Zhao",
+      "Weisheng Wang",
+      "Boyang Li",
+      "Pascale Fung"
+    ],
+    "year": "2023",
+    "venue": "arXiv (Cornell University)",
+    "doi": "https://doi.org/10.48550/arxiv.2305.06500",
+    "url": "https://doi.org/10.48550/arxiv.2305.06500",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Embodied Cognition is Not What you Think it is",
+    "authors": [
+      "Andrew D. Wilson",
+      "Sabrina Golonka"
+    ],
+    "year": "2013",
+    "venue": "Frontiers in Psychology",
+    "doi": "https://doi.org/10.3389/fpsyg.2013.00058",
+    "url": "https://doi.org/10.3389/fpsyg.2013.00058",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Whatever next? Predictive brains, situated agents, and the future of cognitive science",
+    "authors": [
+      "Andy Clark"
+    ],
+    "year": "2013",
+    "venue": "Behavioral and Brain Sciences",
+    "doi": "https://doi.org/10.1017/s0140525x12000477",
+    "url": "https://doi.org/10.1017/s0140525x12000477",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "π₀: A Vision-Language-Action Flow Model for General Robot Control",
+    "authors": [
+      "Kevin Black",
+      "Noah Brown",
+      "Danny Driess",
+      "A. Esmail",
+      "Michael Equi",
+      "Chelsea Finn",
+      "Niccolo Fusai",
+      "Lachy Groom"
+    ],
+    "year": "2025",
+    "venue": "",
+    "doi": "https://doi.org/10.15607/rss.2025.xxi.010",
+    "url": "https://doi.org/10.15607/rss.2025.xxi.010",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Retrieval-Augmented Generation for Large Language Models: A Survey",
+    "authors": [
+      "Yunfan Gao",
+      "Yun Xiong",
+      "Xinyu Gao",
+      "Kangxiang Jia",
+      "Jinliu Pan",
+      "Yuxi Bi",
+      "Yi Dai",
+      "Jiawei Sun"
+    ],
+    "year": "2023",
+    "venue": "arXiv (Cornell University)",
+    "doi": "https://doi.org/10.48550/arxiv.2312.10997",
+    "url": "https://doi.org/10.48550/arxiv.2312.10997",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "NavGPT: Explicit Reasoning in Vision-and-Language Navigation with Large Language Models",
+    "authors": [
+      "Gengze Zhou",
+      "Yicong Hong",
+      "Qi Wu"
+    ],
+    "year": "2024",
+    "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+    "doi": "https://doi.org/10.1609/aaai.v38i7.28597",
+    "url": "https://doi.org/10.1609/aaai.v38i7.28597",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Artificial intelligence and smart vision for building and construction 4.0: Machine and deep learning methods and applications",
+    "authors": [
+      "Shanaka Kristombu Baduge",
+      "Sadeep Thilakarathna",
+      "Jude Shalitha Perera",
+      "Mehrdad Arashpour",
+      "P. Sharafi",
+      "Bertrand Teodosio",
+      "Ankit Shringi",
+      "Priyan Mendis"
+    ],
+    "year": "2022",
+    "venue": "Automation in Construction",
+    "doi": "https://doi.org/10.1016/j.autcon.2022.104440",
+    "url": "https://doi.org/10.1016/j.autcon.2022.104440",
+    "abstract": ""
+  }
+]

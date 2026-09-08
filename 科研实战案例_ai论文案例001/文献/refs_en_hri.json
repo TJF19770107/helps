@@ -1,0 +1,132 @@
+[
+  {
+    "source": "CrossRef",
+    "title": "A Scoping Review of Embodied Intelligence in Human-Computer Interaction",
+    "authors": [
+      "Natasha Cecilia Edeh"
+    ],
+    "year": "2025",
+    "venue": "",
+    "doi": "10.2139/ssrn.5397491",
+    "url": "https://doi.org/10.2139/ssrn.5397491",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "A Scoping Review of Embodied Intelligence in Human-Computer Interaction",
+    "authors": [
+      "Natasha Cecilia Edeh"
+    ],
+    "year": "2025",
+    "venue": "",
+    "doi": "10.2139/ssrn.5448259",
+    "url": "https://doi.org/10.2139/ssrn.5448259",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "Motion of Soft Robots with Physically Embodied Intelligence",
+    "authors": [
+      "Kyu-Jin Cho"
+    ],
+    "year": "2019",
+    "venue": "2019 14th ACM/IEEE International Conference on Human-Robot Interaction (HRI)",
+    "doi": "10.1109/hri.2019.8673158",
+    "url": "https://doi.org/10.1109/hri.2019.8673158",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "From Interaction to Relationship: The Role of Memory, Learning, and Emotional Intelligence in AI-Embodied Human Engagement",
+    "authors": [
+      "Frank Chang",
+      "Damith Herath"
+    ],
+    "year": "2025",
+    "venue": "2025 20th ACM/IEEE International Conference on Human-Robot Interaction (HRI)",
+    "doi": "10.1109/hri61500.2025.10973813",
+    "url": "https://doi.org/10.1109/hri61500.2025.10973813",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "Socially Embodied Human-Robot Interaction",
+    "authors": [
+      "J. Lindblom",
+      "B. Alenljung"
+    ],
+    "year": "2015",
+    "venue": "Advances in Computational Intelligence and Robotics",
+    "doi": "10.4018/978-1-4666-7278-9.ch007",
+    "url": "https://doi.org/10.4018/978-1-4666-7278-9.ch007",
+    "abstract": "A fundamental challenge of human interaction with socially interactive robots, compared to other interactive products, comes from them being embodied. The embodied nature of social robots questions to what degree humans can interact ‘naturally' with robots, and what impact the interaction quality has on the user experience (UX). UX is fundamentally about emotions that arise and form in humans through the use of technology in a particular situation. This chapter aims to contribute to the field of human-robot interaction (HRI) by addressing, in further detail, the role and relevance of embodied "
+  },
+  {
+    "source": "CrossRef",
+    "title": "Integration of work sequence and embodied interaction for collaborative work based human-robot interaction",
+    "authors": [
+      "Jeffrey Too Chuan Tan",
+      "Tetsunari Inamura"
+    ],
+    "year": "2013",
+    "venue": "2013 8th ACM/IEEE International Conference on Human-Robot Interaction (HRI)",
+    "doi": "10.1109/hri.2013.6483590",
+    "url": "https://doi.org/10.1109/hri.2013.6483590",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "Embodied queries for robot task learning",
+    "authors": [
+      "Kalesha Bullard"
+    ],
+    "year": "2016",
+    "venue": "2016 11th ACM/IEEE International Conference on Human-Robot Interaction (HRI)",
+    "doi": "10.1109/hri.2016.7451875",
+    "url": "https://doi.org/10.1109/hri.2016.7451875",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "LLM-Powered Embodied Intelligence for Socially-Aware Robot Navigation in Human-Robot Interaction",
+    "authors": [
+      "Xuqing Liu",
+      "Ahmed Farid",
+      "Tatsuya Amano",
+      "Hamada Rizk",
+      "Hirozumi Yamaguchi"
+    ],
+    "year": "2025",
+    "venue": "Proceedings of the 19th International Symposium on Spatial and Temporal Data",
+    "doi": "10.1145/3748777.3748807",
+    "url": "https://doi.org/10.1145/3748777.3748807",
+    "abstract": ""
+  },
+  {
+    "source": "CrossRef",
+    "title": "Embodied artificial intelligence as a paradigm shift for human–robot collaboration",
+    "authors": [
+      "Junfei Li",
+      "Simon X. Yang"
+    ],
+    "year": "2026",
+    "venue": "Intelligence &amp; Robotics",
+    "doi": "10.20517/ir.2026.05",
+    "url": "https://doi.org/10.20517/ir.2026.05",
+    "abstract": "Human–robot collaboration (HRC) has traditionally relied on instruction-driven paradigms in which humans specify goals and robots execute predefined tasks. Recent advances in embodied artificial intelligence (Embodied AI) challenge this model by grounding intelligence in physical embodiment and continuous interaction with the environment. This editorial positions Embodied AI as a paradigm shift in HRC, redefining collaboration as a physically interactive and mutually adaptive process. It examines the key challenges introduced by this shift and outlines emerging directions for future embodied H"
+  },
+  {
+    "source": "CrossRef",
+    "title": "Embodied Collaborative Referring Expression Generation in Situated Human-Robot Interaction",
+    "authors": [
+      "Rui Fang",
+      "Malcolm Doering",
+      "Joyce Y. Chai"
+    ],
+    "year": "2015",
+    "venue": "Proceedings of the Tenth Annual ACM/IEEE International Conference on Human-Robot Interaction",
+    "doi": "10.1145/2696454.2696467",
+    "url": "https://doi.org/10.1145/2696454.2696467",
+    "abstract": ""
+  }
+]

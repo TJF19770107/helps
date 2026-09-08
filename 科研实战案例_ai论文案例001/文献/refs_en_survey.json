@@ -1,0 +1,189 @@
+[
+  {
+    "source": "OpenAlex",
+    "title": "Your Robot Therapist Will See You Now: Ethical Implications of Embodied Artificial Intelligence in Psychiatry, Psychology, and Psychotherapy",
+    "authors": [
+      "Amelia Fiske",
+      "Peter Henningsen",
+      "Alena Buyx"
+    ],
+    "year": "2019",
+    "venue": "Journal of Medical Internet Research",
+    "doi": "https://doi.org/10.2196/13216",
+    "url": "https://doi.org/10.2196/13216",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Developmental robotics: a survey",
+    "authors": [
+      "Max Lungarella",
+      "Giorgio Metta",
+      "Rolf Pfeifer",
+      "Giulio Sandini"
+    ],
+    "year": "2003",
+    "venue": "Connection Science",
+    "doi": "https://doi.org/10.1080/09540090310001655110",
+    "url": "https://doi.org/10.1080/09540090310001655110",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "A survey on large language model based autonomous agents",
+    "authors": [
+      "Lei Wang",
+      "Chen Ma",
+      "Xueyang Feng",
+      "Zeyu Zhang",
+      "Hao Yang",
+      "Jingsen Zhang",
+      "Zhiyuan Chen",
+      "Jiakai Tang"
+    ],
+    "year": "2024",
+    "venue": "Frontiers of Computer Science",
+    "doi": "https://doi.org/10.1007/s11704-024-40231-1",
+    "url": "https://doi.org/10.1007/s11704-024-40231-1",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "A strategic framework for artificial intelligence in marketing",
+    "authors": [
+      "Ming‐Hui Huang",
+      "Roland T. Rust"
+    ],
+    "year": "2020",
+    "venue": "Journal of the Academy of Marketing Science",
+    "doi": "https://doi.org/10.1007/s11747-020-00749-9",
+    "url": "https://doi.org/10.1007/s11747-020-00749-9",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Event-Based Vision: A Survey",
+    "authors": [
+      "Guillermo Gallego",
+      "Tobi Delbruck",
+      "Garrick Orchard",
+      "Chiara Bartolozzi",
+      "Brian Taba",
+      "Andrea Censi",
+      "Stefan Leutenegger",
+      "Andrew J. Davison"
+    ],
+    "year": "2020",
+    "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+    "doi": "https://doi.org/10.1109/tpami.2020.3008413",
+    "url": "https://doi.org/10.1109/tpami.2020.3008413",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "A survey on dielectric elastomer actuators for soft robots",
+    "authors": [
+      "Guoying Gu",
+      "Jian Zhu",
+      "Li-Min Zhu",
+      "Xiangyang Zhu"
+    ],
+    "year": "2017",
+    "venue": "Bioinspiration & Biomimetics",
+    "doi": "https://doi.org/10.1088/1748-3190/12/1/011003",
+    "url": "https://doi.org/10.1088/1748-3190/12/1/011003",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Embodied neuromorphic intelligence",
+    "authors": [
+      "Chiara Bartolozzi",
+      "Giacomo Indiveri",
+      "Elisa Donati"
+    ],
+    "year": "2022",
+    "venue": "Nature Communications",
+    "doi": "https://doi.org/10.1038/s41467-022-28487-2",
+    "url": "https://doi.org/10.1038/s41467-022-28487-2",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Ethical governance is essential to building trust in robotics and artificial intelligence systems",
+    "authors": [
+      "Alan Winfield",
+      "Marina Jirotka"
+    ],
+    "year": "2018",
+    "venue": "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences",
+    "doi": "https://doi.org/10.1098/rsta.2018.0085",
+    "url": "https://doi.org/10.1098/rsta.2018.0085",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Matching robot appearance and behavior to tasks to improve human-robot cooperation",
+    "authors": [
+      "Jennifer L. Goetz",
+      "Sara Kiesler",
+      "Aaron Powers"
+    ],
+    "year": "2004",
+    "venue": "",
+    "doi": "https://doi.org/10.1109/roman.2003.1251796",
+    "url": "https://doi.org/10.1109/roman.2003.1251796",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "A Standard Model of the Mind: Toward a Common Computational Framework Across Artificial Intelligence, Cognitive Science, Neuroscience, and Robotics",
+    "authors": [
+      "John E. Laird",
+      "Christian Lebière",
+      "Paul S. Rosenbloom"
+    ],
+    "year": "2017",
+    "venue": "AI Magazine",
+    "doi": "https://doi.org/10.1609/aimag.v38i4.2744",
+    "url": "https://doi.org/10.1609/aimag.v38i4.2744",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Foundation models in robotics: Applications, challenges, and the future",
+    "authors": [
+      "Roya Firoozi",
+      "Johnathan Tucker",
+      "Stephen Tian",
+      "Anirudha Majumdar",
+      "Jiankai Sun",
+      "Weiyu Liu",
+      "Yuke Zhu",
+      "Shuran Song"
+    ],
+    "year": "2024",
+    "venue": "The International Journal of Robotics Research",
+    "doi": "https://doi.org/10.1177/02783649241281508",
+    "url": "https://doi.org/10.1177/02783649241281508",
+    "abstract": ""
+  },
+  {
+    "source": "OpenAlex",
+    "title": "Aligning Cyber Space With Physical World: A Comprehensive Survey on Embodied AI",
+    "authors": [
+      "Yang Liu",
+      "Weixing Chen",
+      "Yongjie Bai",
+      "Xiaodan Liang",
+      "Guanbin Li",
+      "Wen Gao",
+      "Liang Lin"
+    ],
+    "year": "2025",
+    "venue": "IEEE/ASME Transactions on Mechatronics",
+    "doi": "https://doi.org/10.1109/tmech.2025.3574943",
+    "url": "https://doi.org/10.1109/tmech.2025.3574943",
+    "abstract": ""
+  }
+]

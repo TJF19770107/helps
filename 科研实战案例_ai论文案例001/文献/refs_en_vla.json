@@ -1,0 +1,208 @@
+[
+  {
+    "source": "arXiv",
+    "title": "Inference-Time Attention Steering for Vision-Language-Action Driving Models",
+    "authors": [
+      "Darshan Nagendra Prasad",
+      "Lars Ullrich",
+      "Knut Graichen"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2608.17095v1",
+    "abstract": "Vision-language-action (VLA) driving models couple a reasoning stage with a diffusion-based trajectory decoder, but do not give a direct way to redirect attention toward safety-critical actors at inference time without retraining. We studied a bounded additive pre-softmax attention bias on the visual tokens of detector localized traffic actors on Alpamayo-R1's Qwen3-VL backbone. It is applied as a fail open forward pre-hook with no weight changes. On 50 lane-change scenarios from the Physical AI World Model Synthetic dataset. The trajectory decoder shows a monotonic dose response in the bias m"
+  },
+  {
+    "source": "arXiv",
+    "title": "Large VLM-based Vision-Language-Action Models for Robotic Manipulation: A Survey",
+    "authors": [
+      "Rui Shao",
+      "Wei Li",
+      "Lingsen Zhang",
+      "Renshan Zhang",
+      "Zhiyang Liu",
+      "Ran Chen",
+      "Liqiang Nie"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2508.13073v3",
+    "abstract": "Robotic manipulation, a key frontier in robotics and embodied AI, requires precise motor control and multimodal understanding, yet traditional rule-based methods fail to scale or generalize in unstructured, novel environments. In recent years, Vision-Language-Action (VLA) models, built upon Large Vision-Language Models (VLMs) pretrained on vast image-text datasets, have emerged as a transformative paradigm. This survey provides the first systematic, taxonomy-oriented review of large VLM-based VLA models for robotic manipulation. We begin by clearly defining large VLM-based VLA models and delin"
+  },
+  {
+    "source": "arXiv",
+    "title": "Your Vision-Language-Action Model Already Has Attention Heads For Path Deviation Detection",
+    "authors": [
+      "Jaehwan Jeong",
+      "Evelyn Zhu",
+      "Jinying Lin",
+      "Emmanuel Jaimes",
+      "Tuan-Anh Vu",
+      "Jungseock Joo",
+      "Sangpil Kim",
+      "M. Khalid Jawed"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2603.13782v1",
+    "abstract": "Vision-Language-Action (VLA) models have demonstrated strong potential for predicting semantic actions in navigation tasks, demonstrating the ability to reason over complex linguistic instructions and visual contexts. However, they are fundamentally hindered by visual-reasoning hallucinations that lead to trajectory deviations. Addressing this issue has conventionally required training external critic modules or relying on complex uncertainty heuristics. In this work, we discover that monitoring a few attention heads within a frozen VLA model can accurately detect path deviations without incur"
+  },
+  {
+    "source": "arXiv",
+    "title": "BLURR: A Boosted Low-Resource Inference for Vision-Language-Action Models",
+    "authors": [
+      "Xiaoyu Ma",
+      "Zhengqing Yuan",
+      "Zheyuan Zhang",
+      "Kaiwen Shi",
+      "Lichao Sun",
+      "Yanfang Ye"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2512.11769v1",
+    "abstract": "Vision-language-action (VLA) models enable impressive zero shot manipulation, but their inference stacks are often too heavy for responsive web demos or high frequency robot control on commodity GPUs. We present BLURR, a lightweight inference wrapper that can be plugged into existing VLA controllers without retraining or changing model checkpoints. Instantiated on the pi-zero VLA controller, BLURR keeps the original observation interfaces and accelerates control by combining an instruction prefix key value cache, mixed precision execution, and a single step rollout schedule that reduces per st"
+  },
+  {
+    "source": "arXiv",
+    "title": "Compositional Context Fine-Tuning Vision-Language Model for Complex Assembly Action Understanding from Videos",
+    "authors": [
+      "Hao Zheng",
+      "Jinyi Huang",
+      "Tiantian Zheng",
+      "Xun Xu",
+      "Tuka Alhanai"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2607.10797v1",
+    "abstract": "Assembly action understanding is a key enabler for effective human-robot collaborative assembly, yet it remains challenging due to subtle motions and fine-grained hand-object interactions. We adapt vision-language models (VLMs) to this challenging domain with Compositional Context Fine-Tuning (CCFT), a method that decomposes assembly actions into semantic elements (Verb, Object, Tool) and fine-tunes VLMs to recognize each action element using templated question-answering pairs. This approach ensures near-deterministic outputs. To enable efficient and effective multi-task learning under limited"
+  },
+  {
+    "source": "arXiv",
+    "title": "Geometric Action Model for Robot Policy Learning",
+    "authors": [
+      "Jisang Han",
+      "Seonghu Jeon",
+      "Jaewoo Jung",
+      "René Zurbrügg",
+      "Honggyu An",
+      "Tifanny Portela",
+      "Marco Hutter",
+      "Marc Pollefeys"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2606.17046v2",
+    "abstract": "Generalist robot policies must follow user instructions while reasoning about how objects, cameras, and robot actions interact in the 3D physical world. Recent vision-language-action models (VLAs) and video world-action models (WAMs) inherit strong semantic or temporal priors from large-scale foundation models, but they still operate primarily on 2D image frames or 2D-derived latent spaces, leaving implicit the 3D geometry required for contact-rich manipulation. We propose the Geometric Action Model (GAM), a language-conditioned manipulation policy that directly repurposes a pretrained geometr"
+  },
+  {
+    "source": "arXiv",
+    "title": "Survey of Vision-Language-Action Models for Embodied Manipulation",
+    "authors": [
+      "Haoran Li",
+      "Yuhui Chen",
+      "Wenbo Cui",
+      "Weiheng Liu",
+      "Kai Liu",
+      "Mingcai Zhou",
+      "Zhengtao Zhang",
+      "Dongbin Zhao"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2508.15201v2",
+    "abstract": "Embodied intelligence systems, which enhance agent capabilities through continuous environment interactions, have garnered significant attention from both academia and industry. Vision-Language-Action models, inspired by advancements in large foundation models, serve as universal robotic control frameworks that substantially improve agent-environment interaction capabilities in embodied intelligence systems. This expansion has broadened application scenarios for embodied AI robots. This survey comprehensively reviews VLA models for embodied manipulation. Firstly, it chronicles the developmenta"
+  },
+  {
+    "source": "arXiv",
+    "title": "RoboMamba: Efficient Vision-Language-Action Model for Robotic Reasoning and Manipulation",
+    "authors": [
+      "Jiaming Liu",
+      "Mengzhen Liu",
+      "Zhenyu Wang",
+      "Pengju An",
+      "Xiaoqi Li",
+      "Kaichen Zhou",
+      "Senqiao Yang",
+      "Renrui Zhang"
+    ],
+    "year": "2024",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2406.04339v2",
+    "abstract": "A fundamental objective in robot manipulation is to enable models to comprehend visual scenes and execute actions. Although existing Vision-Language-Action (VLA) models for robots can handle a range of basic tasks, they still face challenges in two areas: (1) insufficient reasoning ability to tackle complex tasks, and (2) high computational costs for VLA model fine-tuning and inference. The recently proposed state space model (SSM) known as Mamba demonstrates promising capabilities in non-trivial sequence modeling with linear inference complexity. Inspired by this, we introduce RoboMamba, an e"
+  },
+  {
+    "source": "arXiv",
+    "title": "EveryDayVLA: A Vision-Language-Action Model for Affordable Robotic Manipulation",
+    "authors": [
+      "Samarth Chopra",
+      "Alex McMoil",
+      "Ben Carnovale",
+      "Evan Sokolson",
+      "Rajkumar Kubendran",
+      "Samuel Dickerson"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2511.05397v1",
+    "abstract": "While Vision-Language-Action (VLA) models map visual inputs and language instructions directly to robot actions, they often rely on costly hardware and struggle in novel or cluttered scenes. We introduce EverydayVLA, a 6-DOF manipulator that can be assembled for under $300, capable of modest payloads and workspace. A single unified model jointly outputs discrete and continuous actions, and our adaptive-horizon ensemble monitors motion uncertainty to trigger on-the-fly re-planning for safe, reliable operation. On LIBERO, EverydayVLA matches state-of-the-art success rates, and in real-world test"
+  },
+  {
+    "source": "arXiv",
+    "title": "Gaze-Regularized Vision-Language-Action Models for Robotic Manipulation",
+    "authors": [
+      "Anupam Pani",
+      "Yanchao Yang"
+    ],
+    "year": "2026",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2603.23202v2",
+    "abstract": "Despite advances in Vision-Language-Action (VLA) models, robotic manipulation struggles with fine-grained tasks because current models lack mechanisms for active visual attention allocation. Human gaze naturally encodes intent, planning, and execution patterns -- offering a powerful supervisory signal for guiding robot perception. We introduce a gaze-regularized training framework that aligns VLA models' internal attention with human visual patterns without architectural modifications or inference-time overhead. Our method transforms temporally aggregated gaze heatmaps into patch-level distrib"
+  },
+  {
+    "source": "arXiv",
+    "title": "Generalist Robot Manipulation beyond Action Labeled Data",
+    "authors": [
+      "Alexander Spiridonov",
+      "Jan-Nico Zaech",
+      "Nikolay Nikolov",
+      "Luc Van Gool",
+      "Danda Pani Paudel"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2509.19958v1",
+    "abstract": "Recent advances in generalist robot manipulation leverage pre-trained Vision-Language Models (VLMs) and large-scale robot demonstrations to tackle diverse tasks in a zero-shot manner. A key challenge remains: scaling high-quality, action-labeled robot demonstration data, which existing methods rely on for robustness and generalization. To address this, we propose a method that benefits from videos without action labels - featuring humans and/or robots in action - enhancing open-vocabulary performance and enabling data-efficient learning of new tasks. Our method extracts dense, dynamic 3D point"
+  },
+  {
+    "source": "arXiv",
+    "title": "MAP-VLA: Memory-Augmented Prompting for Vision-Language-Action Model in Robotic Manipulation",
+    "authors": [
+      "Runhao Li",
+      "Wenkai Guo",
+      "Zhenyu Wu",
+      "Changyuan Wang",
+      "Haoyuan Deng",
+      "Zhenyu Weng",
+      "Yap-Peng Tan",
+      "Ziwei Wang"
+    ],
+    "year": "2025",
+    "venue": "arXiv preprint",
+    "doi": "",
+    "url": "http://arxiv.org/abs/2511.09516v1",
+    "abstract": "Pre-trained Vision-Language-Action (VLA) models have achieved remarkable success in improving robustness and generalization for end-to-end robotic manipulation. However, these models struggle with long-horizon tasks due to their lack of memory and reliance solely on immediate sensory inputs. To address this limitation, we propose Memory-Augmented Prompting for Vision-Language-Action model (MAP-VLA), a novel framework that empowers pre-trained VLA models with demonstration-derived memory prompts to augment action generation for long-horizon robotic manipulation tasks. To achieve this, MAP-VLA f"
+  }
+]

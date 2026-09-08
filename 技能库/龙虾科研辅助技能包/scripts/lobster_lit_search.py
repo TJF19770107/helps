@@ -156,6 +156,10 @@ def main():
     a = ap.parse_args()
 
     names = list(SOURCES) if a.source == "all" else [a.source]
+    # v1.1 回灌修正（案例 EMBODIED-AI-PAPER-001）：s2 无密钥限流极严（实测首轮即 429），
+    # 从 --source all 默认集中移除；需显式 --source s2 才调用
+    if a.source == "all":
+        names = [n for n in names if n != "s2"]
     all_rows, errors = [], []
     for n in names:
         try:
