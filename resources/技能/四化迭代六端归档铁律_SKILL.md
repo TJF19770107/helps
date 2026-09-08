@@ -1,0 +1,42 @@
+---
+title: 四化迭代六端归档铁律
+version: v1.0
+distilled_at: 2026-09-08
+distilled_by: 汤小龙（Codex）· 仓颉蒸馏 · 源自 20260908 送错归档位置的实战纠偏
+tags: [四化, 六端, 归档, 知识库, 铁律, 踩坑]
+protocol: 1234定义卡v2.1 §4.1.1
+---
+
+# 四化迭代六端归档铁律 SKILL v1.0
+
+> 触发词：`四化迭代知识库` / `迭代知识库` / `归档知识库` / `1234` 的「4」。
+> 一句话：四化产物必须落**六端**，落进豆包主会话源目录不算归档。
+
+## 血的教训（2026-09-08 实录）
+
+Codex 会话把双Chrome修复报告写进 `豆包主会话全集\extracted_knowledge\` 就宣称「落盘完成」，被汤哥当场抓住：那是**源目录**，不是归档端。1234定义卡v2.1 六端表当时已读过，属执行纪律失效，不是知识缺失。
+
+## 六端清单（缺一不可，逐端打勾才算完成）
+
+| # | 端 | 落法 | Codex 可直落? |
+|---|-----|------|--------------|
+| 1 | **Obsidian** | `G:\龙虾AI主控中心\Obsidian\wiki\`（运维类→`运维日志\`，工具类→`AI工具运维\`，原文→`豆包主会话全集\`） | ✅ |
+| 2 | **IMA** | WorkBuddy 连接器（create_media → COS → add_knowledge） | ❌ 需 WorkBuddy |
+| 3 | **乐享** | WorkBuddy 连接器（entry_import_content） | ❌ 需 WorkBuddy |
+| 4 | **CNB** | cnb.cool 知识库镜像仓 git push（经 Hermes NPC 通道） | ❌ 通道待建 |
+| 5 | **GitHub** | `TJF19770107/lobster-knowledge-base`（git proxy=socks5://127.0.0.1:1081） | ✅ |
+| 6 | **WorkBuddy** | `C:\Users\Administrator\.workbuddy\MEMORY.md` 追加 + `G:\WorkBuddy_Data\MEMORY.md` 同步 | ✅ |
+
+## 执行纪律（写报告前先过一遍）
+
+1. **先问落点，再写文件**：动笔前默念「这是六端里的哪一端？豆包源目录不是端」。
+2. **源目录 ≠ 归档端**：`extracted_knowledge` 是待萃取原料，四化产物归档永远另落六端。
+3. **能落几端落几端，落不了的写明卡点与补落路径**（宿主分工：IMA/乐享→WorkBuddy，CNB→Hermes通道），不许静默漏端。
+4. **交付格式**：逐端列表打勾（✅/⏸），⏸ 必须附「谁在哪个宿主能补」。
+5. **GitHub 推送代理**：直连被全局代理捆死时，用 `git -c http.proxy=socks5://127.0.0.1:1081`。
+
+## 验收
+
+- [ ] 六端清单逐端有落点或有明确卡点说明
+- [ ] 无任何端被静默跳过
+- [ ] 报告不含密钥
