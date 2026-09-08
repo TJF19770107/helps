@@ -1,0 +1,11 @@
+serverAddr = "frps"
+serverPort = 17000
+
+loginFailExit = false
+
+[[proxies]]
+name = "securecode_mcp_https"
+type = "tcp"
+localIP = "host.docker.internal"
+localPort = 19090
+remotePort = 19100

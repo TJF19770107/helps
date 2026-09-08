@@ -1,0 +1,54 @@
+# Vibe-Trading MCP 连接器：币安现货交易
+# 协议: MCP 1.28.0 | 分类: exchange_mcp
+# 生成: 2026-06-19 | 基准节点: base_20260619_0424_initial_success
+
+name: "binance_spot_mcp"
+version: "2.0.0"
+description: "币安现货交易连接器 — 通过 CCXT 4.5.59 统一接口"
+protocol: "mcp"
+protocol_version: "1.28.0"
+
+endpoint:
+  type: "ccxt"
+  exchange: "binance"
+  market_type: "spot"
+
+auth:
+  type: "api_key"
+  key_env: "BINANCE_API_KEY"
+  secret_env: "BINANCE_SECRET_KEY"
+  source: ".env"
+  testnet: false
+
+capabilities:
+  - fetch_balance
+  - create_order
+  - cancel_order
+  - fetch_my_trades
+  - fetch_open_orders
+  - fetch_closed_orders
+  - fetch_deposits
+  - fetch_withdrawals
+
+retry:
+  max_attempts: 3
+  backoff_strategy: "exponential"
+  base_delay_seconds: 5
+  max_delay_seconds: 60
+
+timeout:
+  connect_seconds: 10
+  read_seconds: 30
+  total_seconds: 60
+
+rate_limit:
+  requests_per_second: 10
+  burst: 20
+
+fallback:
+  enabled: true
+  exchanges: ["bybit", "okx"]
+  strategy: "round_robin"
+
+enabled: true
+auto_start: true
