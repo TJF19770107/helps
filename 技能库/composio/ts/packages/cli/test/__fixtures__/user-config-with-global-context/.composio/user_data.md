@@ -1,8 +1,0 @@
-```json
-{
-  "api_key": "uak_test_key",
-  "org_id": "org_1",
-  "project_id": "project_1"
-}
-
-```

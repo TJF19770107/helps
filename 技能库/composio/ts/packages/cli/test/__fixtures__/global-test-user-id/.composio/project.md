@@ -1,8 +1,0 @@
-```json
-{
-  "org_id": "org_test",
-  "project_id": "proj_test",
-  "project_name": "Developer Project"
-}
-
-```

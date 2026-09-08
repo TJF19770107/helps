@@ -1,6 +1,0 @@
-```json
-{
-  "api_key": "api_key_from_test_fixture"
-}
-
-```

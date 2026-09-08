@@ -1,4 +1,0 @@
-```yaml
-github: msitarzewski
-
-```

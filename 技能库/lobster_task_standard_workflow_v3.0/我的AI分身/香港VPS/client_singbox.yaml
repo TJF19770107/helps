@@ -1,6 +1,0 @@
-# 本地客户端配置（sing-box / mihomo 通用思路）
-# 填入你的香港服务器信息后，用本机 sing-box/mihomo 加载，代理端口走 7890
-# 注意：此模板按 Hysteria2 编写，字段以你实际 sing-box 版本为准。
-server: YOUR_SERVER_DOMAIN_OR_IP
-port: 8443
-password: YOUR_PASSWORD
