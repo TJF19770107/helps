@@ -119,10 +119,12 @@ ModuleNotFoundError: No module named 'encodings'
 
 | 成因 | 特征 | 处置 |
 |---|---|---|
-| **托管运行时正在安装/解压窗口期** | 目录 mtime 是「刚刚（几分钟内）」 | **等 1–3 分钟复测**，通常自动补齐（2026-09-09 实测：19:00 捕获残缺，19:05 已恢复 3.13.14 全功能） |
+| **宿主重安装但解压中断**（2026-09-09 真因） | 目录 mtime 是「刚刚几分钟内」；`~/.workbuddy/binaries/python/.cache/downloads` 留有几十 MB 的 `cpython-3.13.*-install_only.tar.gz`，registry.json 该版本 `verified:false`，旁边可能有 `3.13.12.old.*` 残骸 | **用另一个完好的解释器（如 3.10.11）作搬运工具，tarfile 解开该 tar.gz、剥离顶层 `python/`、跳过 `*.pdb`，覆盖回 3.13.12 目录**（实测 3 分钟恢复 3.13.14 + OpenSSL 3.5.7） |
 | **真·被清理/误删** | mtime 是几天前，且磁盘清理任务刚跑过 | 用守卫输出里「推荐默认解释器」临时顶上，再重装该版本 |
 
-**判定顺序**：先 `ls` 看 mtime → 隔 2 分钟复测 → 仍坏才重装。别一上来就重建 6 个 venv。
+**判定顺序**：先 `ls` 看 mtime → 看有没有 `.cache/downloads/*.tar.gz` 残包 → 隔 2 分钟复测（可能是并发会话正在修）→ 仍坏才重装。别一上来就重建 6 个 venv。
+
+**⚠️ 连带影响（比崩溃本身更危险）**：所有硬编码该 python.exe 的计划任务会**空转但 Result=0**（`Lobster_CodexModelGuard` / `Lobster_CatalogGuard_Deepseek` 等），即「任务成功但什么都没干」。恢复后必须手动补跑一次守卫类任务，把静默期间漏掉的漂移补回来。
 
 ### venv 连带故障
 
@@ -155,6 +157,13 @@ ModuleNotFoundError: No module named 'encodings'
 - 建议挂计划任务每日巡检一次，输出落 `MCP服务\logs\`。
 
 ---
+
+### 网络通道坑（2026-09-09 实测）
+
+- **GitHub 直连 `git fetch` 会挂 >6 分钟**（curl 直连却 200，说明是 git 的 TLS/连接行为被 GFW 拖死）
+  → 必须 `git -c http.proxy=socks5://127.0.0.1:1081 -c https.proxy=socks5://127.0.0.1:1081 ...`（HK 隧道端口需 LISTENING）
+- **gh-proxy.com 也不通**（本次 exit 124）→ 优先 socks5 1081
+- **CNB `TJF19770107/lobster-knowledge-base` 2026-09-09 19:20 起 404**（01:28 还能推）→ 仓库被删或令牌失效；  同名私有仓无权限也返回 404，需到网页端确认
 
 ## 七、实录（2026-09-09 首次执行）
 
