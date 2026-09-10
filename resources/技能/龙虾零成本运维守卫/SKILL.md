@@ -1,21 +1,22 @@
 ---
 name: 龙虾零成本运维守卫
-version: v1.2
+version: v1.3
 owner: 汤小龙（AI 分身）
 created: 2026-09-09
-updated: 2026-09-10
+updated: 2026-09-11
 cost_mode: P0（全本地 stdlib，零积分）
 agent_created: true
 ---
 
-# 龙虾零成本运维守卫 v1.2
+# 龙虾零成本运维守卫 v1.3
 
-> 一句话：**凡是要「推远端 / 起服务」之前，先跑守卫体检，把灾难挡在本地。**
-> 三个脚本，纯标准库，零积分，只读优先，不写业务数据。
+> 一句话：**凡是要「推远端 / 起服务 / 分发五库」之前，先跑守卫体检，把灾难挡在本地。**
+> 五个脚本，纯标准库，零积分，只读优先，不写业务数据。
 
 **触发词**：推送守卫 / git 假删除 / 推送前体检 / 镜像仓推送 / 双仓同步 / python 运行时坏了 /
 `No module named 'encodings'` / 代理脚本启动就崩 / 推送被拒 / 远端引用缺失 /
-**仓库是不是没了 / Repository Not Found / 令牌失效 / 凭据库 / 内嵌明文 token / credential helper 挂起**
+**仓库是不是没了 / Repository Not Found / 令牌失效 / 凭据库 / 内嵌明文 token / credential helper 挂起** /
+**五库分发 / 五落点 / 知识库归档 / 分发回执 / 推送挂起不返回**
 
 ---
 
@@ -27,8 +28,9 @@ agent_created: true
 | 2026-09-09 19:00 | `.workbuddy\...\python\3.13.12` 只剩 exe+DLL，`import encodings` 崩溃；依赖它的 6 个 venv 一并报废 | 铁律#2 指定的解释器不可用，代理一旦重启全线瘫痪 |
 | 2026-09-09 巡检 | CNB 远端 URL 内嵌明文 token（94 位） | `git remote -v` 一贴就泄露 |
 | **2026-09-10 06:00** | **误判事故**：CNB 回「仓库不存在」→ 昨日据此写待办「仓库可能被删」；实测身份探针 `/user` = **401**，真因是**令牌失效**，仓库大概率还在 | 按错误结论去重建仓库 = 白干，且丢失历史判断 |
+| **2026-09-11 06:00** | **自伤事故**：v1.2 做完 SEC01 脱敏后 remote 变成 `https://user@host/...`，诊断器 `parse_remote` 不剥 `user@` → host 变 `user@host` → 平台画像查不到 → **身份探针被永久跳过，只剩弱判定**；同时死令牌 push 仍会挂起 | v1.2 引以为傲的强判定在真实环境里根本没生效，等于白修 |
 
-四者共同点：**静默故障 / 静默误导**——表面一切正常（老进程还在跑、推送还没执行），或**错误信息本身在骗人**，一触发就不可收拾。
+五者共同点：**静默故障 / 静默误导**——表面一切正常（老进程还在跑、推送还没执行），或**错误信息本身在骗人**，一触发就不可收拾。
 守卫的价值 = 把「事后救火」变成「事前熔断」，把「平台说什么」变成「自己验什么」。
 
 ---
@@ -40,6 +42,8 @@ agent_created: true
 | `scripts/git_mirror_safe_push.py` | 推送前 12 项体检 + 熔断 + 可选执行推送 + ls-remote 回查 | 本技能包 / `企业微信群定制接单项目\scripts\` |
 | `scripts/python_runtime_guard.py` | 解释器与 venv 健康巡检，输出推荐默认解释器 | 同上 |
 | `scripts/remote_repo_doctor.py` | **远端仓库可达性分步诊断**：区分「令牌失效」与「仓库被删」，根治 URL 内嵌明文 token | 同上 |
+| `scripts/opsguard_daily.py` | 每日编排器（**Python 编排，不写 bat**），日志落 `MCP服务\logs\` | 同上 |
+| `scripts/five_lib_dispatch.py` | **v1.3 新增·五库分发一键编排**：门禁 → 落盘 → 推送 → 回查 → 回执，逐端打勾 | 同上 |
 
 ---
 
@@ -274,3 +278,79 @@ PY="C:/Users/Administrator/.workbuddy/binaries/python/versions/3.13.12/python.ex
   `https://user:***@cnb.cool/...` → `https://user@cnb.cool/...`，凭据入 `~/.git-credentials` ✅
 - **踩坑三步曲（都记进第五节）**：`-c` 追加不替换 → GCM 继承管道假挂（挂 6 分钟）→ `-c` 位置错误
 - **残留待办**：CNB 不发 401 challenge，脱敏后 helper 不触发；需汤哥重新签发令牌后再验
+
+### 2026-09-11 v1.3（强判定修复 + 五库分发器）
+
+- **修复一：`user@` 未剥离导致平台画像失效**（自伤 bug）
+  - 现象：`SEC02 说有凭据` 但 `IDN01 跳过身份探针`，只能出弱判定
+  - 根因：`INLINE_CRED_RE` 只认 `user:pass@`，脱敏后的 `https://user@host/...` 不匹配
+    → host 被解析成 `TJF19770107@cnb.cool` → `PLATFORMS` 查不到 → 判定退化
+  - 修复：`parse_remote` 里补 `host = re.sub(r"^[^/@\s]+@", "", host)`
+- **修复二：令牌来源顺序（凭据库优先于环境变量）**
+  - 实测：环境里 `CNB_TOKEN` / `CNB_GIT_TOKEN` 各 **27 位**（平台 API 令牌），
+    而 git 真正用来推送的是凭据库里那条 **94 位 `cnb_` 开头**的令牌
+  - 拿 API 令牌去打身份探针 → 结论与真实 git 行为不符
+  - 铁律：**诊断 git 就得用 git 的那份凭据**。顺序 = URL 内嵌 > `~/.git-credentials` > env > `git credential fill`
+- **新增检查码 `IDN00`**：打印令牌来源 + 脱敏形态（只留前缀 4 位与长度），明文永不落盘
+- **新增 `five_lib_dispatch.py`**：见下节
+
+---
+
+## 九、v1.3 新增：五库分发一键编排器 `five_lib_dispatch.py`
+
+> 解决的是「每天都要手工做五遍、还总有一端静默失败」的重复劳动（四化之「自动化」）。
+
+### 五端职责（诚实边界，不吹全自动）
+
+| 端 | 手段 | 自动化程度 |
+|---|---|---|
+| ① Obsidian | `copytree`（跳过 `.git`/`__pycache__`/`node_modules`） | **全自动** |
+| ④ CNB | 门禁 → commit → 清代理 push → `ls-remote` 回查 | **全自动** |
+| ⑤ GitHub | 门禁 → commit → socks5 push → `ls-remote` 回查 | **全自动** |
+| ② 乐享 | MCP（Agent 调用） | 半自动：脚本生成载荷 + `--record-receipt` 记回执 |
+| ③ IMA | MCP（推荐 `import_urls` 导乐享页） | 半自动：同上 |
+
+### 核心设计：门禁前置，死凭据不再挂起
+
+```text
+push 之前 → 先跑 remote_repo_doctor 拿强判定
+   IDN01 = 401  →  BLOCKED，跳过推送（不调 git，不挂起）
+   IDN01 = 200  →  继续：安全体检 → commit(只 add 具体路径) → push → ls-remote 回查
+```
+
+**实测对比（本机 CNB 死令牌）**：
+
+| 做法 | 耗时 | 结果 |
+|---|---|---|
+| 直接 `git push cnb` | **6 分钟+ 挂死** | 等凭据助手超时，最后还是失败 |
+| `five_lib_dispatch.py --target cnb` | **1 秒** | `⛔ BLOCKED` + 明确处置建议 |
+
+**实测（GitHub 健康端）**：`IDN01 200` + `OBJ01 rc=0` → `VERDICT OK`，推送 + 回查一致。
+
+### 用法
+
+```bash
+# 前置自检
+python scripts/five_lib_dispatch.py --status
+
+# 单端
+python scripts/five_lib_dispatch.py --target obsidian --src <技能目录>
+python scripts/five_lib_dispatch.py --target cnb    --repo G:/tmp/lobster-knowledge-base
+python scripts/five_lib_dispatch.py --target github --repo G:/tmp/lobster-knowledge-base --branch fresh-main
+
+# 一键五端（MCP 端生成载荷，Agent 补调 MCP 后记回执）
+python scripts/five_lib_dispatch.py --all --src <技能目录> --repo <镜像仓> --title "标题"
+
+# MCP 端回执 / 查看今日报告
+python scripts/five_lib_dispatch.py --record-receipt lexiang --url https://lexiangla.com/pages/xxx
+python scripts/five_lib_dispatch.py --report
+```
+
+### 铁律（写进肌肉记忆）
+
+1. **门禁先于推送**：`IDN01=401` 时绝不调 `git push`，那是拿 6 分钟换一句「失败」。
+2. **只 `git add` 具体路径，永不 `add -A`**（3652 假删除的教训）。
+3. **推送返回 0 不等于成功**：必须 `ls-remote` 回查远端 ref == 本地 HEAD。
+4. **通道不能混**：GitHub 走 `socks5://127.0.0.1:1081`；CNB 必须 `-c http.proxy=` 清空代理。
+5. **MCP 端不留空洞**：调用完立刻 `--record-receipt`，回执落 `待分发任务\五库分发回执_<日期>.json`。
+6. 分支不一致时**不擅自切分支**，直接 SKIP 并报告。

@@ -1,7 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-remote_repo_doctor.py  v1.0  (龙虾零成本运维守卫 v1.2 组件)
+remote_repo_doctor.py  v1.3  (龙虾零成本运维守卫 v1.3 组件)
+
+v1.3 变更（2026-09-11）：修复「SEC02 说有凭据、IDN01 却跳过」的弱判定缺口。
+  旧版 credential_fill() 只返回 True/False，**从不取回明文令牌**，
+  导致远端 URL 一旦脱敏（v1.2 的 SEC01 根治），身份探针就永远没令牌可用 -> 只能出弱判定。
+  新增 credential_get_token()：多源取令牌
+      环境变量 > ~/.git-credentials 明文 > git credential fill 子进程
+  并把来源以脱敏形式记入 IDN00。至此「令牌失效 vs 仓库被删」可出强判定。
 远端仓库可达性「分步诊断器」——专治「仓库是不是没了？」这类误判。
 
 核心铁律：**身份探针优先于对象探针**
@@ -138,6 +145,11 @@ def parse_remote(url):
     if not mm:
         return info
     host, path = mm.group(1), mm.group(2)
+    # 坑（v1.3 修复）：`https://user@host/...` 这种「只有用户名没有密码」的 URL，
+    #   INLINE_CRED_RE 不匹配（它要求 user:pass@），host 于是变成 `user@host`
+    #   -> PLATFORMS 查不到 -> 身份探针被当成「无平台画像」跳过，结论退化成弱判定。
+    #   实测：v1.2 做完 SEC01 脱敏后 remote 恰好变成这种形式，诊断器从此只剩弱判定。
+    host = re.sub(r"^[^/@\s]+@", "", host)
     info["platform"] = host if host in PLATFORMS else None
     parts = [p for p in re.split(r"[:/]", path) if p]
     if len(parts) >= 2:
@@ -192,6 +204,99 @@ def credential_fill(host):
         except Exception:
             pass
     return "password=" in out, out
+
+
+# 令牌来源：环境变量（按 host 定制） -> 通用变量
+TOKEN_ENV_BY_HOST = {
+    "github.com": ["GITHUB_TOKEN", "GH_TOKEN"],
+    "cnb.cool": ["CNB_TOKEN", "CNB_GIT_TOKEN"],
+    "gitee.com": ["GITEE_TOKEN", "GITEE_ACCESS_TOKEN"],
+}
+GENERIC_TOKEN_ENVS = ["LOBSTER_GIT_TOKEN", "GIT_TOKEN"]
+
+
+def mask_token(t):
+    """令牌脱敏：只留前 4 位前缀与长度，永不落明文。"""
+    if not t:
+        return "(空)"
+    return "%s***(len=%d)" % (t[:4], len(t))
+
+
+def _token_from_credentials_file(host):
+    """直读 ~/.git-credentials（store helper 落盘即明文，格式 https://user:pass@host）。"""
+    pf = os.path.expanduser("~/.git-credentials")
+    if not os.path.exists(pf):
+        return None
+    try:
+        with open(pf, "r", encoding="utf-8", errors="ignore") as f:
+            for ln in f:
+                ln = ln.strip()
+                if not ln or "@" not in ln:
+                    continue
+                m = re.match(r"^https?://([^:/@\s]+):([^@\s]+)@([^/\s]+)", ln)
+                if m and m.group(3) == host:
+                    return m.group(2)
+    except Exception:
+        pass
+    return None
+
+
+def credential_get_token(host):
+    """多源取明文令牌 -> (token, source)。拿不到返回 (None, reason)。
+
+    设计要点：令牌只在内存中流转，任何日志/输出一律走 mask_token()，
+    绝不进入 git、四端同步产物或记忆文件（密钥红线）。
+
+    顺序铁律（v1.3 实测纠正）：**凭据库优先于环境变量**。
+      环境变量里的往往是「平台 API 令牌」而非「git 推送令牌」——
+      实测 cnb.cool 环境有 CNB_TOKEN/CNB_GIT_TOKEN 各 27 位（API 用），
+      而 git 真正拿来推送的是凭据库里那条 94 位 cnb_ 开头的令牌。
+      拿 API 令牌去打身份探针会得出与实际 git 行为不符的结论。
+      本脚本诊断的是 git 可达性，所以必须与 git 用同一份凭据。
+    """
+    # 1) ~/.git-credentials 明文（git 实际使用的凭据，零子进程）
+    t = _token_from_credentials_file(host)
+    if t:
+        return t, "file:~/.git-credentials"
+    # 2) 环境变量（无落盘凭据时的兜底，如 CI / 计划任务）
+    for var in TOKEN_ENV_BY_HOST.get(host, []) + GENERIC_TOKEN_ENVS:
+        v = os.environ.get(var)
+        if v and v.strip():
+            return v.strip(), "env:" + var
+    # 3) 退回 git credential fill（GCM 也走这条；已按坑1/坑2加固）
+    env = dict(os.environ)
+    env["GCM_INTERACTIVE"] = "never"
+    env["GIT_TERMINAL_PROMPT"] = "0"
+    tmp = os.path.join(os.environ.get("TEMP", "."), "_lkr_tok_%d.tmp" % os.getpid())
+    try:
+        with open(tmp, "w", errors="ignore") as fo:
+            p = subprocess.Popen(["git", "-c", "credential.helper=",
+                                  "-c", "credential.helper=store",
+                                  "credential", "fill"], stdin=subprocess.PIPE,
+                                 stdout=fo, stderr=subprocess.DEVNULL, text=True, env=env)
+            # 坑：stdout 必须是文件不是管道，否则 GCM 孙进程持有管道导致 timeout 失效
+            try:
+                p.communicate(input="protocol=https\nhost=%s\n\n" % host, timeout=20)
+            except subprocess.TimeoutExpired:
+                p.kill()
+                try:
+                    p.communicate(timeout=5)
+                except Exception:
+                    pass
+                return None, "credential fill 超时（凭据助手挂起）"
+        with open(tmp, "r", errors="ignore") as fi:
+            out = fi.read()
+        m = re.search(r"(?m)^password=(.*)$", out)
+        if m and m.group(1).strip():
+            return m.group(1).strip(), "cmd:git credential fill"
+    except Exception as e:
+        return None, type(e).__name__ + " " + str(e)[:60]
+    finally:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
+    return None, "凭据库无该 host 的可用明文条目"
 
 
 def credential_approve(host, user, token):
@@ -280,7 +385,12 @@ def diagnose(url, do_fix=False, repo_path=None, remote_name=None):
     add("OK" if has_cred else "WARN", "SEC02",
         "凭据库已有 %s 条目" % host if has_cred else "凭据库无 %s 条目（每次推需交互或依赖 URL 明文）" % host)
 
-    token = info["inline_token"]
+    # 令牌取用顺序：URL 内嵌（已告警）> 环境变量 > 凭据库明文 > git credential fill
+    token, tok_src = info["inline_token"], "url-inline"
+    if not token:
+        token, tok_src = credential_get_token(host)
+    add("INFO", "IDN00", "身份探针令牌来源: %s  令牌=%s"
+        % (tok_src if token else "无", mask_token(token)))
     plat = PLATFORMS.get(info["platform"])
 
     # ---------- 3. 匿名对象探针（最容易骗人的一步）----------
