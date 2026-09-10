@@ -346,6 +346,29 @@ python scripts/five_lib_dispatch.py --record-receipt lexiang --url https://lexia
 python scripts/five_lib_dispatch.py --report
 ```
 
+### ⚠️ 「假成功」第 4 形态：回查一致，但改动根本没上去
+
+首轮跑通时脚本报了 `✅ 推送成功，ls-remote 回查一致`——**其实是假的**。三个连环坑：
+
+| # | 坑 | 后果 |
+|---|---|---|
+| 1 | `git status --porcelain` 默认 `core.quotepath=true`，中文路径被转义成八进制 `resources/\346\212\200\350\203\275/...` | 拿到的路径是假的 |
+| 2 | 用这个转义串 `git add` → 路径不存在 → 暂存区为空 → `commit rc=1` | 什么都没提交 |
+| 3 | commit 没成 → 本地 HEAD 还是旧的 → `push` 推了个寂寞 → `ls-remote` 回查**当然一致** | **误报成功** |
+
+**这条最阴险**：`ls-remote` 回查是上一版引以为傲的防线，但它只能证明「远端 == 本地」，
+证明不了「本地已经前进」。commit 失败时三者都旧，防线自动失效。
+
+**三道补丁（已在 v1.3 落地）**：
+
+1. `git -c core.quotepath=false status --porcelain` —— 取真实 UTF-8 路径
+2. commit 后**复检工作区必须干净**，否则 FAIL
+3. 回查一致时**追加校验 HEAD 是否前进**：有改动却没前进 → 判 FAIL（新增 `UPTODATE` 状态与之区分）
+
+修复后复测：`commit ok (3 项)` → `推送成功 HEAD=800b63b→f504bff`，远端独立回查 `f504bff` 一致 ✅
+
+> 通用教训：**校验成功不能只看「前后一致」，必须看「状态确实发生了变化」。**
+
 ### 铁律（写进肌肉记忆）
 
 1. **门禁先于推送**：`IDN01=401` 时绝不调 `git push`，那是拿 6 分钟换一句「失败」。

@@ -169,15 +169,37 @@ def dispatch_git(target, repo, branch, report, do_push=True):
         return
 
     # 本地有没有待提交
-    rc, out = run(["git", "status", "--porcelain"], cwd=repo, timeout=60)
+    # 坑（v1.3 实测）：默认 core.quotepath=true 会把中文路径转成八进制 \346\212\200，
+    #   直接拿去 git add 会「路径不存在」-> 暂存为空 -> commit rc=1 -> push 什么都没推，
+    #   而 ls-remote 回查时本地 HEAD 还是旧值，与远端一致 -> 脚本误报「推送成功」。
+    #   必须 -c core.quotepath=false。
+    rc, out = run(["git", "-c", "core.quotepath=false", "status", "--porcelain"],
+                  cwd=repo, timeout=60)
     dirty = [l for l in out.splitlines() if l.strip()]
+    head_before = run(["git", "rev-parse", "--short", "HEAD"], cwd=repo, timeout=30)[1].strip()
+    made_commit = False
     if dirty:
         # 只 add「具体路径」绝不 add -A（假删除 3652 文件险情的血的教训）
-        paths = sorted({l[3:].strip().strip('"') for l in dirty})
-        run(["git", "add", "--"] + paths, cwd=repo, timeout=60)
+        paths = sorted({l[3:].strip().strip('"').split(" -> ")[-1] for l in dirty})
+        rc, out = run(["git", "add", "--"] + paths, cwd=repo, timeout=60)
+        if rc != 0:
+            report(target, "FAIL", "git add 失败 rc=%d（疑似路径转义问题）: %s"
+                   % (rc, out.strip()[-160:]))
+            return
         rc, out = run(["git", "commit", "-m", "五库分发: %s" % time.strftime("%Y-%m-%d %H:%M")],
                       cwd=repo, timeout=120)
-        log("GIT", "commit rc=%d (%d 项)" % (rc, len(paths)))
+        if rc != 0:
+            report(target, "FAIL", "commit 失败 rc=%d: %s" % (rc, out.strip()[-200:]))
+            return
+        made_commit = True
+        # 提交后复检：工作区必须干净，否则说明有文件没进版本库
+        _, out2 = run(["git", "-c", "core.quotepath=false", "status", "--porcelain"],
+                      cwd=repo, timeout=60)
+        rest = [l for l in out2.splitlines() if l.strip()]
+        if rest:
+            report(target, "FAIL", "commit 后仍有 %d 项未入库: %s" % (len(rest), rest[0][:80]))
+            return
+        log("GIT", "commit ok (%d 项)" % len(paths))
     else:
         log("GIT", "工作区干净，无需 commit")
 
@@ -195,8 +217,18 @@ def dispatch_git(target, repo, branch, report, do_push=True):
     rc2, out2 = run(["git"] + GIT_CHANNEL.get(target, []) +
                     ["ls-remote", target, "refs/heads/" + branch], cwd=repo, timeout=120)
     remote_sha = out2.split()[0][:len(head)] if out2.split() else ""
-    if remote_sha and remote_sha == head:
-        report(target, "OK", "推送成功，ls-remote 回查一致 HEAD=%s" % head)
+    # 假成功防线（v1.3）：commit 没做成就 push，回查当然「一致」——因为两边都还是旧 HEAD。
+    # 必须同时满足：① 远端 ref == 本地 HEAD  ② 本次确实产生了新提交（或本就无改动）
+    if remote_sha == head:
+        if dirty and head == head_before:
+            report(target, "FAIL",
+                   "回查一致但 HEAD 未前进（%s）——有改动却没提交成功，"
+                   "这是「假成功」第 4 形态，改动并未上远端" % head)
+        elif made_commit:
+            report(target, "OK", "推送成功，ls-remote 回查一致 HEAD=%s（本次新提交 %s→%s）"
+                   % (head, head_before, head))
+        else:
+            report(target, "UPTODATE", "远端已是最新，无新增内容 HEAD=%s" % head)
     else:
         report(target, "FAIL", "推送返回 0 但回查不一致(本地=%s 远端=%s)" % (head, remote_sha or "空"))
 
@@ -259,7 +291,8 @@ def main():
 
     def report(target, status, msg):
         results.append((target, status, msg))
-        mark = {"OK": "✅", "SKIP": "⏸", "BLOCKED": "⛔", "FAIL": "❌"}.get(status, "•")
+        mark = {"OK": "✅", "SKIP": "⏸", "BLOCKED": "⛔",
+                "FAIL": "❌", "UPTODATE": "☑"}.get(status, "•")
         log(mark, "%-9s %s" % (target, msg))
 
     if a.status:
