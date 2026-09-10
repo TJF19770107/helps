@@ -57,6 +57,26 @@ GIT_CHANNEL = {
     "cnb": ["-c", "http.proxy=", "-c", "https.proxy="],
 }
 
+# cnb.cool 专用：git-credentials 里那条令牌是**死的**，
+# 真正在用的是 cnb CLI 的登录态 ~/.cnb/token（GIT_ASKPASS 读取）。
+# 而且 URL 里**不能带用户名**——带 `user@` 时 git 用 user 去换凭据，
+# 服务端回 `token:` 为空，表现为「仓库不存在」。去掉用户名后 askpass 才会被问到。
+CNB_ASKPASS = r"G:\WorkBuddy_Data\cnb_askpass.sh"
+CNB_CLEAN_URL = "https://cnb.cool/TJF19770107/lobster-knowledge-base.git"
+
+
+def cnb_env():
+    """CNB 专用环境：清空窄权限 env token + 挂 askpass + 禁用凭据助手。"""
+    env = _env()
+    env.pop("CNB_TOKEN", None)
+    env.pop("CNB_GIT_TOKEN", None)
+    if os.path.exists(CNB_ASKPASS):
+        env["GIT_ASKPASS"] = CNB_ASKPASS
+        env["GIT_TERMINAL_PROMPT"] = "1"
+    else:
+        env["GIT_TERMINAL_PROMPT"] = "0"
+    return env
+
 SKIP_DIRS = {".git", "__pycache__", ".idea", ".vscode", "node_modules", ".workbuddy"}
 
 
@@ -64,13 +84,13 @@ def log(tag, msg):
     print("[%s] %s" % (tag, msg), flush=True)
 
 
-def run(cmd, cwd=None, timeout=180):
+def run(cmd, cwd=None, timeout=180, env=None):
     """统一子进程封装：stdout 走临时文件不用管道，规避 GCM 孙进程持管道导致 timeout 失效。"""
     tmp = os.path.join(os.environ.get("TEMP", "."), "_lb5_%d.tmp" % os.getpid())
     try:
         with open(tmp, "w", errors="ignore") as fo:
             p = subprocess.Popen(cmd, cwd=cwd, stdout=fo, stderr=subprocess.STDOUT,
-                                 text=True, env=_env())
+                                 text=True, env=env or _env())
             try:
                 p.communicate(timeout=timeout)
                 rc = p.returncode
@@ -208,14 +228,28 @@ def dispatch_git(target, repo, branch, report, do_push=True):
         report(target, "OK", "门禁通过（--no-push 模式），HEAD=%s" % head)
         return
 
-    rc, out = run(["git"] + GIT_CHANNEL.get(target, []) + ["push", target, branch],
-                  cwd=repo, timeout=300)
+    if target == "cnb":
+        # 走 askpass 通道：干净 URL（无 user@）+ 清凭据助手 + cnb CLI 登录态
+        push_args = (["git"] + GIT_CHANNEL["cnb"] + ["-c", "credential.helper=",
+                     "push", CNB_CLEAN_URL, branch])
+        penv = cnb_env()
+    else:
+        push_args = ["git"] + GIT_CHANNEL.get(target, []) + ["push", target, branch]
+        penv = None
+    rc, out = run(push_args, cwd=repo, timeout=300, env=penv)
     if rc != 0:
         report(target, "FAIL", "push rc=%d: %s" % (rc, out.strip()[-200:]))
         return
     # 回查：远端 ref 必须等于本地 HEAD
-    rc2, out2 = run(["git"] + GIT_CHANNEL.get(target, []) +
-                    ["ls-remote", target, "refs/heads/" + branch], cwd=repo, timeout=120)
+    if target == "cnb":
+        verify_args = (["git"] + GIT_CHANNEL["cnb"] + ["-c", "credential.helper=",
+                       "ls-remote", CNB_CLEAN_URL, "refs/heads/" + branch])
+        venv_ = cnb_env()
+    else:
+        verify_args = ["git"] + GIT_CHANNEL.get(target, []) + \
+            ["ls-remote", target, "refs/heads/" + branch]
+        venv_ = None
+    rc2, out2 = run(verify_args, cwd=repo, timeout=120, env=venv_)
     remote_sha = out2.split()[0][:len(head)] if out2.split() else ""
     # 假成功防线（v1.3）：commit 没做成就 push，回查当然「一致」——因为两边都还是旧 HEAD。
     # 必须同时满足：① 远端 ref == 本地 HEAD  ② 本次确实产生了新提交（或本就无改动）

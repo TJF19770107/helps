@@ -99,10 +99,10 @@ def mask(s):
     return s
 
 
-def git(args, cwd=None, timeout=180):
+def git(args, cwd=None, timeout=180, env=None):
     try:
         r = subprocess.run(["git"] + args, cwd=cwd, capture_output=True,
-                           text=True, timeout=timeout, errors="ignore")
+                           text=True, timeout=timeout, errors="ignore", env=env)
         return r.returncode, (r.stdout or "").strip(), (r.stderr or "").strip()
     except subprocess.TimeoutExpired:
         return -1, "", "timeout after %ss" % timeout
@@ -239,6 +239,50 @@ def _token_from_credentials_file(host):
     except Exception:
         pass
     return None
+
+
+def _token_from_cnb_cli():
+    """~/.cnb/token —— cnb CLI 的登录态，与 ~/.git-credentials 是**两套独立凭据**。
+
+    2026-09-11 实测：git-credentials 里那条 94 位 cnb_ 令牌已失效（身份探针 401），
+    但 ~/.cnb/token 里的 access_token 仍然有效（身份探针 200、push 成功）。
+    **「CNB 令牌失效」这句话必须带上「哪一套」才有意义。**
+    """
+    p = os.path.expanduser("~/.cnb/token")
+    if not os.path.exists(p):
+        return None
+    try:
+        d = json.load(open(p, encoding="utf-8"))
+        t = d.get("access_token")
+        exp = d.get("expires_at")
+        if t and exp and time.time() > float(exp):
+            return None          # 已过期，别拿去污染判定
+        return t or None
+    except Exception:
+        return None
+
+
+def token_candidates(host):
+    """返回该 host 的**全部**候选令牌 [(token, source), ...]。
+
+    为什么不再只取一个：不同来源的令牌是不同权限/不同生命周期的东西，
+    只试一个就会得出「令牌失效」这种以偏概全的结论（2026-09-10/11 连续误判两次）。
+    正确做法是逐个打身份探针，谁 200 用谁。
+    """
+    out = []
+
+    def add(t, src):
+        if t and (t, src) not in out:
+            out.append((t, src))
+
+    add(_token_from_credentials_file(host), "file:~/.git-credentials")
+    if host == "cnb.cool":
+        add(_token_from_cnb_cli(), "file:~/.cnb/token(cnb CLI 登录态)")
+    for var in TOKEN_ENV_BY_HOST.get(host, []) + GENERIC_TOKEN_ENVS:
+        v = os.environ.get(var)
+        if v and v.strip():
+            add(v.strip(), "env:" + var)
+    return out
 
 
 def credential_get_token(host):
@@ -385,12 +429,14 @@ def diagnose(url, do_fix=False, repo_path=None, remote_name=None):
     add("OK" if has_cred else "WARN", "SEC02",
         "凭据库已有 %s 条目" % host if has_cred else "凭据库无 %s 条目（每次推需交互或依赖 URL 明文）" % host)
 
-    # 令牌取用顺序：URL 内嵌（已告警）> 环境变量 > 凭据库明文 > git credential fill
-    token, tok_src = info["inline_token"], "url-inline"
-    if not token:
-        token, tok_src = credential_get_token(host)
-    add("INFO", "IDN00", "身份探针令牌来源: %s  令牌=%s"
-        % (tok_src if token else "无", mask_token(token)))
+    # 候选令牌：URL 内嵌（已告警）> 凭据库 > cnb CLI 登录态 > 环境变量
+    cands = []
+    if info["inline_token"]:
+        cands.append((info["inline_token"], "url-inline"))
+    cands += token_candidates(host)
+    token, tok_src = (cands[0] if cands else (None, "无"))
+    add("INFO", "IDN00", "候选令牌 %d 个: %s"
+        % (len(cands), ", ".join("%s=%s" % (s, mask_token(t)) for t, s in cands) or "无"))
     plat = PLATFORMS.get(info["platform"])
 
     # ---------- 3. 匿名对象探针（最容易骗人的一步）----------
@@ -400,15 +446,20 @@ def diagnose(url, do_fix=False, repo_path=None, remote_name=None):
 
     # ---------- 4. 身份探针（真因判定关键）----------
     identity_ok = None
-    if plat and token:
-        code, _ = http_probe(plat["api"] + plat["identity"], headers=plat["auth_headers"](token))
-        if code == 200:
-            identity_ok = True
-            add("OK", "IDN01", f"{info['platform']} 身份探针 200 -> 凭据有效")
-        else:
+    if plat and cands:
+        # 逐个试，谁 200 用谁——避免「一条令牌死了就说令牌失效」
+        for t, src in cands:
+            code, _ = http_probe(plat["api"] + plat["identity"], headers=plat["auth_headers"](t))
+            if code == 200:
+                identity_ok, token, tok_src = True, t, src
+                add("OK", "IDN01", f"{info['platform']} 身份探针 200 -> 凭据有效（{src}）")
+                break
+            last_code = code
+        if identity_ok is None:
             identity_ok = False
             add("FAIL", "IDN01",
-                f"{info['platform']} 身份探针 {code} -> **凭据已失效**（令牌过期/被撤销/权限不足）")
+                f"{info['platform']} 全部 {len(cands)} 个候选令牌身份探针均非 200"
+                f"（末次 {last_code}）-> **凭据均已失效**（过期/被撤销/权限不足）")
     elif not token:
         add("INFO", "IDN01", "无可用令牌（URL 无内嵌且凭据库未取到明文），跳过身份探针")
     else:
@@ -416,10 +467,28 @@ def diagnose(url, do_fix=False, repo_path=None, remote_name=None):
 
     # ---------- 5. git 对象探针（权威）----------
     args = ["-c", "http.proxy=" + PROXY, "-c", "https.proxy=" + PROXY, "ls-remote", "--heads"]
-    if repo_path:
-        rc, out, err = git(args + [remote_name or "origin"], cwd=repo_path)
+    # cnb.cool 特例（2026-09-11 实测）：remote URL 里带 `user@` 时 git 拿 user 去换凭据，
+    # 服务端回 `token:` 为空 → 伪装成「仓库不存在」。改用无用户名 URL + GIT_ASKPASS（cnb CLI 登录态）才通。
+    genv = None
+    if host == "cnb.cool" and _token_from_cnb_cli():
+        clean = re.sub(r"^(https?://)[^/@\s]+@", r"\1", url)
+        args = ["-c", "http.proxy=", "-c", "https.proxy=",
+                "-c", "credential.helper=", "ls-remote", "--heads", clean]
+        genv = dict(os.environ)
+        genv.pop("CNB_TOKEN", None)
+        genv.pop("CNB_GIT_TOKEN", None)
+        genv["GIT_TERMINAL_PROMPT"] = "0"
+        ap = r"G:\WorkBuddy_Data\cnb_askpass.sh"
+        if os.path.exists(ap):
+            genv["GIT_ASKPASS"] = ap
+        else:
+            # 无 askpass 脚本时的兜底：临时 URL 内嵌（用完即弃，不写 .git/config）
+            genv = None
+            args[-1] = re.sub(r"^(https?://)", r"\1cnb:" + _token_from_cnb_cli() + "@", clean)
+    if genv is not None or not repo_path:
+        rc, out, err = git(args, cwd=repo_path, env=genv)   # args 已含完整 URL
     else:
-        rc, out, err = git(args + [url])
+        rc, out, err = git(args + [remote_name or "origin"], cwd=repo_path)
     git_ok = (rc == 0)
     err_masked = mask((err or "").replace("\n", " | ")[:200])
     add("OK" if git_ok else "FAIL", "OBJ01",
