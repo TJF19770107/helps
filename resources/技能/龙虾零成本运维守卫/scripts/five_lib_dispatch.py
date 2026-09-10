@@ -262,7 +262,8 @@ def dispatch_git(target, repo, branch, report, do_push=True):
             report(target, "OK", "推送成功，ls-remote 回查一致 HEAD=%s（本次新提交 %s→%s）"
                    % (head, head_before, head))
         else:
-            report(target, "UPTODATE", "远端已是最新，无新增内容 HEAD=%s" % head)
+            # 本轮没产生新提交，但 push 已执行且回查一致（例如另一端的提交已同步过来）
+            report(target, "OK", "推送完成，远端已同步 HEAD=%s（本轮无新增提交）" % head)
     else:
         report(target, "FAIL", "推送返回 0 但回查不一致(本地=%s 远端=%s)" % (head, remote_sha or "空"))
 

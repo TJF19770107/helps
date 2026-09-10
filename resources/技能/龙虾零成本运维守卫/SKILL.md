@@ -346,6 +346,39 @@ python scripts/five_lib_dispatch.py --record-receipt lexiang --url https://lexia
 python scripts/five_lib_dispatch.py --report
 ```
 
+### 🔴 CNB 通道真相（2026-09-11 实测推翻前两天的结论）
+
+连续两天（09-10 / 09-11）都判定「CNB 令牌失效，需汤哥重签」——**这个结论是错的**。真相是：
+
+> **同一个平台存在多套独立凭据，死的是其中一套，不是全部。**
+
+| 凭据 | 位置 | 状态（09-11 实测） |
+|---|---|---|
+| git-credentials | `~/.git-credentials`（94 位 `cnb_`） | ❌ 身份探针 401 |
+| **cnb CLI 登录态** | `~/.cnb/token` → `access_token`（94 位） | ✅ 身份探针 200，**push 成功** |
+| 环境变量 | `CNB_TOKEN` / `CNB_GIT_TOKEN`（27 位） | ⚠️ 窄权限 API 令牌，不是 git 令牌 |
+
+**而且 URL 里不能带用户名**：
+
+```bash
+# ❌ 带 user@：git 拿 user 去换凭据，服务端回 `token:` 为空 → 伪装成「仓库不存在」
+git push https://TJF19770107@cnb.cool/... fresh-main
+
+# ✅ 无用户名 + GIT_ASKPASS（askpass 返回 username=cnb / password=access_token）
+GIT_ASKPASS="G:/WorkBuddy_Data/cnb_askpass.sh" \
+  git -c credential.helper= -c http.proxy= -c https.proxy= \
+  push https://cnb.cool/TJF19770107/lobster-knowledge-base.git fresh-main
+```
+
+服务端回包里的 **`remote: token:` 为空** 是这条链路最关键的指纹——它说明「凭据根本没送到」，
+而不是「仓库没了」。
+
+**已固化**：诊断器会逐个试探全部候选令牌（`IDN00` 列出来源与脱敏形态），谁 200 用谁；
+分发器对 cnb 自动走 askpass 通道。**不再出现「一条令牌死了就说令牌失效」的误判。**
+
+顺带发现：本地历史与 CNB 端在 `d028030` 处分叉（CNB 多一个 `3e6f328` backfill 8 篇），
+用 `merge` 合并而非 force push，`3e6f328..4bc7e8d` 一把推通，**没有丢任何一端的产出**。
+
 ### ⚠️ 「假成功」第 4 形态：回查一致，但改动根本没上去
 
 首轮跑通时脚本报了 `✅ 推送成功，ls-remote 回查一致`——**其实是假的**。三个连环坑：
