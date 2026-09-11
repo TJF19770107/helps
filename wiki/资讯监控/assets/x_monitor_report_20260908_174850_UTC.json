@@ -1,0 +1,39 @@
+{
+  "timestamp_utc": "20260908_174850_UTC",
+  "proxy": "http://127.0.0.1:7897",
+  "accounts": [
+    {
+      "handle": "cz_binance",
+      "display": "CZ 🔶 BNB",
+      "url": "https://x.com/cz_binance",
+      "status": "screenshot_ok",
+      "http_status": 403,
+      "screenshot": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\资讯监控\\assets\\x_cz_binance_20260908_174850_UTC.png",
+      "title": "",
+      "tweet_samples": [],
+      "html_snippet": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\资讯监控\\assets\\x_cz_binance_20260908_174850_UTC.html"
+    },
+    {
+      "handle": "elonmusk",
+      "display": "Elon Musk",
+      "url": "https://x.com/elonmusk",
+      "status": "screenshot_ok",
+      "http_status": 403,
+      "screenshot": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\资讯监控\\assets\\x_elonmusk_20260908_174850_UTC.png",
+      "title": "",
+      "tweet_samples": [],
+      "html_snippet": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\资讯监控\\assets\\x_elonmusk_20260908_174850_UTC.html"
+    },
+    {
+      "handle": "realDonaldTrump",
+      "display": "Donald J. Trump",
+      "url": "https://x.com/realDonaldTrump",
+      "status": "screenshot_ok",
+      "http_status": 403,
+      "screenshot": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\资讯监控\\assets\\x_realDonaldTrump_20260908_174850_UTC.png",
+      "title": "",
+      "tweet_samples": [],
+      "html_snippet": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\资讯监控\\assets\\x_realDonaldTrump_20260908_174850_UTC.html"
+    }
+  ]
+}
