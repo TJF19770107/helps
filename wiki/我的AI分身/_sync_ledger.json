@@ -1,76 +1,255 @@
 {
   "_meta": {
-    "description": "OB技能目录 → IMA/乐享/CNB 三库同步台账（唯一防重复依据）",
+    "description": "OB技能目录 → IMA/乐享/CNB/GitHub 多库同步台账（唯一防重复依据）",
     "ob_source": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\我的AI分身\\ 与 E:\\龙虾AI主控中心\\我的AI分身\\技能库\\lobster_task_standard_workflow_v3.0\\",
     "lexiang_group": "36e88ea22e4541418ffb838d608d19e0",
     "lexiang_parent": "8f78c0a0371646d28afe8bda5bafdc88",
+    "lexiang_ob_group_20260908": "f831a71ea8c9442db89180e35eca9804",
     "ima_kb": "001aa1cd10007026",
-    "updated_at": "2026-09-05T16:20:00+08:00",
-    "maintainer": "汤小龙"
+    "github_remote": "https://github.com/TJF19770107/lobster-knowledge-base.git",
+    "github_status": "20260908 commit 已完成，push pending（代理 127.0.0.1:7890 未启动，直连被重置；代理恢复后 git push 即可）",
+    "updated_at": "2026-09-10T22:30:00+08:00",
+    "maintainer": "汤小龙",
+    "cnb_remote": "https://cnb.cool/TJF19770107/lobster-knowledge-base",
+    "cnb_default_branch": "fresh-main",
+    "cnb_status": "20260910 首次全量推送完成（8 新增 + 13 核验回填）；token 走 ~/.cnb/token，git 需绕开 127.0.0.1:7897 代理",
+    "cnb_last_sync": "2026-09-10T22:30:00+08:00"
   },
   "技能_零成本磁盘扩容经验_20260905.md": {
     "size": 2849,
     "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_49839b44d5f4d83b21cb2386c880eafa001aa1cd10007026",
     "lexiang_entry_id": "d7d1448b38894a25bd01dd5c09748a6f",
-    "cnb": "pending",
-    "synced_at": "2026-09-05"
+    "cnb": "done",
+    "synced_at": "2026-09-05",
+    "cnb_path": "wiki/我的AI分身/技能_零成本磁盘扩容经验_20260905.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
   },
   "20260825_1234快捷体系_官方定义卡.md": {
-    "size": 6786,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_d4195936d61b2fa668ac9c5b06b03c12001aa1cd10007026",
+    "size": 9197,
+    "version": "v2.1六端版",
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_d361c03b08108c2fac4dc40aeb754f71001aa1cd10007026",
     "lexiang_entry_id": "f8ea0d77243c428bb2683311e741491e",
-    "cnb": "pending",
-    "synced_at": "2026-09-05"
+    "lexiang_mode": "page_force_write_update",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/20260825_1234快捷体系_官方定义卡.md",
+    "cnb_synced_at": "2026-09-10"
   },
   "AI分身Agent架构与定义v1.0_20260826.md": {
     "size": 9384,
     "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_644db9910f7b28ca501b31460bafe713001aa1cd10007026",
     "lexiang_entry_id": "18d84d1f1b414a0288a37114d1711b2e",
-    "cnb": "pending",
-    "synced_at": "2026-09-05"
+    "cnb": "done",
+    "synced_at": "2026-09-05",
+    "cnb_path": "wiki/我的AI分身/AI分身Agent架构与定义v1.0_20260826.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
   },
   "AI分身能力边界与完善计划v1.1_20260826.md": {
     "size": 7388,
     "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_1fdd0add12ab6e63747c0c2878dc9664001aa1cd10007026",
     "lexiang_entry_id": "9fffb972ac064f1b81738fda0f0e97ec",
-    "cnb": "pending",
-    "synced_at": "2026-09-05"
+    "cnb": "done",
+    "synced_at": "2026-09-05",
+    "cnb_path": "wiki/我的AI分身/AI分身能力边界与完善计划v1.1_20260826.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
   },
   "仓颉Skill知识蒸馏技能.md": {
     "size": 7455,
     "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_4b04db76b0c82e2b9018b6f9dc28e82d001aa1cd10007026",
     "lexiang_entry_id": "42b0ac3113be416d95d0d4af40156822",
-    "cnb": "pending",
-    "synced_at": "2026-09-05"
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/仓颉Skill知识蒸馏技能.md",
+    "cnb_synced_at": "2026-09-10"
   },
   "龙虾全域官方模板-最终版.md": {
-    "size": 246611,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_ad1aaee56efb4a732bbf6b97805c1f42001aa1cd10007026",
-    "lexiang_entry_id": "babb4afcca77482782d06f334b052593",
-    "lexiang_mode": "file_upload_child",
-    "cnb": "pending",
-    "synced_at": "2026-09-05"
+    "size": 248815,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_c336b315549e58b9fb79f214c920e6b8001aa1cd10007026",
+    "lexiang_entry_id": "e758e890f0c048afb029d941e8a74c25",
+    "lexiang_mode": "file_upload_child_rev2",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/龙虾全域官方模板-最终版.md",
+    "cnb_synced_at": "2026-09-10"
   },
   "龙虾五步法V3.6·PR#21闭环版（成本优先置顶）SKILL.md": {
-    "size": 92035,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_d010a69605359d8adb059d6e5b914e1f001aa1cd10007026",
-    "lexiang_entry_id": "a5f7ed88c7534f10a14ea32209967fcc",
-    "lexiang_mode": "file_upload_child",
+    "size": 93480,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_660a787001d731a907385a479ffb22b7001aa1cd10007026",
+    "lexiang_entry_id": "df287ee69a6b4de4a8609174ba7dfffd",
+    "lexiang_mode": "file_upload_child_rev2",
     "cnb": "pending",
-    "synced_at": "2026-09-05"
+    "synced_at": "2026-09-08"
   },
   "赛博书屋（Cyber Book House）v1.5SKILL.md": {
     "size": 8280,
     "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_38afe0ea464daa43db1217a571a73735001aa1cd10007026",
     "lexiang_entry_id": "bf61c3b8a27641c9a0a5175203deae12",
-    "cnb": "pending",
-    "synced_at": "2026-09-05"
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/赛博书屋（Cyber Book House）v1.5SKILL.md",
+    "cnb_synced_at": "2026-09-10"
   },
   "心理画像与对标差距分析_20260826.md": {
     "size": 9646,
     "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_7b6c06c727fffd52daf22e4f173ba9d6001aa1cd10007026",
     "lexiang_entry_id": "5e9496c170114b07ad5ccca5209ae352",
-    "cnb": "pending",
-    "synced_at": "2026-09-05"
+    "cnb": "done",
+    "synced_at": "2026-09-05",
+    "cnb_path": "wiki/我的AI分身/心理画像与对标差距分析_20260826.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+  },
+  "GptBrowser不安全标记修复与Obsidian插件全自动安装_SKILL.md": {
+    "size": 9656,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_f54a4ef81528ee502e3611736fbe0717001aa1cd10007026",
+    "lexiang_entry_id": "78583ff8cf534ade95b6265b6b03e61a",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/GptBrowser不安全标记修复与Obsidian插件全自动安装_SKILL.md",
+    "cnb_synced_at": "2026-09-10"
+  },
+  "全局问题沉淀与复用SKILL.md": {
+    "size": 5420,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_a1fb081a9f506ba82d6cdf16815e4cfb001aa1cd10007026",
+    "lexiang_entry_id": "7a2264aaa1e643759c2602b075a18ddd",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/全局问题沉淀与复用SKILL.md",
+    "cnb_synced_at": "2026-09-10"
+  },
+  "分身之眼企微接单全自动化_SKILL.md": {
+    "size": 4869,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_c031fd63cdeb95ff685ffc63e965e96a001aa1cd10007026",
+    "lexiang_entry_id": "ed66150e82a541f48fee992157c7b934",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/分身之眼企微接单全自动化_SKILL.md",
+    "cnb_synced_at": "2026-09-10"
+  },
+  "20260830_1234四化迭代_汤小龙宿主继承激活与模型强制免费化.md": {
+    "size": 11463,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_73854f5f566ff6c16ad88c937684adc0001aa1cd10007026",
+    "lexiang_entry_id": "b1a9282a792743e6885c6e4e6cd85bf8",
+    "github": "committed_pending_push",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "cnb_path": "wiki/我的AI分身/20260830_1234四化迭代_汤小龙宿主继承激活与模型强制免费化.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+  },
+  "AI分身升级路线图v1.2_20260826.md": {
+    "size": 6749,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_9bbf3fae9a0a66fe7b7ed7a608998948001aa1cd10007026",
+    "lexiang_entry_id": "9908333c939441cdbe1a4a5e8c0db17b",
+    "github": "committed_pending_push",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "cnb_path": "wiki/我的AI分身/AI分身升级路线图v1.2_20260826.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+  },
+  "Codex开源福利申请_20260907.md": {
+    "size": 21453,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_c311b4322d753b81ee11a68a764cbfb5001aa1cd10007026",
+    "lexiang_entry_id": "6ec0d4d57913444199281a6133ea3d9c",
+    "github": "committed_pending_push",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "cnb_path": "wiki/我的AI分身/Codex开源福利申请_20260907.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+  },
+  "OpenCodeZen免费模型调研_20260907.md": {
+    "size": 22239,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_75499702b76db7180bd979f567ea3e7a001aa1cd10007026",
+    "lexiang_entry_id": "6ae05dd44ae24013ac5b18f0336a586f",
+    "github": "committed_pending_push",
+    "cnb": "source_missing",
+    "synced_at": "2026-09-08",
+    "cnb_note": "本地源文件已不存在，IMA/乐享有副本；如需回灌 CNB 需从 IMA/OB 取回"
+  },
+  "宿主MCP技能继承清单.md": {
+    "size": 5722,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_edf0e42ed61cdf4d66343c747c69da24001aa1cd10007026",
+    "lexiang_entry_id": "9737753230b74565865a3dd2584c55ff",
+    "github": "committed_pending_push",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "cnb_path": "wiki/我的AI分身/宿主MCP技能继承清单.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+  },
+  "画像实时增量_20260907.md": {
+    "size": 4147,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_edcf99c4d1e078e108374a8846233cac001aa1cd10007026",
+    "lexiang_entry_id": "9370d65e6d26457d93e378bae9c837f2",
+    "github": "committed_pending_push",
+    "cnb": "source_missing",
+    "synced_at": "2026-09-08",
+    "cnb_note": "本地源文件已不存在，IMA/乐享有副本；如需回灌 CNB 需从 IMA/OB 取回"
+  },
+  "技能_Windows桌面GUI智能体部署与企微接单提取_20260905.md": {
+    "size": 2522,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_8630ab7ae3ff148976de87b6af9b5ea1001aa1cd10007026",
+    "lexiang_entry_id": "56f0e5edd8cf48f79c1a3d107a6acb4b",
+    "github": "committed_pending_push",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "cnb_path": "wiki/我的AI分身/技能_Windows桌面GUI智能体部署与企微接单提取_20260905.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+  },
+  "技能总索引.md": {
+    "size": 3008,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_84bd752198999a0457dcffd9da897827001aa1cd10007026",
+    "lexiang_entry_id": "fd946cc1350a4ec1bae9dc03073a343e",
+    "github": "committed_pending_push",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "cnb_path": "wiki/我的AI分身/技能总索引.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+  },
+  "接单出片大技能库_索引.md": {
+    "size": 2502,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_b3a3bc0b887211eb2d018751e01eec1e001aa1cd10007026",
+    "lexiang_entry_id": "840f8feaf9914a319fe67438f603535a",
+    "github": "committed_pending_push",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "cnb_path": "wiki/我的AI分身/接单出片大技能库_索引.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+  },
+  "遗留问题实修清单_20260826.md": {
+    "size": 2426,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_20e6c70e8bc70b9ffeec0f10587b8966001aa1cd10007026",
+    "lexiang_entry_id": "6389ba3d5ac842ef99cc67dca6b9950b",
+    "github": "committed_pending_push",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "cnb_path": "wiki/我的AI分身/遗留问题实修清单_20260826.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+  },
+  "X大佬推文监控_原型任务指令_CZ_20260908.md": {
+    "size": 3446,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_09b387dde15a319ed2173142eee1b74c001aa1cd10007026",
+    "lexiang_entry_id": "6bbac9d2376a4398a9b75040fd514577",
+    "github": "committed_pending_push",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "cnb_path": "wiki/资讯监控/X大佬推文监控_原型任务指令_CZ_20260908.md",
+    "cnb_synced_at": "2026-09-10",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+  },
+  "香港隧道假死与GptBrowser插件假死修复_20260910.md": {
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/香港隧道假死与GptBrowser插件假死修复_20260910.md",
+    "cnb_synced_at": "2026-09-10",
+    "synced_at": "2026-09-10"
   }
 }
