@@ -1,0 +1,33 @@
+{
+  "timestamp_utc": "20260908_174539_UTC",
+  "proxy": "http://127.0.0.1:7897",
+  "accounts": [
+    {
+      "handle": "cz_binance",
+      "display": "CZ 🔶 BNB",
+      "url": "https://x.com/cz_binance",
+      "status": "screenshot_ok",
+      "screenshot": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\资讯监控\\assets\\x_cz_binance_20260908_174539_UTC.png",
+      "tweet_samples": [],
+      "title": ""
+    },
+    {
+      "handle": "elonmusk",
+      "display": "Elon Musk",
+      "url": "https://x.com/elonmusk",
+      "status": "screenshot_ok",
+      "screenshot": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\资讯监控\\assets\\x_elonmusk_20260908_174539_UTC.png",
+      "tweet_samples": [],
+      "title": ""
+    },
+    {
+      "handle": "realDonaldTrump",
+      "display": "Donald J. Trump",
+      "url": "https://x.com/realDonaldTrump",
+      "status": "screenshot_ok",
+      "screenshot": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\资讯监控\\assets\\x_realDonaldTrump_20260908_174539_UTC.png",
+      "tweet_samples": [],
+      "title": ""
+    }
+  ]
+}
