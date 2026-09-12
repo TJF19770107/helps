@@ -1,14 +1,14 @@
 ---
 name: 龙虾零成本运维守卫
-version: v1.4
+version: v1.5
 owner: 汤小龙（AI 分身）
 created: 2026-09-09
-updated: 2026-09-12
+updated: 2026-09-13
 cost_mode: P0（全本地 stdlib，零积分）
 agent_created: true
 ---
 
-# 龙虾零成本运维守卫 v1.4
+# 龙虾零成本运维守卫 v1.5
 
 > 一句话：**凡是要「推远端 / 起服务 / 分发五库」之前，先跑守卫体检，把灾难挡在本地。**
 > 六个脚本 + 一个修复版守卫，纯标准库，零积分，只读优先，不写业务数据。
@@ -48,6 +48,47 @@ agent_created: true
 | 3 | 假删除 | 旧克隆 rebase 后成片 `D` | DEL01 熔断 |
 | 4 | 假一致 | `ls-remote` 回查一致，但本地 HEAD 没前进 | **校验 HEAD 前进** |
 | 5 | **假安全（守卫失效）** | 守卫崩了，唯一线索是没人看的 LastResult | **守卫的守卫 + 状态回执** |
+| 6 | **假红（语义被特例吞掉）** | 调度器状态码 0x41301「正在运行」被自指例外判成「未捕获异常」→ 审计器自锁永久红 | **语义表做「减刑器」而非「抢答器」，且必须置于所有特例之上** |
+| 7 | **假告警（记账与送达脱钩）** | 去重记账写在 `--push` 分支里 → 不推送就永不记账 → 冷却期失效，同一红项每次都算「新增」 | **记账绑定「是否已送达」，不绑定「用哪条通道送」** |
+
+---
+
+## 一·五、v1.5 新增：审计器自锁假红事故（2026-09-13 06:00）
+
+**现象**：`Lobster_GuardHealthAudit` 计划任务结果码 **267009**，审计器据此判自己
+「上次执行失败（未捕获异常）」→ 红 → exit 1 → 下一轮继续判自己红 → **自锁**。
+
+**根因（两层）**：
+1. `267009 = 0x41301 = SCHED_S_TASK_RUNNING` —— Windows 在说「这个实例正在运行」，
+   不是「脚本崩了」。
+2. `classify()` 里**自指例外排在第 227 行，语义表 `SCHED_S` 排在第 267 行**。
+   自指分支只放行 `res in (0, 1)`，**把状态码吞成了脚本失败**。
+
+**为什么手动跑永远复现不出来（时序型假故障）**：
+审计器**被调度器拉起时**，它查询 schtasks 的那一刻**它自己还在运行** →
+调度器如实回答 0x41301；等它退出（exit 1）后，落库的结果码才变成 1。
+所以手动执行读到的是 1（绿），只有计划任务里才会读到 267009（红）。
+
+**修法（关键设计取舍）**：
+语义表不能简单「前置抢答」——否则 `Lobster_HKTunnel` 会退化成用弱证据（状态码）判绿，
+丢掉更强的端口探针。正解是做成**减刑器**：
+
+```python
+sched = SCHED_S.get(res) if res is not None else None   # 预取，不抢答
+sched_ok = bool(sched and sched[1] == "OK")
+
+def soften(level, reason, e=None):
+    if level == "RED" and sched_ok:      # 证据链判红，但 Windows 说这不是失败
+        return ("YELLOW", f"{reason}；但结果码 {res} = 调度器状态 {sched[0]}", e)
+    return (level, reason, e)
+```
+
+通用教训：**凡是「状态码 → 结论」的映射，若被特例分支绕过，映射形同虚设。**
+
+**顺带修的两处**：
+- 让元守卫**反过来逼守卫升级**：结果码 0 但**没有状态回执** → 判黄
+  （「弱证据：无法证明守卫真的执行成功」），而不是继续给绿。
+- 抽出 `guard_receipt.py` 通用回执模块，守卫接入只需两行。
 
 ---
 
@@ -62,6 +103,38 @@ agent_created: true
 | `scripts/five_lib_dispatch.py` | **v1.3 新增·五库分发一键编排**：门禁 → 落盘 → 推送 → 回查 → 回执，逐端打勾 | 同上 |
 | `scripts/guard_health_audit.py` | **v1.4 新增·守卫的守卫**：扫描全部 `Lobster_*` 计划任务，按「状态回执 → 端口探针 → 结果码语义」三级证据判红黄绿，含静默停摆检测 | 同上 |
 | `scripts/catalog_guard_deepseek.py` | **v1.4 修复**：免费模型目录守卫，模板候选链替代写死模板，全程不崩 + 落状态回执 | 同上 |
+| `scripts/guard_receipt.py` | **v1.5 新增·通用状态回执模块**：守卫两行接入，原子写盘，永不抛异常拖垮守卫 | 同上 / `MCP服务\` |
+| `scripts/guard_alert.py` | **v1.5 新增·红项主动告警**：指纹去重 + 冷却期 + 恢复清账 + 可选的零积分企微推送 | 同上 |
+| `scripts/guard_health_audit.py` | **v1.5 修复**：语义表改「减刑器」，修调度器状态码自锁假红；新增「无回执判黄」 | 同上 |
+
+### v1.5 守卫接入回执（两行，任何守卫通用）
+
+```python
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from guard_receipt import write_receipt
+except Exception:
+    write_receipt = None        # 回执模块缺失，不许拖垮守卫本体
+
+# ...守卫逻辑结束前：
+write_receipt("my_guard", healthy=ok, detail="人话结论",
+              version="1.0", exit_code=rc, extra={...})
+```
+
+回执落在 `.workbuddy/guard_status/<guard>.json`，**原子替换**（`.tmp` + `os.replace`），
+审计器不会读到写了一半的 JSON。
+
+### v1.5 主动告警
+
+```bash
+python guard_alert.py                 # 读审计回执 → 红项写 ALERT.md
+python guard_alert.py --push          # 额外推企微（受 12h 冷却约束）
+python guard_alert.py --json          # 机器可读
+python guard_alert.py --dry-run       # 只看会发什么
+```
+
+常驻任务 `Lobster_GuardAlert`（07:35 起每 6h，比审计晚 5 分钟）。
+**默认只写本地 `ALERT.md`，不推送**——告警要主动，但不能把人吵醒。
 
 ---
 

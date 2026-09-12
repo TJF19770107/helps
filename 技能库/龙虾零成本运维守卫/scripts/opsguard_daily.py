@@ -1,7 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-opsguard_daily.py v1.0 —— 龙虾零成本运维守卫「每日编排器」
+opsguard_daily.py v1.1 —— 龙虾零成本运维守卫「每日编排器」
+
+v1.1 (2026-09-13)：接入 guard_receipt 状态回执
+  原先本编排器只落日志、不落回执，守卫的守卫只能用「计划任务结果码」猜健康度。
+  实测结果码分三类（真失败 / 调度器状态 0x4130x / GUI 退出码），只有第一类能判红，
+  靠结果码判断 = 制造假故障。现改为同时落结构化回执，成为审计器的最强证据。
 
 设计要点：
 - 纯 Python 编排，**不写 .bat/.cmd** —— 绕开 Windows bat 的 GBK/CRLF 编码坑
@@ -23,6 +28,11 @@ import glob
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PY = sys.executable
+sys.path.insert(0, HERE)
+try:
+    from guard_receipt import write_receipt
+except Exception:                      # 回执模块缺失不许拖垮编排器本体
+    write_receipt = None
 LOG_DIR = r"E:\龙虾AI主控中心\MCP服务\logs"
 REPOS = [
     r"G:\tmp\lobster-knowledge-base",
@@ -102,7 +112,17 @@ def main():
     log(fh, "=== 结论: " + ("有守卫报警 -> " + str(bad) if bad else "全绿") + " ===")
     log(fh, "[INFO] 日志: " + path)
     fh.close()
-    return 3 if bad else 0
+
+    rc = 3 if bad else 0
+    if write_receipt:
+        detail = "全绿 (%s)" % time.strftime("%H:%M:%S") if not bad \
+            else "子守卫报警: %s" % bad
+        p = write_receipt("opsguard_daily", healthy=not bad, detail=detail,
+                          version="1.1", exit_code=rc,
+                          extra={"codes": codes, "log": path})
+        if p:
+            print("[INFO] 状态回执 -> " + p)
+    return rc
 
 
 if __name__ == "__main__":
