@@ -124,6 +124,37 @@ write_receipt("my_guard", healthy=ok, detail="人话结论",
 回执落在 `.workbuddy/guard_status/<guard>.json`，**原子替换**（`.tmp` + `os.replace`），
 审计器不会读到写了一半的 JSON。
 
+### v1.5 踩坑补遗（当天修 bug 时又抓到两个）
+
+**① 等级词表不一致 → 整个审计器崩溃（`KeyError: 'OK'`）**
+
+`SCHED_S` 里写的是 `OK/WARN`，而报告层只认 `GREEN/YELLOW/RED/UNKNOWN/INFO`。
+新任务以 `0x41303(NOT_YET_RUN)` 第一次走到该分支即炸：
+
+```
+File "guard_health_audit.py", line 346, in <lambda>
+    rows.sort(key=lambda r: order[r["level"]])
+KeyError: 'OK'
+```
+
+> **教训**：分层系统里，**语义层词汇必须显式翻译成输出层词汇**，
+> 否则「加一个新状态码」这种最小改动就能让整个监督体系停摆。
+> 顺带加了一道兜底：任何未收录等级降级为 `UNKNOWN`，**绝不让单点拼写问题毁掉全局监控**。
+
+值得记一笔的是：**这次崩溃纯靠昨天（v1.1）加的 `audit_crash.log` 在 1 秒内定位**。
+计划任务的 stdout 没人看，没有 traceback 落盘，这种退出码就只能靠猜。
+**给无人值守脚本加「异常 traceback 落盘」，投入 5 行，回报是每次崩溃省 30 分钟。**
+
+**② 「从未运行」不是空值，是哨兵日期 `1999/11/30 0:00:00`**
+
+Windows 从不给空值：任务没跑过时 `schtasks` 输出的是哨兵日期。代码当真实日期解析
+→ 算出「已 **234822h** 未运行」→ 把刚注册、还没到触发点的健康任务判成静默停摆。
+
+```python
+if dt.year < 2000:      # 1970 前的哨兵一律视为「从未运行」，不计停摆
+    return None
+```
+
 ### v1.5 主动告警
 
 ```bash

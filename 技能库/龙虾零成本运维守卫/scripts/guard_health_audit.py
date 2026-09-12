@@ -67,6 +67,10 @@ SCHED_S = {
     0x41304: ("NO_MORE_RUNS", "OK",   "一次性任务已跑完"),
     0x41305: ("NOT_SCHEDULED","WARN", "没有排程"),
 }
+# 等级词表翻译：语义层写 OK/WARN，报告层只认 GREEN/YELLOW/RED/UNKNOWN/INFO。
+#   v1.2 踩坑：两套词表不一致，新任务以 0x41303 走到该分支即抛
+#   `KeyError: 'OK'`（rows.sort / 图标查表处），整个审计器崩掉。
+SCHED_LEVEL2REPORT = {"OK": "GREEN", "WARN": "YELLOW"}
 
 # 有数据面可打的任务：任务名关键字 -> 需要 LISTENING 的端口
 PORT_PROBES = {
@@ -206,7 +210,7 @@ STALE_HOURS = 72
 
 
 def hours_since(s):
-    """解析 schtasks 的本地化时间串，返回距今年小时数；解析不出返回 None"""
+    """解析 schtasks 的本地化时间串，返回距今年小时数；解析不出或「从未运行」返回 None"""
     s = (s or "").strip()
     if not s or s.upper().startswith("N/A"):
         return None
@@ -214,9 +218,15 @@ def hours_since(s):
     for fmt in ("%Y/%m/%d %H:%M:%S", "%Y-%m-%d %H:%M:%S", "%Y/%m/%d %H:%M"):
         try:
             dt = datetime.datetime.strptime(s, fmt)
-            return (datetime.datetime.now() - dt).total_seconds() / 3600.0
         except Exception:
             continue
+        # Windows 从不给空值：任务「从未运行过」时，schtasks 输出的是哨兵日期
+        #   1999/11/30 0:00:00（不是 N/A）。v1.2 踩坑：当真实日期解析 →
+        #   算出「已 234822h 未运行」→ 把刚注册、还没到触发点的健康任务判成静默停摆。
+        #   1970 前的哨兵一律视为「从未运行」，不计停摆。
+        if dt.year < 2000:
+            return None
+        return (datetime.datetime.now() - dt).total_seconds() / 3600.0
     return None
 
 
@@ -304,7 +314,7 @@ def classify(task, receipts):
         return ("GREEN", "结果码 0", ev)
     if res in SCHED_S:
         code, lvl, desc = SCHED_S[res]
-        return (lvl, f"调度器状态 {code}：{desc}", ev)
+        return (SCHED_LEVEL2REPORT.get(lvl, lvl), f"调度器状态 {code}：{desc}", ev)
     if 0 < res < 256:
         return soften("RED", f"脚本退出码 {res}（非调度器状态，判定为脚本失败）")
     return ("YELLOW", f"未知结果码 {res}（0x{res & 0xFFFFFFFF:X}），需人工确认", ev)
@@ -342,8 +352,16 @@ def main():
         rows.append({"level": lvl, "reason": reason, "evidence": ev,
                      "action": t.get("action", "")[:300]})
 
+    # v1.2 兜底：等级词表若再次出现未收录值，降级为 UNKNOWN 而不是让整个审计器崩掉。
+    #   一个等级拼写问题不该让所有守卫失去监督。
+    VALID = {"RED", "YELLOW", "UNKNOWN", "GREEN", "INFO"}
+    for r in rows:
+        if r["level"] not in VALID:
+            r["reason"] += f"（等级值 '{r['level']}' 未收录，已降级为 UNKNOWN）"
+            r["level"] = "UNKNOWN"
+
     order = {"RED": 0, "YELLOW": 1, "UNKNOWN": 2, "GREEN": 3, "INFO": 4}
-    rows.sort(key=lambda r: order[r["level"]])
+    rows.sort(key=lambda r: order.get(r["level"], 2))
 
     if "--json" in args:
         print(json.dumps({"checked_at": datetime.datetime.now().isoformat(timespec="seconds"),
@@ -356,7 +374,7 @@ def main():
         print("=" * 68)
         for r in rows:
             mark = {"GREEN": "[绿]", "YELLOW": "[黄]", "RED": "[红]",
-                    "UNKNOWN": "[?]", "INFO": "[略]"}[r["level"]]
+                    "UNKNOWN": "[?]", "INFO": "[略]"}.get(r["level"], "[?]")
             base = r["evidence"]["task"]
             print(f"{mark} {base}")
             print(f"     判定: {r['reason']}")
