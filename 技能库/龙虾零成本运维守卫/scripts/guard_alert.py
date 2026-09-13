@@ -33,6 +33,15 @@ import hashlib
 import datetime
 import subprocess
 
+# v1.1 (2026-09-14)：告警器自己也要落回执。
+# 讽刺但真实：告警器天天盯别人健康，自己挂了没人知道——审计器只能看到
+# 「结果码 0 但无回执 → 判黄」。两行接入，守卫的守卫才没有盲区。
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from guard_receipt import write_receipt
+except Exception:
+    write_receipt = None
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 STATUS_DIR = os.path.join(os.path.dirname(HERE), ".workbuddy", "guard_status")
 RECEIPT = os.path.join(STATUS_DIR, "_audit_receipt.json")
@@ -177,6 +186,20 @@ def main():
         result["pushed"] = ok
         result["push_info"] = info
     save_state(st)
+
+    # v1.1 自身状态回执：告警器健康 = 它跑完了且知道当前有多少红项
+    if write_receipt:
+        try:
+            write_receipt(
+                "guardalert", True,
+                "告警器执行完成：红 %d / 新增待报 %d / 冷却静默 %d"
+                % (len(rows), len(fresh), len(muted)),
+                version="1.1", exit_code=0,
+                extra={"red": len(rows), "fresh": len(fresh), "muted": len(muted),
+                       "pushed": bool(result.get("pushed"))},
+            )
+        except Exception:
+            pass
 
     if "--json" in args:
         print(json.dumps(result, ensure_ascii=False, indent=2))

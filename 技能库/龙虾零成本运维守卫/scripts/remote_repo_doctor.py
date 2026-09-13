@@ -491,8 +491,27 @@ def diagnose(url, do_fix=False, repo_path=None, remote_name=None):
         rc, out, err = git(args + [remote_name or "origin"], cwd=repo_path)
     git_ok = (rc == 0)
     err_masked = mask((err or "").replace("\n", " | ")[:200])
-    add("OK" if git_ok else "FAIL", "OBJ01",
+
+    # v1.1 (2026-09-14) 代理/链路误报识别
+    # 实测：身份探针 200（令牌有效）+ git 报 "Failed to receive SOCKS response,
+    # proxy closed connection"，被判定矩阵判成 FAIL「凭据有效但仓库不可达」——
+    # 于是 OpsGuard 天天给仓库记红，实际挂的是 7897→1081→香港 这条代理链路。
+    # `-c http.proxy=` 只能清 git config 级代理，清不掉系统级/链路级故障。
+    # 所以这里按**错误文本特征**分流：链路问题 ≠ 仓库问题，不许记到仓库头上。
+    proxy_suspect = (not git_ok) and bool(re.search(
+        r"socks|proxy|tunnel|closed connection|connection reset|"
+        r"couldn't connect|Could not resolve|timed out|Failed to receive",
+        err or "", re.I))
+    # 代理/链路故障降级为 WARN：仓库本身没病，别让它背锅（否则 OpsGuard 天天记红）
+    add("OK" if git_ok else ("WARN" if proxy_suspect else "FAIL"), "OBJ01",
         f"git ls-remote -> rc={rc}" + ("" if git_ok else f"  {err_masked}"))
+    if proxy_suspect:
+        add("WARN", "PRX01",
+            "git 报错形似**代理/链路故障**，不是仓库或凭据问题："
+            f"{err_masked[:120]}\n"
+            "        处置：① `netstat -ano | grep :7897` 看中转器在不在听；"
+            "② 直连复测 `git -c http.proxy= -c https.proxy= ls-remote`（国内平台应走直连）；"
+            "③ 链路修好后复跑本脚本。在链路恢复前，本项**不计入仓库健康度**。")
 
     # ---------- 6. 判定矩阵（本脚本的价值所在）----------
     print("\n--- 判定 ---")
@@ -504,6 +523,11 @@ def diagnose(url, do_fix=False, repo_path=None, remote_name=None):
             f"此时 {host} 返回的 404「仓库不存在」是平台标准伪装，**不可据此判定仓库被删**。\n"
             f"        处置：去 {info['platform'] or host} 重新签发令牌 -> "
             f"`git -c credential.helper=store credential approve` 写入凭据库 -> 复跑本脚本。")
+    elif identity_ok is True and proxy_suspect:
+        add("WARN", "VERDICT",
+            "**疑似代理/链路故障，非仓库问题**：身份探针 200 证明令牌活着，"
+            "git 失败原因落在传输层（见 PRX01）。\n"
+            "        结论降级为 WARN：先修链路再复跑，不要据此判定仓库被删或令牌失效。")
     elif identity_ok is True:
         add("FAIL", "VERDICT",
             "凭据有效但仓库不可达 -> 仓库确实不存在，或该令牌账号无访问权限。"

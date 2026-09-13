@@ -1,6 +1,6 @@
 ---
 name: 龙虾零成本运维守卫
-version: v1.5
+version: v1.6
 owner: 汤小龙（AI 分身）
 created: 2026-09-09
 updated: 2026-09-13
@@ -8,7 +8,7 @@ cost_mode: P0（全本地 stdlib，零积分）
 agent_created: true
 ---
 
-# 龙虾零成本运维守卫 v1.5
+# 龙虾零成本运维守卫 v1.6
 
 > 一句话：**凡是要「推远端 / 起服务 / 分发五库」之前，先跑守卫体检，把灾难挡在本地。**
 > 六个脚本 + 一个修复版守卫，纯标准库，零积分，只读优先，不写业务数据。
@@ -106,6 +106,9 @@ def soften(level, reason, e=None):
 | `scripts/guard_receipt.py` | **v1.5 新增·通用状态回执模块**：守卫两行接入，原子写盘，永不抛异常拖垮守卫 | 同上 / `MCP服务\` |
 | `scripts/guard_alert.py` | **v1.5 新增·红项主动告警**：指纹去重 + 冷却期 + 恢复清账 + 可选的零积分企微推送 | 同上 |
 | `scripts/guard_health_audit.py` | **v1.5 修复**：语义表改「减刑器」，修调度器状态码自锁假红；新增「无回执判黄」 | 同上 |
+| `scripts/guard_receipt_cli.py` | **v1.6 新增·回执命令行接入点**：让 `.bat` 等非 Python 守卫一行落回执 | 同上 |
+| `scripts/guard_receipt_probe.py` | **v1.6 新增·常驻守卫探针回执器**：给「永不退出」的守卫做外部端口实测并代写回执 | 同上 |
+| `scripts/remote_repo_doctor.py` | **v1.6 修复**：代理/链路故障识别，不再把「SOCKS 连接被掐」误判成「仓库不存在」 | 同上 |
 
 ### v1.5 守卫接入回执（两行，任何守卫通用）
 
@@ -682,3 +685,66 @@ if __name__ == "__main__":
 - **新增** `guard_health_audit.py` v1.0：7 项任务体检，**红 0 / 黄 0 / 未知 0 / 绿 6 / 免检 1**。
 - **方法论沉淀**：提出「**假安全第 5 形态 = 守卫自身失效静默化**」，
   与前 4 种假成功并列；并给出反直觉判据「**结果码 ≠ 健康度**」。
+
+## 十一、v1.6 新增：常驻型守卫的回执范式（2026-09-14）
+
+### 11.1 发现问题：守卫不是只有一种
+
+v1.5 把回执覆盖率从 1/6 推到 3/6，剩下 3 个（Fleet_AutoRestore / HKTunnel / HTTP2Socks）
+迟迟接不进去。原因不是懒，是**范式不对**：
+
+| 类型 | 特征 | 结束写回执可行？ | 正确范式 |
+|---|---|---|---|
+| **批处理型** | 跑完退出（fleet_autostart.bat、opsguard_daily.py） | ✅ 结尾写一次 | `guard_receipt.py` / `guard_receipt_cli.py` |
+| **常驻型** | 永不退出（`goto :loop`、`while True: accept()`） | ❌ 永远走不到结尾 | **外部周期探针代写** 或 **内部心跳线程** |
+
+常驻守卫的计划任务结果码**恒为 `267009` (0x41301 SCHED_S_TASK_RUNNING)**，
+它描述的是「实例正在运行」，与健康度无关。想让审计器拿到强证据，只能换范式。
+
+### 11.2 三个新组件（按守卫类型对号入座）
+
+**① `guard_receipt_cli.py` —— 给 .bat / 非 Python 守卫**
+```bat
+"%PY%" "...\scripts\guard_receipt_cli.py" fleet_autorestore %FLEET_OK% "%FLEET_MSG%" 0 1.4
+```
+永远返回 0 —— 回执写失败不许拖垮宿主守卫。
+
+**② `guard_receipt_probe.py` —— 常驻守卫的外部探针**
+不看它「有没有在跑」，看它「端不端得出服务」：L1 端口 LISTENING → L2 数据面 → L3 依赖链。
+新增常驻守卫只需往 `RESIDENT_GUARDS` 加一条，不动主逻辑。
+
+**③ 心跳回执 —— 常驻服务本体自证**
+`http2socks_7897.py` 内起一条 daemon 线程每 60s 自证一次（在听 + 上游 1081 可达）。
+**「7897 在听但 1081 不通」要如实写成 unhealthy 并标注是依赖侧故障**——不准假装健康，也不准连坐。
+
+### 11.3 回执名匹配铁律（踩过才知道）
+
+审计器把「回执名」和「计划任务名」都归一化（只留 a-z0-9 小写）后判断**子串包含**：
+
+```
+LobsterFleet_AutoRestore  -> "fleet_autorestore"  ✅ 子串
+Lobster_HKTunnel          -> "hktunnel"           ✅
+Lobster_HTTP2Socks_7897   -> "http2socks"         ✅
+```
+写成 `fleet`（太短易误配）或 `fleet_autostart`（非子串）**都匹配不上，白写**。
+
+### 11.4 v1.6 踩坑三则
+
+1. **Python docstring 里写 Windows 路径 → 编译期 SyntaxError**
+   `"""... C:\Users\... python.exe ..."""` 中的 `\U` 被当 Unicode 转义
+   （`\U` 需 8 位十六进制）→ `truncated \UXXXXXXXX escape`，而报错只指到 docstring 首行，**极难定位**。
+   → 文档型 docstring 一律用 `r"""`，或把路径写成 `C:/Users/...`。
+2. **bat 追加子程序时，`":chk" in txt` 判断会被 `call :chk 15721` 误触发**
+   → 防重判断必须锚定标签定义本身：`marker = "\r\n:chk\r\n"`。
+   教训：**「字符串是否出现」≠「定义是否存在」**，判断要锚定唯一形态。
+3. **守卫把链路故障记到仓库头上（误报）**
+   身份探针 200（令牌有效）+ git 报 `Failed to receive SOCKS response, proxy closed connection`
+   → 判定矩阵原本判 FAIL「凭据有效但仓库不可达」，OpsGuard 于是天天给仓库记红，
+   实际挂的是 7897→1081→香港 这条链路。
+   → 按**错误文本特征**分流：`socks|proxy|tunnel|closed connection|timed out` → OBJ01 降 WARN + 新增 PRX01，
+   并明确「链路恢复前不计入仓库健康度」。**`-c http.proxy=` 只清 git config 级代理，清不掉链路级故障。**
+
+### 11.5 收效
+
+审计从 **绿 6/黄 1/红 1** → **绿 7/黄 0/红 1**（黄项清零，即「靠猜」的守卫清零）。
+红项 1 个是 `Lobster_OpsGuard_Daily` 的 CNB 通道（真实问题：令牌/权限，非误报）。
