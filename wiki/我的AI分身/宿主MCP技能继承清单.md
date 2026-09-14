@@ -1,3 +1,12 @@
+---
+title: 汤小龙宿主MCP技能继承清单
+date: 2026-08-31
+category: capability-index
+source: local-scan
+status: active
+sensitivity: internal
+---
+
 # 汤小龙 · 宿主MCP技能继承清单
 
 > 自动生成：2026-08-31 00:08:57（零积分纯本地扫描）
