@@ -1,32 +1,22 @@
 {
   "_meta": {
     "description": "OB技能目录 → IMA/乐享/CNB/GitHub 多库同步台账（唯一防重复依据）",
-    "ob_source": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\我的AI分身\\ 与 E:\\龙虾AI主控中心\\我的AI分身\\技能库\\lobster_task_standard_workflow_v3.0\\",
+    "ob_source": "E:\\龙虾AI主控中心\\Obsidian\\wiki\\我的AI分身\\ 与 E:\\龙虾AI主控中心\\我的AI分身\\技能库\\lobster_task_standard_workflow_v3.0\\\\",
+    "ima_kb": "001aa1cd10007026",
     "lexiang_group": "36e88ea22e4541418ffb838d608d19e0",
     "lexiang_parent": "8f78c0a0371646d28afe8bda5bafdc88",
-    "lexiang_ob_group_20260908": "f831a71ea8c9442db89180e35eca9804",
-    "ima_kb": "001aa1cd10007026",
-    "github_remote": "https://github.com/TJF19770107/lobster-knowledge-base.git",
-    "github_status": "20260908 commit 已完成，push pending（代理 127.0.0.1:7890 未启动，直连被重置；代理恢复后 git push 即可）",
-    "updated_at": "2026-09-10T22:30:00+08:00",
-    "maintainer": "汤小龙",
+    "lexiang_group_20260914": "6a687325396541fe9942b87a8d486026",
     "cnb_remote": "https://cnb.cool/TJF19770107/lobster-knowledge-base",
     "cnb_default_branch": "fresh-main",
-    "cnb_status": "20260910 首次全量推送完成（8 新增 + 13 核验回填）；token 走 ~/.cnb/token，git 需绕开 127.0.0.1:7897 代理",
-    "cnb_last_sync": "2026-09-10T22:30:00+08:00"
-  },
-  "技能_零成本磁盘扩容经验_20260905.md": {
-    "size": 2849,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_49839b44d5f4d83b21cb2386c880eafa001aa1cd10007026",
-    "lexiang_entry_id": "d7d1448b38894a25bd01dd5c09748a6f",
-    "cnb": "done",
-    "synced_at": "2026-09-05",
-    "cnb_path": "wiki/我的AI分身/技能_零成本磁盘扩容经验_20260905.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+    "cnb_status": "2026-09-14 全量镜像推送完成 commit 5430137（32 files changed）；远端此前已领先至 f533267（守卫 v1.6）",
+    "ima_status": "2026-09-14 核验：知识库 167 条，内容已覆盖至 2026-09-14 01:19（含 20260911 分身恢复/骨架自检、香港隧道假死、四化知识库轻量快照_20260913、20260914 人形Agent迁移验证、snapshot_20260914_011454_manifest）",
+    "lexiang_status": "2026-09-14 核验：乐享（示例知识库 space 1de96cbc… + 个人空间 d3e2fdd1…）已含 20260911 分身恢复与骨架自检（61c0132b/f232f945）、avatar-skeleton-selfcheck 新技能（fa2f6649）、snapshot_20260914_011454_manifest（bfbf08d6）等；2026-09-14 补建归档分组页 6a687325396541fe9942b87a8d486026",
+    "ledger_note": "历史台账严重滞后（大量已同步文件漏标 pending），本轮回填以「仓/库实测」为准；教训见 OB知识库四化同步 SKILL 踩坑 18",
+    "updated_at": "2026-09-14T15:30:34",
+    "maintainer": "汤小龙"
   },
   "20260825_1234快捷体系_官方定义卡.md": {
-    "size": 9197,
+    "size": 9300,
     "version": "v2.1六端版",
     "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_d361c03b08108c2fac4dc40aeb754f71001aa1cd10007026",
     "lexiang_entry_id": "f8ea0d77243c428bb2683311e741491e",
@@ -34,100 +24,8 @@
     "cnb": "done",
     "synced_at": "2026-09-10",
     "cnb_path": "wiki/我的AI分身/20260825_1234快捷体系_官方定义卡.md",
-    "cnb_synced_at": "2026-09-10"
-  },
-  "AI分身Agent架构与定义v1.0_20260826.md": {
-    "size": 9384,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_644db9910f7b28ca501b31460bafe713001aa1cd10007026",
-    "lexiang_entry_id": "18d84d1f1b414a0288a37114d1711b2e",
-    "cnb": "done",
-    "synced_at": "2026-09-05",
-    "cnb_path": "wiki/我的AI分身/AI分身Agent架构与定义v1.0_20260826.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
-  },
-  "AI分身能力边界与完善计划v1.1_20260826.md": {
-    "size": 7388,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_1fdd0add12ab6e63747c0c2878dc9664001aa1cd10007026",
-    "lexiang_entry_id": "9fffb972ac064f1b81738fda0f0e97ec",
-    "cnb": "done",
-    "synced_at": "2026-09-05",
-    "cnb_path": "wiki/我的AI分身/AI分身能力边界与完善计划v1.1_20260826.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
-  },
-  "仓颉Skill知识蒸馏技能.md": {
-    "size": 7455,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_4b04db76b0c82e2b9018b6f9dc28e82d001aa1cd10007026",
-    "lexiang_entry_id": "42b0ac3113be416d95d0d4af40156822",
-    "cnb": "done",
-    "synced_at": "2026-09-10",
-    "cnb_path": "wiki/我的AI分身/仓颉Skill知识蒸馏技能.md",
-    "cnb_synced_at": "2026-09-10"
-  },
-  "龙虾全域官方模板-最终版.md": {
-    "size": 248815,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_c336b315549e58b9fb79f214c920e6b8001aa1cd10007026",
-    "lexiang_entry_id": "e758e890f0c048afb029d941e8a74c25",
-    "lexiang_mode": "file_upload_child_rev2",
-    "cnb": "done",
-    "synced_at": "2026-09-10",
-    "cnb_path": "wiki/我的AI分身/龙虾全域官方模板-最终版.md",
-    "cnb_synced_at": "2026-09-10"
-  },
-  "龙虾五步法V3.6·PR#21闭环版（成本优先置顶）SKILL.md": {
-    "size": 93480,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_660a787001d731a907385a479ffb22b7001aa1cd10007026",
-    "lexiang_entry_id": "df287ee69a6b4de4a8609174ba7dfffd",
-    "lexiang_mode": "file_upload_child_rev2",
-    "cnb": "pending",
-    "synced_at": "2026-09-08"
-  },
-  "赛博书屋（Cyber Book House）v1.5SKILL.md": {
-    "size": 8280,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_38afe0ea464daa43db1217a571a73735001aa1cd10007026",
-    "lexiang_entry_id": "bf61c3b8a27641c9a0a5175203deae12",
-    "cnb": "done",
-    "synced_at": "2026-09-10",
-    "cnb_path": "wiki/我的AI分身/赛博书屋（Cyber Book House）v1.5SKILL.md",
-    "cnb_synced_at": "2026-09-10"
-  },
-  "心理画像与对标差距分析_20260826.md": {
-    "size": 9646,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_7b6c06c727fffd52daf22e4f173ba9d6001aa1cd10007026",
-    "lexiang_entry_id": "5e9496c170114b07ad5ccca5209ae352",
-    "cnb": "done",
-    "synced_at": "2026-09-05",
-    "cnb_path": "wiki/我的AI分身/心理画像与对标差距分析_20260826.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
-  },
-  "GptBrowser不安全标记修复与Obsidian插件全自动安装_SKILL.md": {
-    "size": 9656,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_f54a4ef81528ee502e3611736fbe0717001aa1cd10007026",
-    "lexiang_entry_id": "78583ff8cf534ade95b6265b6b03e61a",
-    "cnb": "done",
-    "synced_at": "2026-09-10",
-    "cnb_path": "wiki/我的AI分身/GptBrowser不安全标记修复与Obsidian插件全自动安装_SKILL.md",
-    "cnb_synced_at": "2026-09-10"
-  },
-  "全局问题沉淀与复用SKILL.md": {
-    "size": 5420,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_a1fb081a9f506ba82d6cdf16815e4cfb001aa1cd10007026",
-    "lexiang_entry_id": "7a2264aaa1e643759c2602b075a18ddd",
-    "cnb": "done",
-    "synced_at": "2026-09-10",
-    "cnb_path": "wiki/我的AI分身/全局问题沉淀与复用SKILL.md",
-    "cnb_synced_at": "2026-09-10"
-  },
-  "分身之眼企微接单全自动化_SKILL.md": {
-    "size": 4869,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_c031fd63cdeb95ff685ffc63e965e96a001aa1cd10007026",
-    "lexiang_entry_id": "ed66150e82a541f48fee992157c7b934",
-    "cnb": "done",
-    "synced_at": "2026-09-10",
-    "cnb_path": "wiki/我的AI分身/分身之眼企微接单全自动化_SKILL.md",
-    "cnb_synced_at": "2026-09-10"
+    "cnb_synced_at": "2026-09-14",
+    "mtime": "2026-09-11"
   },
   "20260830_1234四化迭代_汤小龙宿主继承激活与模型强制免费化.md": {
     "size": 11463,
@@ -137,8 +35,56 @@
     "cnb": "done",
     "synced_at": "2026-09-08",
     "cnb_path": "wiki/我的AI分身/20260830_1234四化迭代_汤小龙宿主继承激活与模型强制免费化.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-09"
+  },
+  "20260911_汤小龙分身恢复与骨架自检_四化迭代.md": {
+    "size": 6649,
+    "mtime": "2026-09-11",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/20260911_汤小龙分身恢复与骨架自检_四化迭代.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "20260911_骨架自检技能与断链修复_四化迭代.md": {
+    "size": 6257,
+    "mtime": "2026-09-11",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/20260911_骨架自检技能与断链修复_四化迭代.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "20260912_四化迭代知识库未完成任务收口_四化迭代.md": {
+    "size": 7012,
+    "mtime": "2026-09-13",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/20260912_四化迭代知识库未完成任务收口_四化迭代.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "20260913_四化知识库轻量快照与回滚说明.md": {
+    "size": 1883,
+    "mtime": "2026-09-13",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/20260913_四化知识库轻量快照与回滚说明.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "AI分身Agent架构与定义v1.0_20260826.md": {
+    "size": 7262,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_644db9910f7b28ca501b31460bafe713001aa1cd10007026",
+    "lexiang_entry_id": "18d84d1f1b414a0288a37114d1711b2e",
+    "cnb": "done",
+    "synced_at": "2026-09-05",
+    "cnb_path": "wiki/我的AI分身/AI分身Agent架构与定义v1.0_20260826.md",
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-09"
   },
   "AI分身升级路线图v1.2_20260826.md": {
     "size": 6749,
@@ -148,8 +94,29 @@
     "cnb": "done",
     "synced_at": "2026-09-08",
     "cnb_path": "wiki/我的AI分身/AI分身升级路线图v1.2_20260826.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-09"
+  },
+  "AI分身启动自检报告_20260826.md": {
+    "size": 7486,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/AI分身启动自检报告_20260826.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "AI分身能力边界与完善计划v1.1_20260826.md": {
+    "size": 7541,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_1fdd0add12ab6e63747c0c2878dc9664001aa1cd10007026",
+    "lexiang_entry_id": "9fffb972ac064f1b81738fda0f0e97ec",
+    "cnb": "done",
+    "synced_at": "2026-09-05",
+    "cnb_path": "wiki/我的AI分身/AI分身能力边界与完善计划v1.1_20260826.md",
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-09"
   },
   "Codex开源福利申请_20260907.md": {
     "size": 21453,
@@ -159,37 +126,372 @@
     "cnb": "done",
     "synced_at": "2026-09-08",
     "cnb_path": "wiki/我的AI分身/Codex开源福利申请_20260907.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-09"
+  },
+  "GptBrowser不安全标记修复与Obsidian插件全自动安装_SKILL.md": {
+    "size": 13551,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_f54a4ef81528ee502e3611736fbe0717001aa1cd10007026",
+    "lexiang_entry_id": "78583ff8cf534ade95b6265b6b03e61a",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/GptBrowser不安全标记修复与Obsidian插件全自动安装_SKILL.md",
+    "cnb_synced_at": "2026-09-14",
+    "mtime": "2026-09-11"
   },
   "OpenCodeZen免费模型调研_20260907.md": {
-    "size": 22239,
+    "size": 19525,
     "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_75499702b76db7180bd979f567ea3e7a001aa1cd10007026",
     "lexiang_entry_id": "6ae05dd44ae24013ac5b18f0336a586f",
     "github": "committed_pending_push",
-    "cnb": "source_missing",
+    "cnb": "done",
     "synced_at": "2026-09-08",
-    "cnb_note": "本地源文件已不存在，IMA/乐享有副本；如需回灌 CNB 需从 IMA/OB 取回"
+    "cnb_note": "本地源文件已不存在，IMA/乐享有副本；如需回灌 CNB 需从 IMA/OB 取回",
+    "mtime": "2026-09-12",
+    "cnb_path": "wiki/我的AI分身/OpenCodeZen免费模型调研_20260907.md",
+    "cnb_synced_at": "2026-09-14"
+  },
+  "今日学习简报_20260829.md": {
+    "size": 1220,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260829.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260830.md": {
+    "size": 1130,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260830.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260831.md": {
+    "size": 1355,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260831.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260901.md": {
+    "size": 2366,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260901.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260902.md": {
+    "size": 1675,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260902.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260905.md": {
+    "size": 2225,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260905.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260906.md": {
+    "size": 2284,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260906.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260907.md": {
+    "size": 353,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260907.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260908.md": {
+    "size": 2072,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260908.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260909.md": {
+    "size": 4215,
+    "mtime": "2026-09-11",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260909.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260910.md": {
+    "size": 1829,
+    "mtime": "2026-09-11",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260910.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260911.md": {
+    "size": 1927,
+    "mtime": "2026-09-11",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260911.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260912.md": {
+    "size": 1093,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260912.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260913.md": {
+    "size": 6226,
+    "mtime": "2026-09-13",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260913.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "今日学习简报_20260914.md": {
+    "size": 1328,
+    "mtime": "2026-09-14",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/今日学习简报_20260914.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "仓颉Skill知识蒸馏技能.md": {
+    "size": 7648,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_4b04db76b0c82e2b9018b6f9dc28e82d001aa1cd10007026",
+    "lexiang_entry_id": "42b0ac3113be416d95d0d4af40156822",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/仓颉Skill知识蒸馏技能.md",
+    "cnb_synced_at": "2026-09-14",
+    "mtime": "2026-09-11"
+  },
+  "修行日志_20260829.md": {
+    "size": 785,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260829.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260830.md": {
+    "size": 785,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260830.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260831.md": {
+    "size": 785,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260831.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260901.md": {
+    "size": 785,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260901.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260902.md": {
+    "size": 785,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260902.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260905.md": {
+    "size": 785,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260905.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260906.md": {
+    "size": 785,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260906.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260907.md": {
+    "size": 785,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260907.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260908.md": {
+    "size": 785,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260908.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260909.md": {
+    "size": 630,
+    "mtime": "2026-09-11",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260909.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260910.md": {
+    "size": 630,
+    "mtime": "2026-09-11",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260910.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260911.md": {
+    "size": 630,
+    "mtime": "2026-09-11",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260911.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260912.md": {
+    "size": 630,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260912.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260913.md": {
+    "size": 973,
+    "mtime": "2026-09-13",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260913.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "修行日志_20260914.md": {
+    "size": 630,
+    "mtime": "2026-09-14",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/修行日志_20260914.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "全局问题沉淀与复用SKILL.md": {
+    "size": 5532,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_a1fb081a9f506ba82d6cdf16815e4cfb001aa1cd10007026",
+    "lexiang_entry_id": "7a2264aaa1e643759c2602b075a18ddd",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/全局问题沉淀与复用SKILL.md",
+    "cnb_synced_at": "2026-09-14",
+    "mtime": "2026-09-11"
+  },
+  "分身之眼企微接单全自动化_SKILL.md": {
+    "size": 5169,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_c031fd63cdeb95ff685ffc63e965e96a001aa1cd10007026",
+    "lexiang_entry_id": "ed66150e82a541f48fee992157c7b934",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/分身之眼企微接单全自动化_SKILL.md",
+    "cnb_synced_at": "2026-09-14",
+    "mtime": "2026-09-11"
+  },
+  "学习日志_20260829.md": {
+    "size": 505,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/学习日志_20260829.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "守卫与自我纠偏机制_20260831.md": {
+    "size": 1304,
+    "mtime": "2026-09-12",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/守卫与自我纠偏机制_20260831.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
   },
   "宿主MCP技能继承清单.md": {
-    "size": 5722,
+    "size": 5884,
     "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_edf0e42ed61cdf4d66343c747c69da24001aa1cd10007026",
     "lexiang_entry_id": "9737753230b74565865a3dd2584c55ff",
     "github": "committed_pending_push",
     "cnb": "done",
     "synced_at": "2026-09-08",
     "cnb_path": "wiki/我的AI分身/宿主MCP技能继承清单.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-12"
   },
-  "画像实时增量_20260907.md": {
-    "size": 4147,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_edcf99c4d1e078e108374a8846233cac001aa1cd10007026",
-    "lexiang_entry_id": "9370d65e6d26457d93e378bae9c837f2",
-    "github": "committed_pending_push",
-    "cnb": "source_missing",
-    "synced_at": "2026-09-08",
-    "cnb_note": "本地源文件已不存在，IMA/乐享有副本；如需回灌 CNB 需从 IMA/OB 取回"
+  "心理画像与对标差距分析_20260826.md": {
+    "size": 8574,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_7b6c06c727fffd52daf22e4f173ba9d6001aa1cd10007026",
+    "lexiang_entry_id": "5e9496c170114b07ad5ccca5209ae352",
+    "cnb": "done",
+    "synced_at": "2026-09-05",
+    "cnb_path": "wiki/我的AI分身/心理画像与对标差距分析_20260826.md",
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-09"
   },
   "技能_Windows桌面GUI智能体部署与企微接单提取_20260905.md": {
     "size": 2522,
@@ -199,8 +501,20 @@
     "cnb": "done",
     "synced_at": "2026-09-08",
     "cnb_path": "wiki/我的AI分身/技能_Windows桌面GUI智能体部署与企微接单提取_20260905.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-09"
+  },
+  "技能_零成本磁盘扩容经验_20260905.md": {
+    "size": 2905,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_49839b44d5f4d83b21cb2386c880eafa001aa1cd10007026",
+    "lexiang_entry_id": "d7d1448b38894a25bd01dd5c09748a6f",
+    "cnb": "done",
+    "synced_at": "2026-09-05",
+    "cnb_path": "wiki/我的AI分身/技能_零成本磁盘扩容经验_20260905.md",
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-09"
   },
   "技能总索引.md": {
     "size": 3008,
@@ -210,19 +524,412 @@
     "cnb": "done",
     "synced_at": "2026-09-08",
     "cnb_path": "wiki/我的AI分身/技能总索引.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-09"
   },
   "接单出片大技能库_索引.md": {
-    "size": 2502,
+    "size": 2663,
     "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_b3a3bc0b887211eb2d018751e01eec1e001aa1cd10007026",
     "lexiang_entry_id": "840f8feaf9914a319fe67438f603535a",
     "github": "committed_pending_push",
     "cnb": "done",
     "synced_at": "2026-09-08",
     "cnb_path": "wiki/我的AI分身/接单出片大技能库_索引.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-12"
+  },
+  "画像实时增量_20260907.md": {
+    "size": 4115,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_edcf99c4d1e078e108374a8846233cac001aa1cd10007026",
+    "lexiang_entry_id": "9370d65e6d26457d93e378bae9c837f2",
+    "github": "committed_pending_push",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "cnb_note": "本地源文件已不存在，IMA/乐享有副本；如需回灌 CNB 需从 IMA/OB 取回",
+    "mtime": "2026-09-12",
+    "cnb_path": "wiki/我的AI分身/画像实时增量_20260907.md",
+    "cnb_synced_at": "2026-09-14"
+  },
+  "赛博书屋（Cyber Book House）v1.5SKILL.md": {
+    "size": 8280,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_38afe0ea464daa43db1217a571a73735001aa1cd10007026",
+    "lexiang_entry_id": "bf61c3b8a27641c9a0a5175203deae12",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/赛博书屋（Cyber Book House）v1.5SKILL.md",
+    "cnb_synced_at": "2026-09-14",
+    "mtime": "2026-09-11"
+  },
+  "迭代记录_AI分身git与框架身_20260827.md": {
+    "size": 1357,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_AI分身git与框架身_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_Codex++覆盖与自动学习_20260829.md": {
+    "size": 1265,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_Codex++覆盖与自动学习_20260829.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_Codex全局夺舍_20260827.md": {
+    "size": 1129,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_Codex全局夺舍_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_Codex原生并入与脚手架_20260827.md": {
+    "size": 1260,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_Codex原生并入与脚手架_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_Firecrawl联网抓取_20260827.md": {
+    "size": 1561,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_Firecrawl联网抓取_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_FreeLLMAPI形态澄清_20260828.md": {
+    "size": 967,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_FreeLLMAPI形态澄清_20260828.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_FreeLLMAPI恢复与CNB方案_20260828.md": {
+    "size": 1180,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_FreeLLMAPI恢复与CNB方案_20260828.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_GLM5.3接入_20260827.md": {
+    "size": 1248,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_GLM5.3接入_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_NVIDIA_GLM_provider_20260827.md": {
+    "size": 1461,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_NVIDIA_GLM_provider_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_NVIDIA免费池代理_20260829.md": {
+    "size": 1172,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_NVIDIA免费池代理_20260829.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_NVIDIA池自动切换内置_20260829.md": {
+    "size": 1238,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_NVIDIA池自动切换内置_20260829.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_TeamoRouter漫剧成本基准_20260831.md": {
+    "size": 2979,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_TeamoRouter漫剧成本基准_20260831.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_Teamo付费链路隔离_20260829.md": {
+    "size": 5285,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_Teamo付费链路隔离_20260829.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_ZCode宿主接入_GLM53旗舰大脑_20260831.md": {
+    "size": 2846,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_ZCode宿主接入_GLM53旗舰大脑_20260831.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_今日蒸馏与新技能_20260827.md": {
+    "size": 1301,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_今日蒸馏与新技能_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_代理盘点与豆包根因_20260827.md": {
+    "size": 1285,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_代理盘点与豆包根因_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_代理稳定性与四Agent接线_20260827.md": {
+    "size": 1448,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_代理稳定性与四Agent接线_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_代理诊断与对比_20260827.md": {
+    "size": 1411,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_代理诊断与对比_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_免费大脑与防失忆_20260827.md": {
+    "size": 1301,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_免费大脑与防失忆_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_全局布置与框架身_20260827.md": {
+    "size": 1149,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_全局布置与框架身_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_分身之眼上线_20260905.md": {
+    "size": 852,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_分身之眼上线_20260905.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_分身开口看图_20260827.md": {
+    "size": 1426,
+    "mtime": "2026-09-13",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_分身开口看图_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_启动自动扫描技能_20260827.md": {
+    "size": 1110,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_启动自动扫描技能_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_启动自动拉起NVIDIA池_20260829.md": {
+    "size": 1186,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_启动自动拉起NVIDIA池_20260829.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_四化修行体系V2_20260828.md": {
+    "size": 1557,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_四化修行体系V2_20260828.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_币安数据下载更新技能_20260904.md": {
+    "size": 2407,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_币安数据下载更新技能_20260904.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_技能内置汤小龙_20260827.md": {
+    "size": 1304,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_技能内置汤小龙_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_汤小龙每日进化_20260827.md": {
+    "size": 366,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_汤小龙每日进化_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_汤小龙每日进化_20260828.md": {
+    "size": 364,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_汤小龙每日进化_20260828.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_汤小龙每日进化_20260829.md": {
+    "size": 365,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_汤小龙每日进化_20260829.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_汤小龙每日进化_20260830.md": {
+    "size": 354,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_汤小龙每日进化_20260830.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_汤小龙每日进化_20260831.md": {
+    "size": 361,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_汤小龙每日进化_20260831.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_继承机制动态化_20260829.md": {
+    "size": 2307,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_继承机制动态化_20260829.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_网络诊断与代理修复_20260827.md": {
+    "size": 1412,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_网络诊断与代理修复_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_融合WorkBuddy_Marvis_20260827.md": {
+    "size": 1189,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_融合WorkBuddy_Marvis_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_融合版AGENTS_20260827.md": {
+    "size": 1075,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_融合版AGENTS_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_补齐P0P3与第八识_20260827.md": {
+    "size": 1894,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_补齐P0P3与第八识_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_进化定时化与夺舍边界_20260827.md": {
+    "size": 1363,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_进化定时化与夺舍边界_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_音频修复与P0P3_20260827.md": {
+    "size": 1378,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_音频修复与P0P3_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_香港VPS代理部署_20260827.md": {
+    "size": 1537,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_香港VPS代理部署_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
+  },
+  "迭代记录_香港VPS方案_20260827.md": {
+    "size": 1234,
+    "mtime": "2026-09-09",
+    "cnb": "done",
+    "cnb_path": "wiki/我的AI分身/迭代记录_香港VPS方案_20260827.md",
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-14",
+    "note": "2026-09-14 四化迭代知识库收口：本轮核验并落 CNB"
   },
   "遗留问题实修清单_20260826.md": {
     "size": 2426,
@@ -232,24 +939,38 @@
     "cnb": "done",
     "synced_at": "2026-09-08",
     "cnb_path": "wiki/我的AI分身/遗留问题实修清单_20260826.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
-  },
-  "X大佬推文监控_原型任务指令_CZ_20260908.md": {
-    "size": 3446,
-    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_09b387dde15a319ed2173142eee1b74c001aa1cd10007026",
-    "lexiang_entry_id": "6bbac9d2376a4398a9b75040fd514577",
-    "github": "committed_pending_push",
-    "cnb": "done",
-    "synced_at": "2026-09-08",
-    "cnb_path": "wiki/资讯监控/X大佬推文监控_原型任务指令_CZ_20260908.md",
-    "cnb_synced_at": "2026-09-10",
-    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填"
+    "cnb_synced_at": "2026-09-14",
+    "cnb_note": "2026-09-08 已入库，台账漏标，本次核验回填",
+    "mtime": "2026-09-09"
   },
   "香港隧道假死与GptBrowser插件假死修复_20260910.md": {
     "cnb": "done",
     "cnb_path": "wiki/我的AI分身/香港隧道假死与GptBrowser插件假死修复_20260910.md",
-    "cnb_synced_at": "2026-09-10",
-    "synced_at": "2026-09-10"
+    "cnb_synced_at": "2026-09-14",
+    "synced_at": "2026-09-10",
+    "size": 3730,
+    "mtime": "2026-09-11"
+  },
+  "龙虾五步法V3.6·PR#21闭环版（成本优先置顶）SKILL.md": {
+    "size": 93483,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_660a787001d731a907385a479ffb22b7001aa1cd10007026",
+    "lexiang_entry_id": "df287ee69a6b4de4a8609174ba7dfffd",
+    "lexiang_mode": "file_upload_child_rev2",
+    "cnb": "done",
+    "synced_at": "2026-09-08",
+    "mtime": "2026-09-12",
+    "cnb_path": "wiki/我的AI分身/龙虾五步法V3.6·PR#21闭环版（成本优先置顶）SKILL.md",
+    "cnb_synced_at": "2026-09-14"
+  },
+  "龙虾全域官方模板-最终版.md": {
+    "size": 248826,
+    "ima_media_id": "markdown_15c895be44e1ec063be12201d941d8c4_c336b315549e58b9fb79f214c920e6b8001aa1cd10007026",
+    "lexiang_entry_id": "e758e890f0c048afb029d941e8a74c25",
+    "lexiang_mode": "file_upload_child_rev2",
+    "cnb": "done",
+    "synced_at": "2026-09-10",
+    "cnb_path": "wiki/我的AI分身/龙虾全域官方模板-最终版.md",
+    "cnb_synced_at": "2026-09-14",
+    "mtime": "2026-09-11"
   }
 }
