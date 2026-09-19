@@ -1,0 +1,87 @@
+===== H. 真实重启/开机时间线(最近7天) =====
+2026-09-12 23:14:09  ID=1074  Lvl=信息  进程 C:\Windows\System32\RuntimeBroker.exe (PC-20240407MGZX) 由于以下原因已代表用户 PC-20240407MGZX\Administrator 启动计算机 PC-20240407MGZX 的 重启: 其他(计划外) |  原因代码: 0x0
+2026-09-12 23:14:26  ID=6006  Lvl=信息  事件日志服务已停止。
+2026-09-12 23:15:00  ID=6005  Lvl=信息  事件日志服务已启动。
+2026-09-14 15:01:38  ID=1074  Lvl=信息  进程 C:\Windows\System32\RuntimeBroker.exe (PC-20240407MGZX) 由于以下原因已代表用户 PC-20240407MGZX\Administrator 启动计算机 PC-20240407MGZX 的 重启: 其他(计划外) |  原因代码: 0x0
+2026-09-14 15:02:19  ID=6006  Lvl=信息  事件日志服务已停止。
+2026-09-14 15:02:56  ID=6005  Lvl=信息  事件日志服务已启动。
+2026-09-14 23:12:00  ID=1074  Lvl=信息  进程 C:\Windows\System32\RuntimeBroker.exe (PC-20240407MGZX) 由于以下原因已代表用户 PC-20240407MGZX\Administrator 启动计算机 PC-20240407MGZX 的 重启: 其他(计划外) |  原因代码: 0x0
+2026-09-14 23:12:44  ID=6006  Lvl=信息  事件日志服务已停止。
+2026-09-14 23:13:23  ID=6005  Lvl=信息  事件日志服务已启动。
+2026-09-15 11:28:36  ID=41  Lvl=关键  系统已在未先正常关机的情况下重新启动。如果系统停止响应、发生崩溃或意外断电，则可能会导致此错误。
+2026-09-15 11:28:43  ID=6005  Lvl=信息  事件日志服务已启动。
+2026-09-15 13:17:11  ID=1074  Lvl=信息  进程 C:\Windows\System32\RuntimeBroker.exe (PC-20240407MGZX) 由于以下原因已代表用户 PC-20240407MGZX\Administrator 启动计算机 PC-20240407MGZX 的 重启: 其他(计划外) |  原因代码: 0x0
+2026-09-15 13:17:33  ID=6006  Lvl=信息  事件日志服务已停止。
+2026-09-15 13:28:22  ID=6005  Lvl=信息  事件日志服务已启动。
+2026-09-15 13:49:34  ID=1074  Lvl=信息  进程 C:\Windows\system32\winlogon.exe (PC-20240407MGZX) 由于以下原因已代表用户 PC-20240407MGZX\Administrator 启动计算机 PC-20240407MGZX 的 重启: 没有找到这个原因的标题 |  原因代码: 0x500ff
+2026-09-15 13:50:17  ID=6006  Lvl=信息  事件日志服务已停止。
+2026-09-15 13:51:03  ID=6005  Lvl=信息  事件日志服务已启动。
+2026-09-15 22:45:00  ID=1074  Lvl=信息  进程 C:\Windows\System32\RuntimeBroker.exe (PC-20240407MGZX) 由于以下原因已代表用户 PC-20240407MGZX\Administrator 启动计算机 PC-20240407MGZX 的 重启: 其他(计划外) |  原因代码: 0x0
+2026-09-15 22:45:18  ID=6006  Lvl=信息  事件日志服务已停止。
+2026-09-15 22:49:22  ID=6005  Lvl=信息  事件日志服务已启动。
+2026-09-16 16:23:41  ID=41  Lvl=关键  系统已在未先正常关机的情况下重新启动。如果系统停止响应、发生崩溃或意外断电，则可能会导致此错误。
+2026-09-16 16:46:51  ID=6005  Lvl=信息  事件日志服务已启动。
+
+===== I. 磁盘硬件错误(最近7天, ID=7/11/15/51/153/154/157) =====
+2026-09-19 15:40:33  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x3d526250 处重试 IO 操作。
+2026-09-19 15:40:33  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x6a39ce10 处重试 IO 操作。
+2026-09-19 15:40:33  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x3aa0a6f8 处重试 IO 操作。
+2026-09-19 15:40:33  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x14afeed0 处重试 IO 操作。
+2026-09-19 15:40:33  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x5bd950 处重试 IO 操作。
+2026-09-19 15:40:33  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x3d65fe20 处重试 IO 操作。
+2026-09-19 15:40:33  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x24be52e8 处重试 IO 操作。
+2026-09-19 15:40:33  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x57bc9970 处重试 IO 操作。
+2026-09-19 15:40:33  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x155b1280 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x57bc7c00 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x155b0780 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x3d65fe18 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x155b0b80 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x155b0f80 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x14aff210 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x60250b70 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x3d520348 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x340613a8 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x17466d98 处重试 IO 操作。
+2026-09-19 15:40:17  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x155b0380 处重试 IO 操作。
+2026-09-19 15:27:15  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x4c38afb8 处重试 IO 操作。
+2026-09-19 15:27:15  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x5eac3798 处重试 IO 操作。
+2026-09-19 15:27:15  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x6a395c00 处重试 IO 操作。
+2026-09-19 15:27:15  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x6a76840 处重试 IO 操作。
+2026-09-19 15:27:15  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x25259c40 处重试 IO 操作。
+2026-09-19 15:27:15  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x5b1f18 处重试 IO 操作。
+2026-09-19 15:27:15  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x5d164500 处重试 IO 操作。
+2026-09-19 15:27:15  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x24885438 处重试 IO 操作。
+2026-09-19 15:25:21  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x6022b0c0 处重试 IO 操作。
+2026-09-19 15:25:05  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x4c38afb8 处重试 IO 操作。
+2026-09-19 15:25:05  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x25253648 处重试 IO 操作。
+2026-09-19 15:25:05  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x5f4790 处重试 IO 操作。
+2026-09-19 15:25:05  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x5b1f20 处重试 IO 操作。
+2026-09-19 15:25:05  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x5d1644d0 处重试 IO 操作。
+2026-09-19 15:25:05  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x6a73840 处重试 IO 操作。
+2026-09-19 15:25:05  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x3d55c0f8 处重试 IO 操作。
+2026-09-19 15:22:37  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x6a70140 处重试 IO 操作。
+2026-09-19 15:22:37  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x6a6fd40 处重试 IO 操作。
+2026-09-19 15:22:37  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x5f3700 处重试 IO 操作。
+2026-09-19 15:22:37  ID=153  已在磁盘 3 (PDO 名称: \Device\000000a6)的逻辑块地址 0x6a6f940 处重试 IO 操作。
+
+===== J. 磁盘清单(类型/接口) =====
+Disk#=0  MediaType=  BusType=SATA  Size=111.8GB  Model=SATAFIRM   S11
+Disk#=2  MediaType=  BusType=NVMe  Size=465.8GB  Model=KINGSTON SNV2S500G
+Disk#=3  MediaType=  BusType=USB  Size=931.5GB  Model=Seagate Expansion
+Disk#=1  MediaType=  BusType=SATA  Size=290.1GB  Model=WDC WD3200AAJS-00L7A0
+
+===== K. GUID 卷映射(定位 VSS 报错的卷) =====
+DeviceID=\\?\Volume{f922639d-9c40-44dc-9342-582483cd8b5c}\  DriveLetter=C:  Label=  Capacity=155GB
+DeviceID=\\?\Volume{b6c8a514-da2f-47f8-9645-31c1ce73becc}\  DriveLetter=D:  Label=软件  Capacity=127GB
+DeviceID=\\?\Volume{7f5920da-1262-4b81-8534-35d6426caa5c}\  DriveLetter=E:  Label=文档  Capacity=171.4GB
+DeviceID=\\?\Volume{0c58348c-afed-4a1e-a85e-6aa604137960}\  DriveLetter=F:  Label=FUN  Capacity=12GB
+DeviceID=\\?\Volume{03e7eee4-0000-0000-0000-100000000000}\  DriveLetter=G:  Label=Seagate Expansion Drive  Capacity=931.5GB
+DeviceID=\\?\Volume{ad250a1f-0000-0000-007e-000000000000}\  DriveLetter=H:  Label=  Capacity=30.5GB
+DeviceID=\\?\Volume{ad250a1f-0000-0000-0024-b0a207000000}\  DriveLetter=I:  Label=SOFTWARE  Capacity=95.4GB
+DeviceID=\\?\Volume{ad250a1f-0000-0000-00f2-ef7c1f000000}\  DriveLetter=J:  Label=MEDIA  Capacity=95.4GB
+DeviceID=\\?\Volume{ad250a1f-0000-0000-00c0-2f5737000000}\  DriveLetter=K:  Label=BACKUP  Capacity=68.7GB
+DeviceID=\\?\Volume{29003a2b-0b1d-4687-b271-823742b2bda4}\  DriveLetter=  Label=  Capacity=0.3GB
+
+===== L. G盘当前 python313.dll 可达性 =====
+可达: G:\WorkBuddy_Data\binaries\python\versions\3.13.12\python313.dll  (大小 5.86MB)
+C盘副本可达: C:\Users\Administrator\.workbuddy\binaries\python\versions\3.13.12\python313.dll
