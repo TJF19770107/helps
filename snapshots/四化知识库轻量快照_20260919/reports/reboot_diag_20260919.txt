@@ -1,0 +1,53 @@
+===== A. 系统关机/重启事件(最近2天) =====
+(无相关事件)
+
+===== B. 蓝屏/崩溃 Bugcheck (ID=1001) =====
+(无 Bugcheck 事件)
+
+===== C. Windows Update 重启相关 (最近2天) =====
+(无 Update 事件)
+
+===== D. 计划任务含 reboot/shutdown/restart =====
+Task=RunOnReboot Path=\Microsoft\Windows\Management\Provisioning\ State=Disabled
+   Exec=%windir%\system32\ProvTool.exe Args=/turn 5 /source ContinueSessionTask
+Task=Device Install Reboot Required Path=\Microsoft\Windows\Plug and Play\ State=Ready
+   Exec= Args=
+Task=SvcRestartTask Path=\Microsoft\Windows\SoftwareProtectionPlatform\ State=Ready
+   Exec= Args=
+Task=SvcRestartTaskLogon Path=\Microsoft\Windows\SoftwareProtectionPlatform\ State=Ready
+   Exec= Args=
+Task=SvcRestartTaskNetwork Path=\Microsoft\Windows\SoftwareProtectionPlatform\ State=Ready
+   Exec= Args=
+Task=Reboot_AC Path=\Microsoft\Windows\UpdateOrchestrator\ State=Disabled
+   Exec=%systemroot%\system32\MusNotification.exe Args=/RunOnAC RebootDialog
+Task=Reboot_Battery Path=\Microsoft\Windows\UpdateOrchestrator\ State=Disabled
+   Exec=%systemroot%\system32\MusNotification.exe Args=/RunOnBattery RebootDialog
+
+===== E. 崩溃自动重启注册表 =====
+AutoReboot(on crash) = 0
+
+===== F. 磁盘剩余空间 =====
+C:  Used=129.8GB  Free=25.2GB  (16.3%)
+E:  Used=138.6GB  Free=32.8GB  (19.1%)
+G:  Used=726.1GB  Free=205.5GB  (22.1%)
+
+===== G. Application 错误(Level=2, 前20) =====
+2026-09-17 18:00:07  Src=Microsoft-Windows-Security-SPP  许可证激活(slui.exe)失败，返回以下错误代码:
+2026-09-18 05:44:52  Src=VSS  卷影复制服务错误: 意外错误 DeviceIoControl(\\?\Volume{03e7eee4-0000-0000-0000-100000000000} - 0000000000000258,0x0053c06c,000001DD402077F0,0,000001DD402067C0,4096,[0])。hr = 0x80070079, 信号灯超时时间已到
+2026-09-18 06:49:20  Src=VSS  卷影复制服务错误: 意外错误 DeviceIoControl(\\?\Volume{03e7eee4-0000-0000-0000-100000000000} - 00000000000002C0,0x0053c06c,0000013675A07AE0,0,0000013675A06AB0,4096,[0])。hr = 0x80070079, 信号灯超时时间已到
+2026-09-18 09:12:12  Src=VSS  卷影复制服务错误: 意外错误 DeviceIoControl(\\?\Volume{03e7eee4-0000-0000-0000-100000000000} - 000000000000026C,0x0053c06c,0000026F5A807AE0,0,0000026F5A806AB0,4096,[0])。hr = 0x80070079, 信号灯超时时间已到
+2026-09-18 10:30:12  Src=VSS  卷影复制服务错误: 意外错误 DeviceIoControl(\\?\Volume{03e7eee4-0000-0000-0000-100000000000} - 0000000000000278,0x0053c06c,00000258EE0077F0,0,00000258EE0067C0,4096,[0])。hr = 0x80070079, 信号灯超时时间已到
+2026-09-18 13:47:44  Src=VSS  卷影复制服务错误: 意外错误 DeviceIoControl(\\?\Volume{03e7eee4-0000-0000-0000-100000000000} - 0000000000000268,0x0053c06c,0000024A1C207AE0,0,0000024A1C206AB0,4096,[0])。hr = 0x80070079, 信号灯超时时间已到
+2026-09-18 14:09:24  Src=Application Hang  程序 GptBrowser.exe 版本 128.0.6541.235 已停止与 Windows 交互并关闭。若要查看是否有关于该问题的详细信息，请检查“安全性与维护”控制面板中的问题历史记录。
+2026-09-18 14:30:51  Src=Application Error  错误应用程序名称: 360se.exe，版本: 16.3.1008.64，时间戳: 0x6a714d37
+2026-09-18 14:34:12  Src=Application Error  错误应用程序名称: 360se.exe，版本: 16.3.1008.64，时间戳: 0x6a714d37
+2026-09-18 14:46:52  Src=Application Error  错误应用程序名称: svchost.exe_svsvc，版本: 10.0.19041.5794，时间戳: 0x11bd0919
+2026-09-18 14:53:12  Src=Application Error  错误应用程序名称: svchost.exe_svsvc，版本: 10.0.19041.5794，时间戳: 0x11bd0919
+2026-09-18 17:59:12  Src=Microsoft-Windows-Security-SPP  许可证激活(slui.exe)失败，返回以下错误代码:
+2026-09-18 18:35:35  Src=Application Error  错误应用程序名称: python.exe，版本: 3.13.14150.1013，时间戳: 0x6a2a3429
+2026-09-18 18:35:35  Src=Application Error  由于下列某个原因，Windows 无法访问文件 G:\WorkBuddy_Data\binaries\python\versions\3.13.12\python313.dll: 网络连接、存储文件的磁盘或安装在此计算机上的存储 驱动程序有问题；或者磁盘丢失。 由于上述错误，Windows 关闭了程序 Python。
+2026-09-18 20:01:42  Src=Application Error  错误应用程序名称: pythonw.exe，版本: 3.13.14150.1013，时间戳: 0x6a2a342a
+2026-09-18 20:01:42  Src=Application Error  错误应用程序名称: pythonw.exe，版本: 3.13.14150.1013，时间戳: 0x6a2a342a
+2026-09-18 20:01:42  Src=Application Error  错误应用程序名称: pythonw.exe，版本: 3.13.14150.1013，时间戳: 0x6a2a342a
+2026-09-18 20:01:42  Src=Application Error  错误应用程序名称: python.exe，版本: 3.13.14150.1013，时间戳: 0x6a2a3429
+2026-09-18 20:01:42  Src=Application Error  由于下列某个原因，Windows 无法访问文件 : 网络连接、存储文件的磁盘或安装在此计算机上的存储 驱动程序有问题；或者磁盘丢失。 由于上述错误，Windows 关闭了程序 Python。
