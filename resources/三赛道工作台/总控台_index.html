@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>三赛道工作台 · 总控台 v2.1.0</title>
+<style>
+:root{--bg:#f5f7fa;--panel:#fff;--ink:#1a2332;--ink2:#5a6674;--ink3:#8b93a1;--line:#e3e8ef;--ok:#0f9960}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:22px;padding-bottom:70px}
+.hd{background:linear-gradient(135deg,#0b5cad,#6d28d9);color:#fff;border-radius:14px;padding:24px 28px;margin-bottom:18px;box-shadow:0 4px 20px rgba(11,92,173,.22);display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.hd h1{font-size:24px;font-weight:700}
+.hd .sub{opacity:.94;font-size:13px;margin-top:8px;line-height:1.8}
+.badge{margin-left:auto;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);padding:7px 15px;border-radius:999px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;background:#cbd5e1}
+.dot.up{background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.28)}.dot.down{background:#f87171}
+h2{font-size:16.5px;margin:24px 0 13px;padding-left:11px;border-left:4px solid #0b5cad}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:19px 21px;transition:.16s;text-decoration:none;color:inherit;display:block}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(16,24,40,.1)}
+.card .t{font-size:17px;font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:9px}
+.card .d{font-size:12.5px;color:var(--ink2);line-height:1.8}
+.card .p{margin-top:11px;font-size:12.5px;font-weight:700;color:#0b5cad}
+.c1{border-top:4px solid #0b5cad}.c2{border-top:4px solid #b42318}.c3{border-top:4px solid #6d28d9}
+.ops{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+button.act{background:linear-gradient(135deg,#0b5cad,#0d9488);color:#fff;border:none;padding:11px 20px;border-radius:9px;font-size:13.5px;font-weight:600;cursor:pointer;box-shadow:0 3px 12px rgba(11,92,173,.26);transition:.15s;font-family:inherit}
+button.act:hover{transform:translateY(-2px)}
+button.act.alt{background:linear-gradient(135deg,#475569,#64748b)}
+.res{background:#0f1b2d;color:#c9e2f7;border-radius:11px;padding:14px 17px;font-family:Consolas,monospace;font-size:12.3px;line-height:1.85;white-space:pre-wrap;word-break:break-all;max-height:220px;overflow:auto;min-height:44px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:11px;overflow:hidden;font-size:12.4px;box-shadow:0 1px 3px rgba(16,24,40,.05)}
+th{background:#0b5cad;color:#fff;padding:9px 11px;text-align:left;font-weight:600}
+td{padding:8px 11px;border-bottom:1px solid #f0f3f7;color:var(--ink2)}
+tr:hover td{background:#f8fafc}
+.pill{font-size:10.5px;padding:2px 8px;border-radius:9px;background:#eef4fb;color:#0b5cad;font-weight:600}
+.pill.go{background:#e6f6ef;color:#0a7a4f}.pill.no{background:#fde8e8;color:#b42318}.pill.warn{background:#fef3c7;color:#92400e}
+.kpis{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 17px;min-width:120px;flex:1}
+.kpi .k{font-size:11.5px;color:var(--ink3);margin-bottom:5px}.kpi .v{font-size:21px;font-weight:700;color:#0b5cad}
+.watermark{position:fixed;right:14px;bottom:12px;z-index:99;pointer-events:none;text-align:right;
+background:rgba(255,255,255,.84);border:1px solid rgba(11,92,173,.28);border-radius:9px;padding:7px 12px;backdrop-filter:blur(3px)}
+.watermark .b{font-size:12.5px;font-weight:700;color:#0b5cad}
+.watermark .l{font-size:10.5px;color:#5a6674;margin-top:2px;font-family:Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="watermark"><div class="b">汤小龙 🦞 三赛道工作台 v2.1.0</div>
+<div class="l">汤嘉锋 实名留证 · 总控台 · <span id="wmt"></span></div></div>
+
+<div class="hd">
+  <div><h1>🦞 三赛道工作台 · 总控台</h1>
+  <div class="sub">统一后端 <b>TriHub v2.1.0</b>（零依赖 Python 标准库）｜ 共享数据库 <b>tri_hub.db</b>（SQLite · WAL）<br>
+  三条赛道各自独立运行，底层能力互通相乘 —— 短期现金流 · 中期资金复利 · 前沿虚实闭环储备</div></div>
+  <div class="badge"><span class="dot" id="dot"></span><span id="bdt">检测中…</span></div>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="k">T1 真实订单目录</div><div class="v" id="k1">–</div></div>
+  <div class="kpi"><div class="k">T2 真实K线币种</div><div class="v" id="k2">–</div></div>
+  <div class="kpi"><div class="k">T3 场景库</div><div class="v" id="k3">–</div></div>
+  <div class="kpi"><div class="k">联动产物登记</div><div class="v" id="k4">–</div></div>
+  <div class="kpi"><div class="k">后端事件累计</div><div class="v" id="k5">–</div></div>
+</div>
+
+<h2>三个工作台（点击进入 · 每个按钮都是真后端 + 真数据库）</h2>
+<div class="cards">
+  <a class="card c1" href="/t1"><div class="t">🎨 赛道1 · AI多模态接单工作台</div>
+    <div class="d">短期现金流 ｜ 企业微信群定制接单项目<br>海报 / PPT / CDR复刻 / 菜单 / AI漫剧 / AI短剧 / 小说 / 电影级写实图像 / AI视频</div>
+    <div class="p">进入工作台 →</div></a>
+  <a class="card c2" href="/t2"><div class="t">📈 赛道2 · 黑马量化工作台</div>
+    <div class="d">中期资金复利 ｜ 我的黑马策略 / quant_app + AI量化平台知识底座<br>K线通路 / 全历史回测 / 全市场扫黑马 / 形态双轴检索 / 风控八闸</div>
+    <div class="p">进入工作台 →</div></a>
+  <a class="card c3" href="/t3"><div class="t">🤖 赛道3 · AI具身智能工作台</div>
+    <div class="d">前沿储备 ｜ AI具身智能赛道 · 对标田柯宇世界模型<br>物理感知 → 世界模型预测仿真 → 动作指令 → 反馈回流（临界点预判 1~2 年）</div>
+    <div class="p">进入工作台 →</div></a>
+</div>
+
+<h2>跨赛道联动 · 产物登记与复用评估（score = 复用增益 − 迁移代价）</h2>
+<div class="ops">
+  <button class="act" onclick="reg('T2','T1','BTCUSDT行情图','material','exists','same','行情图→多模态包装成宣传素材')">① T2 行情图 → T1 宣传素材</button>
+  <button class="act" onclick="reg('T2','T3','时序预测引擎','interface','need_new','convert','量化时序引擎→具身环境状态预测')">② T2 时序引擎 → T3 环境预测</button>
+  <button class="act" onclick="reg('T1','T3','场景图像素材','material','need_new','convert','多模态素材→世界模型场景训练集')">③ T1 图像素材 → T3 训练集</button>
+  <button class="act alt" onclick="reg('T1','T3','客户保密单贴纸','material','exists','same','保密素材（红线：不可跨台）',true)">④ 受限素材试跨台（应判死）</button>
+  <button class="act alt" onclick="refreshAll()">↻ 刷新</button>
+</div>
+<div class="res" id="out">// 等待操作…</div>
+
+<h2>联动产物台账（读自 tri_hub.db · link_artifacts）</h2>
+<table><thead><tr><th>产物ID</th><th>来源→目标</th><th>标题</th><th>bytes</th><th>sha256</th><th>判定</th><th>score</th></tr></thead>
+<tbody id="lt"><tr><td colspan="7" style="color:#8b93a1">加载中…</td></tr></tbody></table>
+
+<h2>后端事件日志（读自 tri_hub.db · event_log · 每次按钮点击都留痕）</h2>
+<table><thead><tr><th>时间</th><th>赛道</th><th>动作</th><th>来源</th><th>耗时</th><th>结果</th></tr></thead>
+<tbody id="ev"><tr><td colspan="6" style="color:#8b93a1">加载中…</td></tr></tbody></table>
+
+<script>
+const API_BASE=(location.protocol==='file:')?(location.host||'http://127.0.0.1:8899'):'';const API=(p,b)=>fetch(API_BASE+p,{method:b?'POST':'GET',headers:{'Content-Type':'application/json'},
+  body:b?JSON.stringify(Object.assign({_client:'HUB'},b)):undefined}).then(r=>r.json());
+function stamp(){document.getElementById('wmt').textContent=new Date().toLocaleString('zh-CN',{hour12:false})}
+setInterval(stamp,1000);stamp();
+function show(o){document.getElementById('out').textContent=JSON.stringify(o,null,2)}
+async function health(){try{const h=await API('/api/health');document.getElementById('dot').className='dot up';
+  document.getElementById('bdt').textContent='后端在线 '+h.version+' · '+h.time;}
+  catch(e){document.getElementById('dot').className='dot down';document.getElementById('bdt').textContent='后端离线';}}
+async function loadStats(){const d=await API('/api/stats');
+  document.getElementById('k1').textContent=d.t1.real_order_dirs;
+  document.getElementById('k2').textContent=d.t2.count;
+  document.getElementById('k3').textContent=d.t3.scenes;
+  document.getElementById('k4').textContent=d.link.artifacts;}
+async function loadLink(){const d=await API('/api/link/artifacts');
+  document.getElementById('lt').innerHTML=d.rows.length?d.rows.map(r=>{
+    const cls=r.score>=3?'go':(r.score<0?'no':'warn');
+    return `<tr><td><b>${r.artifact_id}</b></td><td>${r.from_track}→${r.to_track}</td><td>${r.title}</td><td>${r.bytes}</td><td>${r.sha256}</td><td><span class="pill ${cls}">${r.decision}</span></td><td><b>${r.score}</b></td></tr>`;}).join('')
+    :'<tr><td colspan="7" style="color:#8b93a1">暂无登记</td></tr>';}
+async function loadEvents(){const d=await API('/api/events');document.getElementById('k5').textContent=d.count;
+  document.getElementById('ev').innerHTML=d.rows.slice(0,25).map(r=>`<tr><td>${r.ts}</td><td>${r.track}</td><td>${r.action}</td><td>${r.client}</td><td>${r.ms}ms</td><td style="max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.result||'').slice(0,110)}</td></tr>`).join('');}
+async function refreshAll(){await Promise.all([loadStats(),loadLink(),loadEvents()]);}
+async function reg(from,to,title,kind,ig,fg,note,restricted){
+  show({doing:`登记 ${from}→${to} 并评估…`});
+  const offer={kind:kind,interface_gap:ig,format_gap:fg,note:note}; if(restricted)offer.restricted=true;
+  const path=window.__prod&&window.__prod[from]||'';
+  show(await API('/api/link/register',{from_track:from,to_track:to,title:title,type:'file',path:path,offer:offer}));
+  await refreshAll();}
+// 真实产物路径（用于 bytes/sha 取证）
+window.__prod={T2:'E:\\\\龙虾AI主控中心\\\\我的AI分身\\\\CODEX量化策略20260615\\\\币安\\\\我的黑马策略\\\\quant_app\\\\output\\\\charts',
+  T1:'E:\\\\龙虾AI主控中心\\\\我的AI分身\\\\企业微信群定制接单项目\\\\AI多模态产品工作台（2026年9月29日）\\\\index.html'};
+(async()=>{await health();await refreshAll();})();
+</script>
+</body></html>

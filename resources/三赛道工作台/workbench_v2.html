@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>赛道3 · AI具身智能工作台 v2.1.0</title>
+<style>
+:root{--bg:#f5f7fa;--panel:#fff;--ink:#1a2332;--ink2:#5a6674;--ink3:#8b93a1;--line:#e3e8ef;
+--t3:#6d28d9;--t3b:#8b5cf6;--ok:#0f9960}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:22px;padding-bottom:70px}
+.hd{background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff;border-radius:14px;padding:22px 26px;margin-bottom:18px;box-shadow:0 4px 18px rgba(109,40,217,.2);display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.hd h1{font-size:22px;font-weight:700}
+.hd .sub{opacity:.94;font-size:12.8px;margin-top:7px;line-height:1.75}
+.badge{margin-left:auto;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);padding:7px 15px;border-radius:999px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;background:#cbd5e1}
+.dot.up{background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.28)}.dot.down{background:#f87171}
+.kpis{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 18px;min-width:140px;flex:1}
+.kpi .k{font-size:11.5px;color:var(--ink3);margin-bottom:5px}
+.kpi .v{font-size:22px;font-weight:700;color:var(--t3)}
+h2{font-size:16px;margin:22px 0 12px;padding-left:11px;border-left:4px solid var(--t3)}
+.ops{display:flex;gap:10px;flex-wrap:wrap}
+button.act{background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff;border:none;padding:11px 20px;border-radius:9px;font-size:13.5px;font-weight:600;cursor:pointer;box-shadow:0 3px 12px rgba(109,40,217,.28);transition:.15s;font-family:inherit}
+button.act:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(109,40,217,.36)}
+button.act.alt{background:linear-gradient(135deg,#475569,#64748b);box-shadow:0 3px 12px rgba(71,85,105,.24)}
+button.act:disabled{opacity:.55;cursor:wait;transform:none}
+.res{margin-top:12px;background:#1b1236;color:#ded3ff;border-radius:11px;padding:14px 17px;font-family:Consolas,monospace;font-size:12.3px;line-height:1.85;white-space:pre-wrap;word-break:break-all;max-height:270px;overflow:auto;min-height:44px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:11px;overflow:hidden;font-size:12.4px;box-shadow:0 1px 3px rgba(16,24,40,.05)}
+th{background:var(--t3);color:#fff;padding:9px 11px;text-align:left;font-weight:600}
+td{padding:8px 11px;border-bottom:1px solid #f0f3f7;color:var(--ink2)}
+tr:hover td{background:#faf8ff}
+.pill{font-size:10.5px;padding:2px 8px;border-radius:9px;background:#f1ecfd;color:var(--t3);font-weight:600}
+.note{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #f59e0b;border-radius:9px;padding:12px 15px;font-size:12.4px;color:#78350f;line-height:1.8;margin-top:10px}
+.watermark{position:fixed;right:14px;bottom:12px;z-index:99;pointer-events:none;text-align:right;
+background:rgba(255,255,255,.82);border:1px solid rgba(109,40,217,.28);border-radius:9px;padding:7px 12px;backdrop-filter:blur(3px)}
+.watermark .b{font-size:12.5px;font-weight:700;color:#6d28d9}
+.watermark .l{font-size:10.5px;color:#5a6674;margin-top:2px;font-family:Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="watermark"><div class="b">汤小龙 🦞 三赛道工作台 v2.1.0</div>
+<div class="l">汤嘉锋 实名留证 · 赛道3 AI具身智能 · <span id="wmt"></span></div></div>
+
+<div class="hd">
+  <div><h1>🤖 赛道3 · AI具身智能工作台</h1>
+  <div class="sub">前沿储备赛道 ｜ 工作空间：<b>AI具身智能赛道</b> ｜ 对标：<b>田柯宇世界模型路线</b> ｜ 统一后端 TriHub v2.1.0<br>
+  临界点判据（王兴兴 2026-10-12 工博会）：机器人进 <b>80% 陌生场景</b> + 仅凭自然语言指令 + 独立完成 <b>80% 任务</b></div></div>
+  <div class="badge" id="bd"><span class="dot" id="dot"></span><span id="bdt">检测中…</span></div>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="k">世界模型场景库</div><div class="v" id="k1">–</div></div>
+  <div class="kpi"><div class="k">已登记场景样本</div><div class="v" id="k2">–</div></div>
+  <div class="kpi"><div class="k">虚实闭环段数</div><div class="v">4</div></div>
+</div>
+
+<h2>操作台（点按钮 → 打后端 → 写数据库 → 刷新本页）</h2>
+<div class="ops">
+  <button class="act" onclick="ingest()">📥 登记场景样本（从其它赛道取素材）</button>
+  <button class="act" onclick="sim()">🧠 运行世界模型推演</button>
+  <button class="act" onclick="simT2()">🔗 复用T2时序引擎推演</button>
+  <button class="act alt" onclick="refreshAll()">↻ 刷新数据</button>
+  <button class="act alt" onclick="window.open('/','_blank')">🏠 回总控台</button>
+</div>
+<div class="res" id="out">// 等待操作…</div>
+
+<h2>虚实闭环四段（物理感知 → 世界模型预测仿真 → 动作指令控实体 → 物理反馈回流）</h2>
+<table><thead><tr><th>段</th><th>环节</th><th>底座预留接口</th><th>可复用来源</th></tr></thead><tbody>
+<tr><td>①</td><td>物理感知采集</td><td><span class="pill">sensor_ingest</span></td><td>—</td></tr>
+<tr><td>②</td><td>虚拟空间世界模型预测仿真</td><td><span class="pill">world_model.predict</span></td><td>赛道2 时序预测引擎</td></tr>
+<tr><td>③</td><td>输出动作指令控制实体</td><td><span class="pill">action_emit</span></td><td>—</td></tr>
+<tr><td>④</td><td>物理反馈回流迭代</td><td><span class="pill">feedback_loop</span></td><td>赛道1 图像/视频素材（场景训练集）</td></tr>
+</tbody></table>
+
+<h2>场景样本表（读自 tri_hub.db · t3_frames）</h2>
+<table><thead><tr><th>样本号</th><th>场景</th><th>来源赛道</th><th>模态</th><th>时间</th></tr></thead>
+<tbody id="tb"><tr><td colspan="5" style="color:#8b93a1">加载中…</td></tr></tbody></table>
+
+<div class="note"><b>实事求是声明：</b>本台的「世界模型推演」是<b>本地可解释模拟</b>，用于验证虚实闭环的<b>架构连通性</b>与接口预留，<b>不是</b>真实世界模型推理，也<b>不构成</b>对机器人能力的结论。临界点判据为行业预判，尚未发生。</div>
+
+<script>
+const API_BASE=(location.protocol==='file:')?(location.host||'http://127.0.0.1:8899'):'';const API=(p,b)=>fetch(API_BASE+p,{method:b?'POST':'GET',headers:{'Content-Type':'application/json'},
+  body:b?JSON.stringify(Object.assign({_client:'T3'},b)):undefined}).then(r=>r.json());
+function stamp(){document.getElementById('wmt').textContent=new Date().toLocaleString('zh-CN',{hour12:false})}
+setInterval(stamp,1000);stamp();
+function show(o){document.getElementById('out').textContent=JSON.stringify(o,null,2)}
+async function health(){try{const h=await API('/api/health');document.getElementById('dot').className='dot up';
+  document.getElementById('bdt').textContent='后端在线 '+h.version+' · '+h.time;}
+  catch(e){document.getElementById('dot').className='dot down';document.getElementById('bdt').textContent='后端离线';}}
+async function loadFrames(){const d=await API('/api/t3/frames');document.getElementById('k2').textContent=d.count;
+  document.getElementById('tb').innerHTML=d.rows.length?d.rows.map(r=>`<tr><td><b>${r.frame_id}</b></td><td>${r.scene}</td><td><span class="pill">${r.source_track}</span></td><td>${r.modality}</td><td>${r.created_at}</td></tr>`).join(''):'<tr><td colspan="5" style="color:#8b93a1">暂无样本</td></tr>';}
+async function refreshAll(){const s=await API('/api/t3/scenes');document.getElementById('k1').textContent=s.scenes.length;await loadFrames();}
+async function ingest(){const s=await API('/api/t3/scenes');
+  const sc=s.scenes[Math.floor(Math.random()*s.scenes.length)];
+  const src=['T1','T2'][Math.floor(Math.random()*2)];
+  show({doing:'从'+src+'取素材，登记为世界模型场景训练样本…'});
+  show(await API('/api/t3/ingest',{scene:sc,source_track:src,modality:src==='T1'?'image/video':'time_series'}));
+  await refreshAll();}
+async function sim(){const s=await API('/api/t3/scenes');show({doing:'世界模型推演中…'});
+  show(await API('/api/t3/simulate',{scene:s.scenes[0]}));await refreshAll();}
+async function simT2(){const s=await API('/api/t3/scenes');show({doing:'复用T2时序引擎→环境状态预测推演…'});
+  show(await API('/api/t3/simulate',{scene:s.scenes[0],traced_from_track:'T2'}));await refreshAll();}
+(async()=>{await health();await refreshAll();})();
+</script>
+</body></html>
