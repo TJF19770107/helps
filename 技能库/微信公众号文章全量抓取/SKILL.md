@@ -6,8 +6,10 @@ description: >
   「参数错误」「环境异常」「请在微信客户端打开链接」、搜狗微信 antispider、
   要给某个博主建档并蒸馏技能 时使用。
 agent_created: true
-version: 1.0.0
+version: 1.1.0
 created: 2026-11-03
+updated: 2026-11-03
+changelog: v1.1.0 新增第八章「抓到之后怎么归档（乐享端写入协议）」——补 5 个实测坑 + 标准写入顺序 + 「succeeded ≠ 写全了」回读铁律
 source: 实战打通（俊哥AI落地 7 篇 / 27,673 字），踩坑 6 次换 4 条路线
 ---
 
@@ -167,3 +169,39 @@ date = re.search(r'var ct\s*=\s*"(\d+)"', s)   # unix 时间戳
 ```bash
 python s4_curl.py        # 读 links.py，产出 raw_cl/*.txt + articles.json
 ```
+
+---
+
+## 八、抓到之后怎么归档（乐享端写入协议 · v1.1.0 新增）
+
+抓到正文只是半程。**落到乐享知识库有 5 个真坑**，全是本轮实测踩出来的：
+
+| 坑 | 现象 | 解法 |
+|---|---|---|
+| **参数名是 `name` 不是 `title`** | `entry_create_entry` 建出来叫「无标题」 | 用 `name`；建错了用 `entry_rename_entry` 补 |
+| **`replace_content` 整页替换长文会失败** | 报 `replacement content is structurally unstable after round trip` | **拆段写入**：第一段用 `replace_content` 落底，后续全用 `update_content` + `old_str` 匹配上一段末尾再接 |
+| **`update_content` 不支持空 `old_str`** | 报 `old_str is required` | 必须用锚点文本，不能空串追加 |
+| **`>` 引用块 + `**` 组合不稳定** | 同上 round trip 报错 | 去引用块，改普通段落 |
+| 有序列表回读全是 `1.` | 看着像 bug | 渲染时自动编号，源文本为 1 属正常 |
+
+**标准写入顺序**（每步都要回读验证，不能只看「succeeded」）：
+
+```
+entry_create_entry(folder, name=…)          → 拿 entry.id
+entry_create_entry(page, name=…, parent_entry_id=…)  → 拿 entry.id
+block_update_page(replace_content, 第一段)   → 落底
+block_update_page(update_content, 锚点=上段末尾 + 新内容)  × N 段
+block_fetch_page(render_mode=markdown)       → 回读逐节核对
+entry_list_children(parent_id)               → 确认 status: finished
+```
+
+> **`block_update_page` 返回 `succeeded` ≠ 正文写全了。** 必须 `block_fetch_page` 回读，
+> 并核对最后一段是否真的落在页面上（本轮出现「末尾代码块被插到页尾」的排版漂移，
+> 内容没丢但顺序错了 —— 只有回读能发现）。
+
+**补充坑（本轮又踩到 2 个）：**
+
+- **残留空 Code 块**：`update_content` 收尾时容易在页尾留一个空代码块（回读时表现为末尾多出来的两行三反引号）。
+  修法：用 `block_fetch_page(render_mode="mdx")` 拿到该块的 `data-id`，再 `delete_blocks` 单独删 —— 不要用 `update_content` 去「匹配」它，空块文本匹配不上。
+- **表格单元格里的加粗会丢**：markdown 表格里的 `**……**` 写入后被转成纯文本（回读无 `**`）。
+  需要层级强调时，靠「列名写清」而不是靠加粗。
