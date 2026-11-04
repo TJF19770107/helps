@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>GLM-5 技术报告精读（arXiv 2602.15763 全文实读）</title><style>
+body{font-family:-apple-system,"Microsoft YaHei",sans-serif;line-height:1.75;
+     max-width:900px;margin:0 auto;padding:24px;color:#1a1a1a;background:#fff;font-size:15px}
+h1{font-size:26px;border-bottom:2px solid #0b6bcb;padding-bottom:8px;margin-top:28px}
+h2{font-size:21px;margin-top:28px;color:#0b3d91}
+h3{font-size:17px;margin-top:20px;color:#222}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid #d0d7de;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#f2f6fb;font-weight:600}
+tr:nth-child(even) td{background:#fafbfc}
+code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px;
+     font-family:Consolas,monospace;color:#b5314a}
+pre{background:#f6f8fa;padding:14px;border-radius:6px;overflow-x:auto;border:1px solid #e1e4e8}
+pre code{background:none;color:#24292e;font-size:12.5px;line-height:1.5}
+blockquote{border-left:4px solid #0b6bcb;background:#f2f6fb;margin:12px 0;
+           padding:10px 16px;color:#333}
+hr{border:none;border-top:1px solid #e1e4e8;margin:24px 0}
+ul{padding-left:24px}
+li{margin:4px 0}
+.meta{color:#666;font-size:12.5px;background:#f7f7f7;padding:8px 12px;
+      border-radius:4px;margin-bottom:18px}
+details{background:#fafbfc;border:1px solid #e1e4e8;border-radius:4px;padding:10px 14px;margin:10px 0}
+summary{cursor:pointer;font-weight:600;color:#0b3d91}
+a{color:#0b6bcb}
+</style></head><body>
+<h1>GLM-5 技术报告精读（arXiv 2602.15763 全文实读）</h1><div class="meta">来源：论文精读 ｜ 创建：2026-11-02 ｜ 标签：[GLM-5, 技术报告, 精读, MoE, DSA, RL]</div>
+<h1>GLM-5 技术报告精读</h1>
+
+<blockquote><strong>这份和 <code>GLM-5系列_架构与训练全解.md</code> 的分工</strong>：</blockquote>
+<blockquote>那份是「系列总览 + 部署实操」，这份是<strong>论文正文的逐节硬信息</strong>。</blockquote>
+<blockquote>全文来自 arXiv HTML 版（不是摘要、不是二手解读），关键句保留英文原文。</blockquote>
+
+<hr>
+
+<h2>零、先把上一轮的一个「未披露」钉死</h2>
+
+<p>上一版我写的是：「技术报告<strong>没有披露</strong> FP8 训练的完整范围」。</p>
+
+<p><strong>现在全文读完了，可以给确定结论：</strong></p>
+
+<table><thead><tr><th>环节</th><th>精度</th><th>原文依据</th></tr></thead><tbody><tr><td><strong>SFT 阶段</strong></td><td><strong>INT4 QAT（量化感知训练）</strong></td><td><em>"we apply INT4 QAT in the SFT stage"</em></td></tr><tr><td><strong>RL rollout 推理</strong></td><td><strong>FP8</strong></td><td><em>"GLM-5 uses FP8 for rollout inference to reduce per-token latency"</em></td></tr><tr><td><strong>中文芯片（Ascend）</strong></td><td>Attention/MLP 用 <strong>W8A8</strong>，MoE 专家压到 <strong>W4A8</strong></td><td><em>"standard Attention and MLP blocks use W8A8 (INT8), while the MoE experts are compressed to W4A8 (INT4)"</em></td></tr><tr><td><strong>预训练主训练</strong></td><td>正文<strong>未给独立小节</strong></td><td>只有分布式优化器与并行描述，无可确认的 FP8 主训练表述</td></tr></tbody></table>
+
+<p><strong>关键原话</strong>：</p>
+
+<blockquote>"we have developed a quantization kernel applicable to both training and offline weight quantization, which ensures <strong>bitwise-identical behavior between training and inference</strong>."</blockquote>
+
+<blockquote>⚠️ <strong>这条极其重要</strong>：INT4 QAT 用的 kernel 和推理用的是<strong>同一个</strong>，保证<strong>逐位一致</strong>。</blockquote>
+<blockquote>这才是 QAT 的真正价值 —— 不是"训练时模拟量化"，是<strong>训练和推理走同一套数值路径</strong>，彻底消除 train-inference mismatch。</blockquote>
+<blockquote>→ 对比之下，绝大多数团队的 QAT 是"训练用 fake quant、推理用真 kernel"，两者数值不同，量化后掉点是常事。<strong>这条是工程硬功夫。</strong></blockquote>
+
+<hr>
+
+<h2>一、规模与架构（原文数字）</h2>
+
+<table><thead><tr><th>项</th><th>GLM-5</th><th>GLM-4.5（对比）</th></tr></thead><tbody><tr><td>总参数</td><td><strong>744B</strong></td><td>355B</td></tr><tr><td>激活参数</td><td><strong>40B</strong></td><td>32B</td></tr><tr><td>专家数</td><td><strong>256</strong></td><td>—</td></tr><tr><td>层数</td><td><strong>80</strong>（刻意减少，压专家并行通信开销）</td><td>—</td></tr><tr><td>激活占比</td><td><strong>5.4%</strong></td><td>9.0%</td></tr><tr><td>预训练 token</td><td><strong>28.5T</strong>（Base 27T + mid-training 1.55T）</td><td>—</td></tr></tbody></table>
+
+<blockquote><strong>为什么层数反而减少</strong>：<code>"reduces its layer count to 80 to minimize expert parallelism communication overhead"</code> ——</blockquote>
+<blockquote>256 个专家的 EP 通信是主要开销，减层数比减专家更划算。<strong>这是「通信墙」压倒「深度收益」的典型判断。</strong></blockquote>
+
+<h3>1.1 注意力：MLA + 两个新东西</h3>
+
+<table><thead><tr><th>组件</th><th>做法</th><th>解决什么</th></tr></thead><tbody><tr><td><strong>MLA</strong>（Multi-latent Attention）</td><td>低秩压缩 KV</td><td>省 KV cache</td></tr><tr><td><strong>Muon Split</strong> ★新</td><td>把 up-projection 矩阵（<code>W^UQ, W^UK, W^UV</code>）<strong>按头拆成更小矩阵，分别做正交化</strong></td><td>让不同注意力头以<strong>不同尺度</strong>更新，使 MLA 性能追平 GQA-8</td></tr><tr><td><strong>MLA-256</strong> ★新</td><td>头维 192 → <strong>256</strong>，头数减 1/3</td><td>降解码计算量</td></tr></tbody></table>
+
+<blockquote>原文：<em>"The method, denoted as Muon Split, enables projection weights for different attention heads to update at different scales."</em></blockquote>
+<blockquote></blockquote>
+<blockquote><strong>洞察</strong>：MLA 一直有个痛点是"所有头共享同一套投影，梯度尺度一致，头之间难分化"。</blockquote>
+<blockquote>Muon Split 的解法很优雅 —— <strong>不改结构，改优化器的作用粒度</strong>。这是一个「用优化器补结构缺陷」的范例。</blockquote>
+
+<h3>1.2 MTP：3 层参数共享</h3>
+
+<ul><li><strong>3 个 MTP 层共享参数</strong>（<code>"sharing the parameters of 3 MTP layers during training"</code>）</li><li>好处：<strong>显存不涨，接受率涨</strong></li><li>实测接受长度 <strong>2.76</strong>（DeepSeek-V3.2 是 2.55）</li><li>工程细节：MTP 输出层与主输出层<strong>放在最后一个 stage 同址</strong>，实现参数共享</li></ul>
+
+<blockquote><strong>洞察</strong>：投机解码的加速比 = 接受长度。2.76 意味着平均一次前向能出 2.76 个 token，<strong>理论加速接近 2.76×</strong>（实际受验证开销折损）。</blockquote>
+<blockquote>而它是靠"共享参数"白拿的 —— <strong>不加参数、不加显存、只改结构位置</strong>。性价比极高的一招。</blockquote>
+
+<hr>
+
+<h2>二、DSA（DeepSeek Sparse Attention）到底怎么接进来的</h2>
+
+<h3>2.1 核心思想（原文）</h3>
+
+<blockquote>"The core philosophy of DSA is to replace the traditional dense O(L²) attention—which becomes prohibitively expensive at 128K contexts—with a <strong>dynamic, fine-grained selection mechanism</strong>."</blockquote>
+
+<blockquote>"Unlike fixed patterns (like sliding windows), DSA <strong>'looks' at the content</strong> to decide which tokens are important."</blockquote>
+
+<p><strong>一句话</strong>：不是"每隔几个看一个"（固定模式），是<strong>看了内容再决定看谁</strong>。</p>
+
+<h3>2.2 两阶段接入（这是最值钱的工程细节）</h3>
+
+<table><thead><tr><th>阶段</th><th>规模</th><th>学习率</th><th>干什么</th></tr></thead><tbody><tr><td><strong>① 稠密预热</strong></td><td><strong>1000 步</strong>，每步 <strong>14 条 × 202,752 token</strong></td><td><strong>5e-3</strong></td><td>让模型先适应超长序列</td></tr><tr><td><strong>② 稀疏适配</strong></td><td><strong>20B token</strong></td><td>—</td><td>引入稀疏选择，损失尽量小</td></tr></tbody></table>
+
+<blockquote>原文：<em>"The warm-up stage goes through 1000 steps with each step trained on 14 sequences of 202,752 tokens and a maximum learning rate of 5e-3. The sparse adaptation stage... goes through 20B tokens."</em></blockquote>
+
+<p><strong>关键判断</strong>：</p>
+<ul><li>走的是 <strong>Continued Pre-Training（继续预训练）</strong>，不是从零训练 —— 原文：<em>"This avoided the 'astronomical' cost of training from scratch."</em></li><li>稀疏适配只要 <strong>20B token</strong>，对比 DeepSeek-V3.2 的 943.7B，<strong>省了两个数量级</strong></li><li><strong>但必须联合训练补回长上下文能力</strong>，只做适配就交付会掉点</li></ul>
+
+<h3>2.3 效果与「无损」的准确含义</h3>
+
+<blockquote><em>"DSA reduces the attention computation by roughly <strong>1.5-2×</strong> for long sequences... being able to handle 128K contexts at <strong>half the GPU cost</strong>."</em></blockquote>
+
+<blockquote><em>"DSA is <strong>lossless by construction</strong>: its lightning indexer achieves token-level sparsity without discarding any long-range dependencies, enabling application to all layers with no quality degradation."</em></blockquote>
+
+<blockquote>⚠️ <strong>"lossless by construction" 要读准</strong>：它说的不是"精度无损"，是<strong>"不丢弃任何长程依赖"</strong> ——</blockquote>
+<blockquote>因为 indexer 是<strong>按内容选 top-k（k=2048）</strong>，不是按位置截断。只要关键 token 在 top-2048 里，信息就在。</blockquote>
+<blockquote><strong>这是一个「注意力预算无损」的声明，不是「模型能力无损」的声明。</strong> 别误读。</blockquote>
+
+<hr>
+
+<h2>三、后训练：三段 RL + 一个异步框架</h2>
+
+<h3>3.1 流水线</h3>
+
+<pre><code>多任务 SFT（上下文 202,752，三种思考模式：Interleaved / Preserved / Turn-level）
+   ↓
+Reasoning RL → Agentic RL → General RL
+   ↓
+On-Policy Cross-Stage Distillation（防能力回退）</code></pre>
+
+<blockquote>原文：<em>"We implemented a sequential Reinforcement Learning pipeline—starting with Reasoning RL, followed by Agentic RL, and finishing with General RL."</em></blockquote>
+<blockquote><em>"we utilized On-Policy Cross-Stage Distillation throughout this process to prevent catastrophic forgetting"</em></blockquote>
+
+<p><strong>蒸馏优势的写法</strong>（值得抄）：</p>
+<blockquote><code>A_hat_{i,t} = sg[log(π_teacher^infer / π_θ^train)]</code></blockquote>
+<blockquote>用<strong>优势项</strong>的 log-ratio 做蒸馏，而不是直接对 logits 做 KL。这样不会把教师的"错误自信"也学过来。</blockquote>
+
+<h3>3.2 Reasoning RL 的超参（可直接抄）</h3>
+
+<table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>基础算法</td><td><strong>GRPO</strong></td></tr><tr><td>训练-推理不匹配处理</td><td><strong>IcePop</strong></td></tr><tr><td>KL 正则</td><td><strong>去掉</strong>（无 KL）</td></tr><tr><td>β</td><td><strong>2</strong></td></tr><tr><td>ε_low / ε_high</td><td><strong>0.2 / 0.28</strong></td></tr><tr><td>on-policy</td><td><strong>全 on-policy</strong></td></tr><tr><td>group size</td><td><strong>32</strong></td></tr><tr><td>batch size</td><td><strong>32</strong></td></tr><tr><td>覆盖域</td><td>数学、科学、代码、TIR（工具集成推理）</td></tr></tbody></table>
+
+<h3>3.3 ★ DSA 做 RL 的一个致命坑（本案最值钱的一条）</h3>
+
+<blockquote><em>"we use <strong>torch.topk</strong> as the default top-k operator in the DSA Indexer in our training engine. We also <strong>freeze the indexer parameters</strong> by default during RL"</em></blockquote>
+
+<p><strong>展开说清楚</strong>：</p>
+<ul><li><strong>必须用确定性 top-k</strong>（<code>torch.topk</code>）。用非确定性实现（并行/近似 top-k）会导致 <strong>熵骤降 + 性能崩溃</strong>。</li><li><strong>RL 期间冻结 indexer 参数</strong> —— 否则 RL 会把检索器带偏，模型学会"选那些让奖励高的 token"而不是"选真正相关的 token"。</li></ul>
+
+<blockquote>→ 这就是 <strong>reward hacking 在架构层面的形态</strong>：不是模型作弊，是<strong>检索器被奖励信号污染</strong>。</blockquote>
+<blockquote>→ 通用教训：<strong>任何"学习出来的选择器"（gate/router/retriever），在 RL 里都要考虑冻结或加约束。</strong></blockquote>
+
+<h3>3.4 slime 异步框架（GLM-5 的后训练基础设施）</h3>
+
+<p>核心：<strong>Multi-Task Rollout Orchestrator</strong> 解耦推理与训练引擎。</p>
+
+<table><thead><tr><th>机制</th><th>干什么</th></tr></thead><tbody><tr><td><strong>&gt;1k 并发 rollout</strong></td><td>吞吐量</td></tr><tr><td><strong>动态调整任务采样比例</strong></td><td>自动平衡各任务</td></tr><tr><td><strong>TITO 网关</strong>（Token-in-Token-out）</td><td>消除 re-tokenization 不匹配，<strong>保持动作级精确对应</strong></td></tr><tr><td><strong>Direct Double-sided Importance Sampling</strong></td><td>token 级双侧裁剪 [1-εℓ, 1+εh]，<strong>无需追踪历史策略检查点</strong></td></tr><tr><td><strong>DP-aware routing</strong></td><td>一致性哈希把同一 rollout 路由到同一 DP rank，<strong>最大化 KV 复用</strong></td></tr><tr><td><strong>样本过滤</strong></td><td>丢弃 w′−w0 &gt; τ 的过期/噪声样本；环境崩溃样本剔除；组内有效&lt;半数则整组丢弃</td></tr></tbody></table>
+
+<p>slime 三大能力：</p>
+<ul><li>高度可定制 rollout + 基于 server 的执行</li><li>混合精度 + MTP + <strong>PD 分离</strong>（prefill/decode 解耦）提吞吐</li><li><strong>heartbeat 驱动的容错</strong> + 路由级 server 生命周期管理</li></ul>
+
+<blockquote><strong>洞察</strong>：这套东西的复杂度已经<strong>远超"训练一个模型"</strong>，本质是在建一个<strong>分布式任务调度系统</strong>。</blockquote>
+<blockquote>唐杰说的"从模型公司变成系统公司"，在这一节里是可以摸到的实物。</blockquote>
+
+<h3>3.5 关于「RLVR」这个术语</h3>
+
+<blockquote>⚠️ <strong>原文没有用 "RLVR" 这个词</strong>。对应内容是：可验证环境 + 二元结果奖励。</blockquote>
+<blockquote>原文：<em>"we construct verifiable, executable environments that provide grounded feedback for both code-centric and content-generation workflows."</em></blockquote>
+<blockquote><em>"We assign domain and source-specific judge models or evaluation systems to produce <strong>binary outcome rewards</strong>."</em></blockquote>
+
+<p>所以：<strong>RLVR 是社区术语，智谱论文里的说法是「可验证环境 + binary outcome rewards」</strong>。写文章时别混。</p>
+
+<hr>
+
+<h2>四、训练数据（原文给的确定数字）</h2>
+
+<table><thead><tr><th>阶段</th><th>规模</th><th>细节</th></tr></thead><tbody><tr><td><strong>Base 预训练</strong></td><td><strong>27T tokens</strong></td><td><em>"prioritizing code and reasoning early on"</em>（早期重代码与推理）</td></tr><tr><td>代码语料</td><td>—</td><td>模糊去重后<strong>唯一 token +28%</strong></td></tr><tr><td><strong>Mid-training 上下文扩展</strong></td><td><strong>1.55T</strong></td><td>三阶段：<strong>32K（1T）→ 128K（500B）→ 200K（50B）</strong></td></tr><tr><td>软件工程数据</td><td>—</td><td><strong>约 1000 万 issue–PR 对</strong>，其中 issue–PR 部分约 <strong>160B 唯一 token</strong></td></tr><tr><td>数据类型</td><td>—</td><td>Web（DCLM + World Knowledge 分类器）、Code、Math &amp; Science、长上下文（自然+合成，含 MRCR-like）</td></tr></tbody></table>
+
+<blockquote>⚠️ <strong>原文没有给百分比配比</strong>。任何写"代码占 XX%、数学占 XX%"的说法，都不是这篇论文给的。</blockquote>
+
+<p><strong>长上下文扩展的节奏值得抄</strong>：32K → 128K → 200K，token 量 1T → 500B → 50B。</p>
+<p><strong>越往后数据越少</strong>，因为长上下文数据本身就稀缺，且每步算力成本剧增。</p>
+
+<hr>
+
+<h2>五、基准成绩（原文表 7 摘录）</h2>
+
+<table><thead><tr><th>基准</th><th>GLM-5</th><th>GLM-4.7</th><th>DS-V3.2</th><th>Kimi K2.5</th><th>Claude Opus 4.5</th><th>Gemini 3 Pro</th></tr></thead><tbody><tr><td><strong>HLE</strong></td><td>30.5</td><td>24.8</td><td>25.1</td><td><strong>31.5</strong></td><td>28.4</td><td>37.2</td></tr><tr><td><strong>HLE (w/ Tools)</strong></td><td>50.4</td><td>42.8</td><td>40.8</td><td><strong>51.8</strong></td><td>43.4</td><td>45.8</td></tr><tr><td>AIME 2026 I</td><td>92.7</td><td>92.9</td><td>92.7</td><td>92.5</td><td><strong>93.3</strong></td><td>90.6</td></tr><tr><td>HMMT Feb 2025</td><td>97.9</td><td>97.1</td><td>92.5</td><td>95.4</td><td>92.9</td><td>97.3</td></tr><tr><td>GPQA-Diamond</td><td>86.0</td><td>85.7</td><td>82.4</td><td>87.6</td><td>87.0</td><td><strong>91.9</strong></td></tr><tr><td>LongBench v2</td><td>64.5</td><td>59.1</td><td>59.8</td><td>61.0</td><td>64.4</td><td><strong>68.2</strong></td></tr><tr><td><strong>SWE-bench Verified</strong></td><td>77.8</td><td>73.8</td><td>73.1</td><td>76.8</td><td><strong>80.9</strong></td><td>76.2</td></tr><tr><td><strong>SWE-bench Multilingual</strong></td><td>73.3</td><td>66.7</td><td>70.2</td><td>73.0</td><td><strong>77.5</strong></td><td>65.0</td></tr><tr><td><strong>Terminal-Bench 2.0</strong></td><td>56.2/60.7</td><td>41.0</td><td>39.3</td><td>50.8</td><td><strong>59.3</strong></td><td>54.2</td></tr><tr><td><strong>CyberGym</strong>（漏洞挖掘）</td><td>43.2</td><td><strong>23.5</strong></td><td>17.3</td><td>41.3</td><td>50.6</td><td>39.9</td></tr><tr><td>BrowseComp</td><td>62.0</td><td>52.0</td><td>51.4</td><td>60.6</td><td>37.0</td><td>37.8</td></tr><tr><td><strong>τ²-Bench</strong></td><td>89.7</td><td>87.4</td><td>85.3</td><td>80.2</td><td><strong>91.6</strong></td><td>90.7</td></tr><tr><td><strong>MCP-Atlas</strong></td><td>67.8</td><td>52.0</td><td>62.2</td><td>63.8</td><td>65.2</td><td>66.6</td></tr><tr><td><strong>Vending-Bench 2</strong>（赚钱能力）</td><td><strong>$4,432</strong></td><td>$2,377</td><td>$1,034</td><td>$1,198</td><td>$4,967</td><td>$5,478</td></tr><tr><td>GDPval-AA Elo</td><td>1,409</td><td>1,198</td><td>1,195</td><td>1,288</td><td>1,400</td><td>1,201</td></tr></tbody></table>
+
+<p><strong>其他关键数字</strong></p>
+<ul><li><strong>Artificial Analysis Intelligence Index v4.0 = 50</strong> —— <strong>首个达到 50 的开放权重模型</strong>（GLM-4.7 是 42，+8 分）</li><li>8 项基准平均提升约 <strong>20%</strong></li><li>LMArena Text / Code Arena 均为 <strong>开放模型 #1</strong></li><li>Slide Generation 16:9 合规率 <strong>40% → 92%</strong>，人类评估总胜率 67.5%</li><li><strong>中文芯片（Ascend Atlas 800T A3 单机）</strong>：单中国节点性能可比双 GPU 国际集群，长序列部署成本降 <strong>50%</strong></li></ul>
+
+<blockquote><strong>读表要点</strong>：</blockquote>
+<blockquote>① GLM-5 在<strong>开放模型里全面第一</strong>，但<strong>在绝对分数上仍落后 Claude Opus 4.5 / Gemini 3 Pro</strong>（SWE-bench 77.8 vs 80.9/76.2；GPQA 86.0 vs 87.0/91.9）。</blockquote>
+<blockquote>② <strong>真正的领先项是"开放权重"这个属性本身</strong> + CyberGym（43.2 vs DS-V3.2 的 17.3，接近翻倍）。</blockquote>
+<blockquote>③ <strong>Vending-Bench 2 的 $4,432 值得单独看</strong> —— 这是"让模型自己开店赚钱"的基准，是<strong>唯一直接测经济价值</strong>的指标。开放模型第一，但仍低于 Claude（$4,967）和 Gemini（$5,478）。</blockquote>
+
+<hr>
+
+<h2>六、这份报告最值得抄的 6 条工程判断</h2>
+
+<ul><li><strong>层数让位于通信</strong>：256 专家 → 减到 80 层。通信墙是真的。</li><li><strong>QAT 的 kernel 与推理 kernel 必须同源</strong>，做到 bitwise-identical。否则量化掉点是必然。</li><li><strong>稀疏化用继续预训练接入，代价 20B token</strong>，但<strong>必须联合训练补长上下文</strong>，只做适配会掉点。</li><li><strong>RL 里冻结 indexer、用确定性 top-k</strong> —— 学习出来的选择器会被奖励污染。</li><li><strong>MTP 靠共享参数白拿 2.76 接受长度</strong>，不加显存不加参数。</li><li><strong>异步 RL 的复杂度已经是分布式调度系统的量级</strong> —— 这是"系统公司"而非"模型公司"的实证。</li></ul>
+
+<hr>
+
+<h2>七、诚实边界</h2>
+
+<ul><li>✅ 全文来自 arXiv HTML（2602.15763v2），非摘要、非二手解读。</li><li>⚠️ <strong>PDF 原件未下载</strong>：本机沙箱出网全断、香港服务器 22 端口被对端拒绝，客观无法 curl。拿到的是 HTML 全文（内容等价，缺图表矢量原文件）。</li><li>⚠️ <strong>数据配比百分比、FP8 主训练细节</strong>：原文确实没有，不是我漏看。</li><li>⚠️ 表格数字为 HTML 解析结果，**表内个别脚注标记（*/†）已在原表注明**，转述时请保留。</li></ul>
+
+<hr>
+
+<h2>关联</h2>
+<ul><li><span style="color:#0b6bcb">GLM-5系列_架构与训练全解</span> — 系列总览与部署</li><li><span style="color:#0b6bcb">FP8量化技术全景_从SmoothQuant到GLM实践</span> — 量化原理</li><li><span style="color:#0b6bcb">量化_论文精读清单</span></li><li><span style="color:#0b6bcb">唐杰_演讲思想编年_2019到2026</span> — 这些工程选择背后的判断</li><li><span style="color:#0b6bcb">课程精讲_16周逐周知识卡</span> — W3/W7/W11 对应节</li></ul>
+
+</body></html>

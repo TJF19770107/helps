@@ -1,0 +1,177 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: cf54d54c59baa0ada35a5ecb7c73a584_462200bd67ec11f1a0095254002afed2
+    ReservedCode1: KkujlGLcaR7rgYf/VjmlwUYVWI2LUh7Ffs/qE+4Z/7rFXuqdNsfNEeZmWVW+0pPoMY/96G8rTvShAtzRQ5/L6LUv9XFxUEK9gkZKVTy7LMFnYQyYi9gI83rhdgyl25bg3OXvvKnFQiFXrnky2BzK1cU8lYxqGMuoBlzsDjSTzGGFgkWovEXctybFo3k=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: cf54d54c59baa0ada35a5ecb7c73a584_462200bd67ec11f1a0095254002afed2
+    ReservedCode2: KkujlGLcaR7rgYf/VjmlwUYVWI2LUh7Ffs/qE+4Z/7rFXuqdNsfNEeZmWVW+0pPoMY/96G8rTvShAtzRQ5/L6LUv9XFxUEK9gkZKVTy7LMFnYQyYi9gI83rhdgyl25bg3OXvvKnFQiFXrnky2BzK1cU8lYxqGMuoBlzsDjSTzGGFgkWovEXctybFo3k=
+---
+
+# 公众号文章核心要点提炼：如何通过 Codex 对话接入飞书完整版
+
+> 来源：微信公众号文章 | 提炼日期：2026-06-14 | 关联技能手册：Codex+飞书CLI自动化技能手册.md
+
+---
+
+## 一、文章核心主题
+
+飞书于2026年3月底正式开源CLI工具，覆盖11大业务域、200+命令，使AI Agent（如Codex）可以通过命令行直接操作飞书。文章详细介绍了如何将Codex与飞书CLI结合，实现"一句话操作飞书全量数据"。
+
+---
+
+## 二、核心技术要点
+
+### 2.1 飞书CLI能力全景
+
+```
+11大业务域：
+即时通讯 | 云文档 | 云空间 | 电子表格 | 多维表格
+日历 | 视频会议 | 邮箱 | 任务 | 知识库 | 通讯录
+
+200+命令 | 19个Agent Skills
+支持：Claude Code / Codex / Cursor 等主流AI工具接入
+```
+
+### 2.2 Codex + 飞书集成架构
+
+```
+用户（自然语言指令）
+    ↓
+Codex CLI（AI编程助手）
+    ↓
+飞书CLI（lark-cli）
+    ↓
+飞书开放平台API
+    ↓
+飞书应用（消息/文档/表格/日历/会议...）
+```
+
+### 2.3 三种集成模式
+
+| 模式 | 方式 | 适用场景 |
+|------|------|---------|
+| 直接集成 | Codex直接调用飞书CLI命令 | 本地开发/个人使用 |
+| 桥接模式 | WebSocket长连接桥接 | 远程操控/移动端使用 |
+| 增强模式 | 流式卡片+会话管理 | 团队协作/项目管理 |
+
+---
+
+## 三、关键操作流程SOP
+
+### 3.1 飞书CLI安装（标准流程）
+
+```
+1. 安装飞书CLI
+   git clone https://github.com/larksuite/cli.git
+   cd cli && npm install -g
+
+2. 配置凭证
+   lark config set appId cli_xxxxx
+   lark config set appSecret xxxxx
+
+3. 验证
+   lark --version
+```
+
+### 3.2 Codex接入飞书（标准流程）
+
+```
+1. 将飞书CLI README链接发给Codex
+2. Codex自动完成安装和配置
+3. 在飞书开放平台创建自建应用
+4. 提供App ID和App Secret给Codex
+5. Codex自动完成权限申请
+6. 手动授权（浏览器放行）
+7. 配置完成，开始使用
+```
+
+### 3.3 飞书应用配置清单
+
+```
+必需权限：
+- im:message（消息收发）
+- im:message:send_as_bot（机器人推送）
+- drive:drive（云空间访问）
+- doc:doc（文档读写）
+
+事件订阅：
+- im.message.receive_v1（长连接模式）
+```
+
+---
+
+## 四、典型应用场景
+
+| 场景 | 输入（自然语言） | 输出（自动操作） |
+|------|-----------------|-----------------|
+| 查日程 | "今天有什么日程" | 读取飞书日历并返回 |
+| 发消息 | "通知团队明天开会" | 飞书群发消息 |
+| 写文档 | "把会议纪要写成飞书文档" | 创建文档并写入内容 |
+| 查数据 | "本月销售额汇总" | 读取多维表格并计算 |
+| 建会议 | "明天下午3点创建项目复盘会" | 创建飞书会议 |
+| 搜知识 | "搜一下微服务架构最佳实践" | 搜索知识库并提炼 |
+
+---
+
+## 五、核心优势总结
+
+```
+1. 不再需要手动操作飞书界面 → AI直接调用CLI完成
+2. 多步骤流程自动化 → "查消息→写文档→约会议→发邮件"一条指令完成
+3. 支持移动端远程操控 → 通过飞书桥接，手机上就能指挥Codex
+4. 开源生态健全 → GitHub 5.5K+ Star，社区活跃
+5. 安全可控 → 白名单机制、AES加密密钥库、群/会话隔离
+```
+
+---
+
+## 六、与龙虾体系的对标
+
+| 龙虾协议 | 对标内容 | 覆盖状态 |
+|---------|---------|:---:|
+| #127 桌面全平台操控 | 飞书CLI操作飞书界面 | ✅ |
+| #240 超级Agent融合 | Codex+飞书深度集成 | ✅ |
+| #246 七维纵深防御 | 桥接安全机制 | ✅ |
+| #238 自进化闭环 | 自动化执行反馈 | ✅ |
+| #218 技能库能力对齐 | 飞书19个Agent Skills | ✅ |
+
+---
+
+## 七、可复用SOP模板
+
+### SOP-01：飞书环境初始化
+
+```
+1. 安装飞书CLI
+2. 配置飞书应用凭证
+3. 开通必要权限
+4. 验证连接
+5. 测试基本命令
+```
+
+### SOP-02：Codex飞书集成部署
+
+```
+1. 选择集成方案（直接/桥接/增强）
+2. 安装桥接工具（如需要）
+3. 配置.env或config.json
+4. 启动服务
+5. 飞书群内@机器人测试
+```
+
+### SOP-03：自动化场景部署
+
+```
+1. 编写自动化脚本
+2. 在Codex中注入飞书CLI上下文
+3. 测试自动化流程
+4. 配置定时任务（如需要）
+5. 监控执行结果
+```
+
+---
+
+*（内容由AI生成，仅供参考）*
+*（内容由AI生成，仅供参考）*

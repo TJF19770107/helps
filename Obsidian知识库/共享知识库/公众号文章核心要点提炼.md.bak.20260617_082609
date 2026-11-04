@@ -1,0 +1,128 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: cf54d54c59baa0ada35a5ecb7c73a584_c783d75a69c211f1a99c5254007bceed
+    ReservedCode1: cuDdxemD53rVbU8PE1vXFyjZ6e2BQ25Xit2M5j0nTqmtuHiqPBUjJFuObxP9dh2zoeG88hX+ugewsjMgqzZcOdBkGqkGr3R+5uVIX1b0/Hj/pkouMlRvh24m1/O+5vvaid2qw8IQXrwDZ4YBmN22IuR628/fWNb9waQD/ZEB0WPW2hAd7IQ4OA9NHQY=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: cf54d54c59baa0ada35a5ecb7c73a584_c783d75a69c211f1a99c5254007bceed
+    ReservedCode2: cuDdxemD53rVbU8PE1vXFyjZ6e2BQ25Xit2M5j0nTqmtuHiqPBUjJFuObxP9dh2zoeG88hX+ugewsjMgqzZcOdBkGqkGr3R+5uVIX1b0/Hj/pkouMlRvh24m1/O+5vvaid2qw8IQXrwDZ4YBmN22IuR628/fWNb9waQD/ZEB0WPW2hAd7IQ4OA9NHQY=
+---
+
+# 公众号文章核心要点提炼：Codex + 飞书 CLI 自动化接入
+
+> 来源文章：如何通过 Codex 对话接入飞书完整版来了！
+> 作者：姚路行 | 发布日期：2026-05-31
+> 提炼日期：2026-06-17
+
+---
+
+## 一、文章核心架构
+
+文章围绕「Codex 对话式 AI 编程助手」与「飞书开放平台」的深度集成展开，核心命题是：**通过自然语言对话，让 Codex 自主操控飞书的文档、日历、消息、Base 等能力，实现零代码/低代码的办公自动化。**
+
+---
+
+## 二、四步接入流程
+
+### 第1步：安装飞书 CLI
+
+在终端中安装飞书命令行工具，作为 Codex 与飞书 API 之间的桥梁。核心作用是将飞书 REST API 封装为可在终端执行的命令。
+
+```bash
+# 飞书 CLI 安装（npm 全局安装）
+npm install -g @lark-base-open/node-sdk
+# 或通过飞书开放平台官方 CLI 工具
+npm install -g feishu-cli
+```
+
+### 第2步：配置飞书应用
+
+1. 进入 [飞书开放平台](https://open.feishu.cn/app) 创建自建应用
+2. 获取 **App ID** 和 **App Secret** 两个核心凭证
+3. 在应用权限页面开通所需 API 权限：
+   - 日历：calendar:calendar、calendar:event
+   - 文档：doc:document、drive:drive
+   - 多维表格（Base）：bitable:app
+   - 消息：im:message
+   - 通讯录：contact:contact
+4. 发布应用并设置可用范围
+
+### 第3步：登录授权
+
+```bash
+# 通过 CLI 完成 OAuth 授权
+feishu login --app-id <APP_ID> --app-secret <APP_SECRET>
+# 或通过 tenant_access_token 方式
+feishu auth --tenant
+```
+
+授权成功后，CLI 会缓存 token，后续命令自动携带。
+
+### 第4步：验证接入
+
+通过创建日历事件来验证整条链路是否畅通：
+
+```bash
+feishu calendar create-event \
+  --summary "Codex 接入测试" \
+  --start-time "2026-06-17T10:00:00+08:00" \
+  --end-time "2026-06-17T11:00:00+08:00"
+```
+
+---
+
+## 三、Codex 可实现的飞书自动化场景
+
+| 场景 | 能力描述 | 典型命令示例 |
+|------|---------|-------------|
+| 文档创建/更新 | 自动生成飞书文档，插入内容、格式化 | `feishu doc create --title "周报" --content "..."` |
+| 多维表格读写 | 对 Base 表格进行增删改查操作 | `feishu bitable list-records --app-token xxx --table-id xxx` |
+| 日历管理 | 创建/查询/删除日历事件、忙闲查询 | `feishu calendar list-events --start-date 2026-06-17` |
+| 消息发送 | 向指定用户或群组发送飞书消息 | `feishu message send --receive-id xxx --content "提醒"` |
+| 任务管理 | 创建/分配/更新任务 | `feishu task create --title "xxx" --assignee xxx` |
+| 邮箱操作 | 读取/发送邮件 | `feishu mail send --to xxx --subject "xxx"` |
+| 知识库检索 | 搜索飞书知识库内容 | `feishu wiki search --query "关键词"` |
+| 会议纪要 | 自动整理会议录音转文字并生成纪要 | `feishu meeting transcribe --meeting-id xxx` |
+
+---
+
+## 四、Codex 对话式交互范式
+
+用户在 Codex 中以自然语言下达指令，Codex 自动：
+
+1. **解析意图** → 识别用户需要的飞书操作类型
+2. **拼装命令** → 根据飞书 CLI 语法生成正确的 shell 命令
+3. **执行验证** → 执行命令并解析返回结果
+4. **错误自愈** → 遇到权限/参数错误时自动调整重试
+5. **结果反馈** → 以人类可读的方式呈现执行结果
+
+---
+
+## 五、关键权限配置清单
+
+| 权限 scope | 用途 | 必需性 |
+|-----------|------|:---:|
+| `calendar:calendar:readwrite` | 日历读写 | 需要日历时 |
+| `doc:document:readwrite` | 文档读写 | 需要文档时 |
+| `drive:drive:readwrite` | 云空间操作 | 需要文件时 |
+| `bitable:app:readwrite` | 多维表格读写 | 需要 Base 时 |
+| `im:message:send` | 消息发送 | 需要消息时 |
+| `contact:user:read` | 通讯录读取 | 需要查用户时 |
+| `task:task:readwrite` | 任务管理 | 需要任务时 |
+| `mail:mail:readwrite` | 邮箱操作 | 需要邮件时 |
+
+---
+
+## 六、核心价值提炼
+
+1. **零代码自动化**：无需编写飞书 SDK 调用代码，通过对话即可完成
+2. **低学习成本**：CLI 一行命令替代数十行 API 代码
+3. **场景覆盖全面**：文档、日历、Base、消息、任务、邮箱全覆盖
+4. **AI 自愈能力**：Codex 具备错误感知与自动重试，降低运维成本
+5. **可扩展性强**：新增飞书 API 只需更新 CLI 即可，Codex 无需改造
+
+---
+
+*本文由 Marvis AI 从微信公众号文章中提炼，供龙虾 AI 分身技能库使用。*
+*（内容由AI生成，仅供参考）*

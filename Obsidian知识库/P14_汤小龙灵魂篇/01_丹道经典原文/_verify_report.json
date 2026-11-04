@@ -1,0 +1,42 @@
+[
+ {
+  "name": "周易参同契",
+  "raw_chars": 7743,
+  "md_chars": 7743,
+  "identical": true,
+  "ratio": 1.0,
+  "diff_at": null
+ },
+ {
+  "name": "悟真篇",
+  "raw_chars": 11781,
+  "md_chars": 11781,
+  "identical": true,
+  "ratio": 1.0,
+  "diff_at": null
+ },
+ {
+  "name": "钟吕传道集",
+  "raw_chars": 30442,
+  "md_chars": 30442,
+  "identical": true,
+  "ratio": 1.0,
+  "diff_at": null
+ },
+ {
+  "name": "太乙金华宗旨",
+  "raw_chars": 10170,
+  "md_chars": 10170,
+  "identical": true,
+  "ratio": 1.0,
+  "diff_at": null
+ },
+ {
+  "name": "性命圭旨",
+  "raw_chars": 66210,
+  "md_chars": 66210,
+  "identical": true,
+  "ratio": 1.0,
+  "diff_at": null
+ }
+]

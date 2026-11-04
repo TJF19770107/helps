@@ -1,0 +1,769 @@
+================================================================================
+  Anthropic官方课程-390节全集
+  来源：Anthropic Academy (anthropic.skilljar.com) + 官方文档 + 社区深度解读
+  采集日期：2026-06-11 · 第R77轮学习
+  版本：v1.0
+================================================================================
+
+目录：
+  第一部分：Anthropic Academy 13门官方课程概览
+  第二部分：Claude Code 子代理完全指南
+  第三部分：Claude Agent SDK 子代理编排实战
+  第四部分：Claude Code 插件系统
+  第五部分：Agent/Subagent/Agent Teams 决策框架
+  第六部分：MCP协议核心
+  第七部分：核心技能与最佳实践
+
+================================================================================
+  第一部分：Anthropic Academy 13门官方课程概览
+================================================================================
+
+1. Claude 101
+   目标：零基础入门Claude，建立与AI协作的思维框架
+   核心内容：Claude平台导航、Console基本操作、API Key管理、基本对话交互
+   适合角色：所有角色（非技术/技术均可）
+   前置要求：无
+
+2. AI Fluency: Framework & Foundations
+   目标：掌握与AI协作的规范化方法论——4D框架
+   核心内容：
+     (1) Delegation（委派）：明确告诉AI要完成什么目标，而非怎么做
+     (2) Description（描述）：提供充分的上下文和约束条件
+     (3) Discernment（辨别）：评估AI输出的质量，识别潜在错误
+     (4) Diligence（勤勉）：迭代优化、持续验证、不盲信AI输出
+   适合角色：产品经理、运营、非技术业务端
+   前置要求：Claude 101 或同等基础
+
+3. Building with the Claude API
+   目标：掌握Claude API全套调用机制，能独立构建AI应用
+   核心内容：
+     (1) Messages API 结构（官方推荐，替代旧版 Text Completions API）
+     (2) System Prompt 设计策略
+     (3) Tool Use（函数调用）完整流程
+     (4) 流式输出（Streaming）处理
+     (5) 错误处理与重试策略
+     (6) Python/TypeScript SDK 使用
+   适合角色：后端工程师、全栈开发者
+   前置要求：Python或TypeScript基础、HTTP协议理解
+   排雷提示：Text Completions API 已标记为过时方案，必须使用 Messages API
+
+4. Model Context Protocol (MCP) - 基础
+   目标：理解MCP协议核心概念，能搭建简单MCP Server
+   核心内容：
+     (1) MCP三大原语：Tools / Resources / Prompts
+     (2) MCP Server 创建与配置
+     (3) MCP Client 连接与调用
+     (4) Transport层（stdio / SSE）
+   适合角色：后端工程师、平台工程师
+   前置要求：Building with Claude API
+
+5. Model Context Protocol (MCP) - 进阶
+   目标：掌握MCP高级特性，构建生产级MCP集成
+   核心内容：
+     (1) 多Server编排与路由
+     (2) 安全认证与授权
+     (3) 性能优化与缓存策略
+     (4) 错误处理与优雅降级
+   适合角色：架构师、平台工程师
+   前置要求：MCP基础
+
+6. Claude Code in Action
+   目标：在终端环境中深度集成Claude Code，编写可复用Agent Skills
+   核心内容：
+     (1) Claude Code CLI 安装与配置
+     (2) 终端交互式开发工作流
+     (3) Agent Skills 编写（基于Markdown的自动化指令流）
+     (4) Hooks 生命周期管理
+     (5) Subagents 创建与编排
+     (6) 插件系统入门
+   适合角色：全栈开发者、DevOps工程师
+   前置要求：命令行基础、Git基础
+
+7. Claude Code 插件开发
+   目标：掌握插件系统完整架构，能开发和发布自定义插件
+   核心内容：
+     (1) Skills / Agents / Hooks / MCP / LSP / Monitors 六件套
+     (2) plugin.json 清单文件
+     (3) 插件命名空间与市场分发
+     (4) 独立配置 vs 插件的选择策略
+   适合角色：全栈开发者、工具链工程师
+   前置要求：Claude Code in Action
+
+8. Subagents与多Agent协作
+   目标：掌握子代理配置与Agent/Subagent/Agent Teams三种协作模式
+   核心内容：
+     (1) 子代理配置文件结构（.claude/agents/ Markdown + YAML Frontmatter）
+     (2) 项目级 vs 用户级 vs 插件级子代理
+     (3) Agent / Subagent / Agent Teams 六维对比
+     (4) 实战决策树与成本控制
+   适合角色：架构师、高级开发者
+   前置要求：Claude Code in Action
+
+9. Amazon Bedrock 集成 Claude
+   目标：在AWS Bedrock上部署和管理Claude模型
+   核心内容：Bedrock API、模型版本管理、权限与安全、成本优化
+   适合角色：云架构师、DevOps工程师
+   前置要求：AWS基础
+
+10. Google Cloud Vertex AI 集成 Claude
+    目标：在GCP Vertex AI上部署和管理Claude模型
+    核心内容：Vertex AI API、模型版本管理、IAM权限、成本优化
+    适合角色：云架构师、DevOps工程师
+    前置要求：GCP基础
+
+11. Claude Agent SDK 编程
+    目标：掌握 Agent SDK 的子代理编排、并行执行、成本控制
+    核心内容：
+      (1) AgentDefinition 数据结构
+      (2) 并行子代理执行模式
+      (3) TaskBudget 成本控制
+      (4) SubagentStartHook / SubagentStopHook 生命周期钩子
+      (5) 生产级多Agent编排最佳实践
+    适合角色：高级开发者、架构师
+    前置要求：Building with Claude API、Python SDK
+
+12. Claude Code 企业级部署
+    目标：在企业环境中大规模部署和管理Claude Code
+    核心内容：
+      (1) Managed Agents 架构（Brain与Hands解耦）
+      (2) Sandbox 按需唤醒
+      (3) 可观测性与Console追踪
+      (4) CI/CD集成（Webhooks回调）
+    适合角色：平台工程师、DevOps负责人
+    前置要求：Claude Code in Action
+
+13. Lessons from Building Claude Code（工程内部课）
+    目标：从Anthropic工程团队的视角理解Agent系统设计的核心决策
+    核心内容：
+      (1) "简单优先"原则——能不用Agent就不用Agent
+      (2) "给Agent一台电脑"——赋予终端和文件系统访问权限
+      (3) Agent Loop三阶段：Gather Context → Take Action → Verify Work
+      (4) 上下文管理策略：CLAUDE.md 分层 + Skills 渐进式加载
+      (5) 子代理设计哲学：单一职责 + 上下文隔离 + 最小权限
+      (6) Skills是上下文工程而非提示词工程
+      (7) Gotchas是Skill含金量最高的部分
+      (8) Dreaming记忆巩固机制
+    适合角色：架构师、高级开发者、AI产品经理
+    前置要求：有Claude Code使用经验
+
+================================================================================
+  第二部分：Claude Code 子代理完全指南
+================================================================================
+
+1. 子代理核心概念
+  1.1 定义：子代理（Subagent）是在独立上下文窗口中运行的专用AI，由主Agent委派任务
+  1.2 核心价值：
+    (1) 上下文减负：复杂操作在子代理独立上下文中完成，主会话不被打乱
+    (2) 专业化：为子代理写更聚焦的提示与流程清单，提升成功率
+    (3) 可复用与共享：项目级配置纳入版本控制，团队协作一致
+    (4) 精细权限：不同子代理授予不同工具权限
+
+2. 配置文件结构（.claude/agents/ Markdown 文件）
+  2.1 完整 Frontmatter 字段表：
+
+    | 字段 | 必填 | 类型 | 说明 |
+    |------|------|------|------|
+    | name | 是 | string | 唯一标识，小写字母+连字符 |
+    | description | 是 | string | 何时委派任务的判断依据（路由规则） |
+    | tools | 否 | list | 允许的工具，省略则继承全部 |
+    | disallowedTools | 否 | list | 禁用的工具 |
+    | model | 否 | string | sonnet/opus/haiku/完整ID/inherit |
+    | permissionMode | 否 | string | default/acceptEdits/auto/dontAsk/bypassPermissions/plan |
+    | maxTurns | 否 | int | 最大Agent循环数 |
+    | skills | 否 | list | 预加载Skills列表（完整内容注入） |
+    | mcpServers | 否 | object | MCP服务器配置 |
+    | hooks | 否 | object | 生命周期钩子 |
+    | memory | 否 | string | user/project/local 持久记忆范围 |
+    | background | 否 | bool | true时始终后台运行 |
+    | effort | 否 | string | low/medium/high/xhigh/max |
+    | isolation | 否 | string | worktree时在临时git worktree运行 |
+    | color | 否 | string | red/blue/green/yellow/purple/orange/pink/cyan |
+    | initialPrompt | 否 | string | 作为主会话Agent时自动提交的首轮 |
+
+  2.2 配置示例：
+
+    ---
+    name: code-reviewer
+    description: Python code quality and security review specialist
+    tools: [Read, Grep, Glob]
+    model: sonnet
+    maxTurns: 8
+    ---
+    You are a Python senior engineer. Review code for security vulnerabilities,
+    performance issues, and code style compliance.
+
+3. 项目级 vs 用户级 vs 插件级
+  3.1 五级作用域（按优先级从高到低）：
+
+    | 级别 | 配置位置 | 存活周期 | Agent Teams可用 |
+    |------|---------|---------|----------------|
+    | managed | 中心化管理 | 永久 | 是 |
+    | CLI flag | --agents参数 | 单次会话 | 是 |
+    | project | .claude/agents/ | 项目生命周期 | 是 |
+    | user | ~/.claude/agents/ | 跨项目全局 | 是 |
+    | plugin | 插件安装目录 | 插件生命周期 | 受限 |
+
+  3.2 冲突处理：
+    - 同名子代理：project 覆盖 user，CLI 覆盖 project
+    - plugin 子代理不支持 hooks/mcpServers/permissionMode
+
+4. 工具权限配置
+  4.1 权限分级原则：
+    (1) 只读分析型 → Read / Grep / Glob
+    (2) 代码修改型 → + Write / Edit
+    (3) 系统操作型 → + Bash（限定命令集合）
+    (4) 外部连接型 → + MCP（指定服务器）
+    (5) 插件子代理 → 不支持 hooks/mcpServers/permissionMode
+
+  4.2 权限模式说明：
+
+    | 模式 | 行为 | 适用场景 |
+    |------|------|---------|
+    | default | 提示用户确认 | 一般操作 |
+    | acceptEdits | 自动接受编辑 | 代码审查、文档生成 |
+    | auto | 自动执行所有操作 | 信任度高的重复任务 |
+    | bypassPermissions | 绕过所有权限检查 | 极少数场景 |
+    | plan | 仅生成计划不执行 | 架构设计 |
+
+5. 子代理创建方式
+  5.1 方式一：交互式创建（/agents 向导）
+    - 在 Claude Code 中输入 /agents
+    - 选择 Create new agent
+    - Claude 自动扫描项目信息并生成初稿
+    - 人工微调后保存
+
+  5.2 方式二：直接编辑 Markdown 文件
+    - 项目级：.claude/agents/<agent-name>.md
+    - 用户级：~/.claude/agents/<agent-name>.md
+
+  5.3 方式三：API 动态定义（Agent SDK）
+    ```python
+    agent = AgentDefinition(
+        description="Security vulnerability scanner",
+        prompt="You're a security engineer...",
+        tools=["Read", "Grep", "Bash"],
+        model="sonnet",
+        maxTurns=6
+    )
+    ```
+
+6. AGENTS.md 规范
+  6.1 在项目根目录创建 AGENTS.md 作为子代理基线规则
+  6.2 内容要点：
+    (1) 角色定义与职责边界
+    (2) 工具限制与最佳实践
+    (3) 项目特定约束（gotchas）
+    (4) 多Agent协作约定
+
+================================================================================
+  第三部分：Claude Agent SDK 子代理编排实战
+================================================================================
+
+1. AgentDefinition 数据结构（SDK 0.2.82）
+
+  @dataclass
+  class AgentDefinition:
+      description: str          # 编排器识别此代理的描述
+      prompt: str               # 子代理系统提示词
+      tools: list[str] | None         # 允许的工具列表
+      disallowedTools: list[str] | None   # 禁用的工具列表
+      model: str | None               # "sonnet"/"opus"/"haiku"/"inherit"/完整ID
+      skills: list[str] | None        # 预加载Skills（注：tools字段中的Skill已废弃）
+      memory: Literal["user","project","local"] | None
+      mcpServers: list[str|dict] | None
+      initialPrompt: str | None
+      maxTurns: int | None            # 子代理最大循环数
+      background: bool | None
+      effort: EffortLevel|int | None
+      permissionMode: PermissionMode | None
+
+2. 并行执行模式
+
+  2.1 核心原理：
+    "When Claude identifies independent subtasks, it spawns multiple agents
+     simultaneously using multiple Task tool calls in a single message."
+
+  2.2 实际代码示例（PR三路并行审查）：
+
+    code_reviewer = AgentDefinition(
+        description="Python code quality and design review specialist",
+        prompt="You're a Python senior engineer with 10 years of experience...",
+        tools=["Read", "Grep"], model="sonnet", maxTurns=8,
+    )
+    security_scanner = AgentDefinition(
+        description="Security vulnerability scanner",
+        prompt="You're a security engineer. Find injection risks...",
+        tools=["Read", "Grep", "Bash"], model="sonnet", maxTurns=6,
+    )
+    doc_writer = AgentDefinition(
+        description="Docstring and README writer",
+        prompt="You're a technical writer...",
+        tools=["Read", "Write", "Edit"], model="haiku", maxTurns=5,
+    )
+
+    opts = ClaudeAgentOptions(
+        system_prompt="You're a PR review orchestrator...",
+        allowed_tools=["Agent", "Read"],
+        agents={
+            "code-reviewer": code_reviewer,
+            "security-scanner": security_scanner,
+            "doc-writer": doc_writer,
+        },
+        permission_mode="bypassPermissions",
+    )
+
+  2.3 并行 vs 串行决策：
+    - 并行：任务间无数据依赖、无状态依赖、无安全依赖
+    - 串行：涉及UI状态变化、系统状态变更、读后再写
+    - 上限：不超过5个并行，超出分批处理
+
+  2.4 上下文隔离机制：
+    "A subagent's context window starts fresh, and the only channel from
+     parent to subagent is the Agent tool's prompt string."
+    - 子代理看不到其他子代理的推理过程
+    - 主Agent只看到最终结果，不看到中间推理
+    - 这彻底解决了上下文污染问题
+
+3. TaskBudget 成本控制
+
+  3.1 双级保险机制：
+
+    | 级别 | 机制 | 示例 | 作用 |
+    |------|------|------|------|
+    | L1 全局 | TaskBudget(total=N) | total=100000 | 整个编排任务的Token硬上限 |
+    | L2 子代理 | AgentDefinition.maxTurns | maxTurns=6 | 单个子代理最大循环数 |
+
+  3.2 TaskBudget 实现：
+
+    class TaskBudget(TypedDict):
+        total: int  # Token预算总量
+
+    opts = ClaudeAgentOptions(
+        task_budget=TaskBudget(total=100000),  # 全局100K上限
+        agents={...},
+    )
+
+  3.3 双重保护机制：
+    - TaskBudget：Agent感知剩余预算，自主控制节奏，合适时自动收尾
+    - maxTurns：强制限制每个子代理的工具调用循环次数
+    - 两者结合比外部超时中断更优雅，避免任务执行到一半被强制终止
+
+4. Hooks 生命周期钩子
+
+  4.1 SubagentStartHook / SubagentStopHook：
+
+    import time
+    agent_timings: dict[str, float] = {}
+
+    def on_agent_start(hook_input: SubagentStartHookInput) -> None:
+        agent_timings[hook_input.agent_id] = time.time()
+        print(f"▶ {hook_input.agent_type} started")
+
+    def on_agent_stop(hook_input: SubagentStopHookInput) -> None:
+        start = agent_timings.get(hook_input.agent_id, time.time())
+        elapsed = time.time() - start
+        print(f"■ {hook_input.agent_type} done ({elapsed:.1f}s)")
+        # hook_input.agent_transcript_path 含完整对话日志
+
+  4.2 关键特性：
+    - 多个Hook匹配器在同一事件上并发执行（非串行）
+    - agent_transcript_path 是生产调试的第一入口
+    - 每个Hook必须设计为独立运行
+
+================================================================================
+  第四部分：Claude Code 插件系统
+================================================================================
+
+1. 插件六件套架构
+
+  | 组件 | 位置 | 作用 |
+  |------|------|------|
+  | Skills | skills/ | 可复用专业知识，按需加载 |
+  | Agents | agents/ | 自定义子代理定义 |
+  | Hooks | hooks/hooks.json | 事件触发处理程序 |
+  | MCP Servers | .mcp.json | 外部数据源连接 |
+  | LSP Servers | .lsp.json | 实时代码智能 |
+  | Monitors | monitors/monitors.json | 后台日志/文件/状态监视 |
+
+2. plugin.json 清单文件
+
+  2.1 完整字段：
+
+    | 字段 | 必填 | 说明 |
+    |------|------|------|
+    | name | 是 | 唯一标识符和Skill命名空间 |
+    | description | 是 | 插件管理器中显示的描述 |
+    | version | 否 | 版本号。省略则用git提交SHA |
+    | author | 否 | 作者信息 |
+    | homepage | 否 | 项目主页 |
+    | repository | 否 | 代码仓库 |
+    | license | 否 | 许可证 |
+
+  2.2 示例：
+
+    {
+      "name": "my-first-plugin",
+      "description": "A greeting plugin to learn the basics",
+      "version": "1.0.0",
+      "author": {
+        "name": "Your Name"
+      }
+    }
+
+3. 插件目录结构（标准布局）
+
+  my-plugin/
+  ├── .claude-plugin/
+  │   └── plugin.json          # 清单文件
+  ├── skills/                   # Skills目录
+  │   └── hello/
+  │       └── SKILL.md
+  ├── commands/                 # 平面Markdown命令
+  ├── agents/                   # 自定义Agent定义
+  ├── hooks/                    # hooks.json
+  │   └── hooks.json
+  ├── .mcp.json                # MCP服务器配置
+  ├── .lsp.json                # LSP服务器配置
+  ├── monitors/                 # 后台监视器
+  │   └── monitors.json
+  ├── bin/                     # 可执行文件（自动加入PATH）
+  └── settings.json            # 默认设置
+
+  常见错误：不要将commands/、agents/、skills/、hooks/放在.claude-plugin/内。
+  只有plugin.json应该在.claude-plugin/内。
+
+4. 独立配置 vs 插件对比
+
+  | 维度 | 独立配置(.claude/) | 插件(plugin.json) |
+  |------|-------------------|-------------------|
+  | Skill名称 | /hello（简短） | /plugin-name:hello（命名空间） |
+  | 适合场景 | 个人工作流、项目特定、快速实验 | 团队共享、社区分发、版本化发布 |
+  | 安装方式 | 直接编辑文件 | /plugin install |
+  | 共享 | 手动复制 | 市场分发 |
+  | 版本控制 | 依赖项目git | 独立版本号 |
+
+  选择策略：
+    - 从独立配置开始快速迭代
+    - 准备好共享时转换为插件
+    - 个人工具留在独立配置
+    - 团队通用工具发布为插件
+
+5. 命名空间机制
+  - 插件Skills始终使用命名空间：/plugin-name:skill-name
+  - 防止多个插件之间的Skill名称冲突
+  - 命名空间由plugin.json中的name字段决定
+
+6. 市场分发
+  6.1 Anthropic维护两个公共市场：
+    (1) claude-plugins-official：Anthropic精选，所有安装自动可用
+    (2) claude-community：社区提交，审查后收录
+
+  6.2 提交流程：
+    (1) 本地运行 claude plugin validate 验证
+    (2) 通过应用内表单提交审查
+    (3) 批准后自动固定到社区目录
+
+7. 从独立配置迁移到插件
+
+  步骤：
+  (1) 创建插件目录 + .claude-plugin/plugin.json
+  (2) 复制现有commands/agents/skills到插件根目录
+  (3) 迁移hooks：从settings.json复制到hooks/hooks.json
+  (4) 使用 claude --plugin-dir ./my-plugin 测试
+  (5) 验证后从.claude/删除原始文件避免重复
+
+================================================================================
+  第五部分：Agent/Subagent/Agent Teams 决策框架
+================================================================================
+
+1. 三种模式一句话理解
+
+  | 模式 | 类比 | 通信方式 | 上下文 |
+  |------|------|---------|--------|
+  | Agent | 单兵作战 | 你↔AI | 1个窗口 |
+  | Subagent | 老板+员工 | 主AI↔子AI（单向汇报） | 1个主+N个子 |
+  | Agent Teams | 项目组协作 | AI↔AI（双向对话） | N个独立 |
+
+2. 六维深度对比
+
+  维度1：上下文管理
+
+    | 特征 | Agent | Subagent | Agent Teams |
+    |------|-------|----------|-------------|
+    | 上下文数量 | 1个 | 1主+N子 | N个独立 |
+    | 信息累积 | 所有信息在一个窗口 | 子任务上下文独立 | 每个AI只关注自己 |
+    | 混乱风险 | 高（容易混乱） | 低（主AI保持清晰） | 最低 |
+
+  维度2：沟通模式
+
+    | 特征 | Agent | Subagent | Agent Teams |
+    |------|-------|----------|-------------|
+    | 谁和谁说话 | 你↔AI | 主AI↔子AI | AI↔AI（双向） |
+    | 信息流向 | 线性 | 树形汇报 | 网状协作 |
+    | 能否质疑同伴 | N/A | 不能 | 能！互相辩论 |
+
+  维度3：并行能力
+
+    | 特征 | Agent | Subagent | Agent Teams |
+    |------|-------|----------|-------------|
+    | 执行模式 | 严格串行 | 伪并行（串行召唤） | 真并行 |
+    | 处理速度 | 慢（排队） | 中等（依次派发） | 快（同时开工） |
+    | 典型用例 | 写一个函数 | 分析5个竞品 | 修复10个独立bug |
+
+  维度4：Token消耗
+
+    | 特征 | Agent | Subagent | Agent Teams |
+    |------|-------|----------|-------------|
+    | 相对成本 | 最低 | 中等 | 最高 |
+    | 额外开销 | 无 | 主AI协调成本 | AI互相对话成本 |
+    | 适合预算 | 日常任务 | 关键项目 | 高价值复杂任务 |
+
+    Agent Teams的5个AI互相对话，Token消耗可能是单Agent的10倍以上。
+
+  维度5：适用复杂度
+
+    | 特征 | Agent | Subagent | Agent Teams |
+    |------|-------|----------|-------------|
+    | 任务复杂度 | 简单-中等 | 中等-复杂 | 复杂-极复杂 |
+    | 实例 | 写个登录页面 | 重构认证模块 | 从零开发微服务架构 |
+
+  维度6：三层子代理启用信号
+
+    (1) 上下文被噪音淹没 → 子任务产生大量中间信息，主对话只需摘要
+    (2) 搜索空间太大 → 竞品研究/事故根因，多子Agent并行扫不重叠方向
+    (3) 工具太多打架 → 20+工具跨领域，按领域拆专家子Agent
+
+3. 实战决策树三问
+
+  问题1：任务能否在一个会话中完成？
+    - 能 → 用 Agent（常规会话）
+    - 不能 → 继续问题2
+
+  问题2：子任务之间需要互相沟通吗？
+    - 不需要（各干各的） → 用 Subagent
+    - 需要（要讨论、辩论、协调） → 继续问题3
+
+  问题3：这个任务值得花10倍Token吗？
+    - 值得（关键项目、高价值） → 用 Agent Teams
+    - 不值得 → 降级用Subagent或重新拆分任务
+
+4. 常见误区避坑指南
+
+  误区1："复杂任务就用Agent Teams"
+    - 错误：任务复杂就无脑开Agent Teams
+    - 正确：先问"AI之间需要对话吗？"如果只是任务多，用Subagent并行即可
+    - 案例：修10个独立bug不需要Agent Teams，bug之间无关，Subagent足够
+
+  误区2："Subagent比Agent Teams便宜"
+    - 陷阱：Subagent召唤10个子AI也很贵
+    - 原则：成本 = AI数量 × 每个AI工作量 × 协调开销
+
+  误区3："Agent只能做简单任务"
+    - 反例：复杂代码重构可用单Agent完成，只要任务清晰、上下文管理好
+    - 技巧：用计划模式让Agent先梳理思路再执行
+
+  误区4："Agent Teams自己会协调，不用管"
+    - 风险：放任自己讨论可能跑偏或陷入无休止辩论
+    - 最佳实践：定期检查进度、关键决策点人工介入、设定讨论时限
+
+5. 选择速查表
+
+  | 需求信号 | → 选择方案 | 规模 |
+  |----------|-----------|------|
+  | "去查一下X" | Subagent | 1个 |
+  | "你俩一起分析，互相验证" | Agent Teams | 2-3个 |
+  | "帮我改这个" | 单会话 | 0个 |
+  | "并行审查PR安全/性能/测试" | Agent Teams | 3个 |
+  | "5种假设各自验证" | Agent Teams | 5个 |
+  | "前端+后端+数据库+测试" | Agent Teams | 4个 |
+
+6. Agent Teams 五大协作模式
+
+  模式一：并行代码审查
+    - 配置：3个审查队友（security / performance / test）
+    - 每个队友独立上下文，各自产出审查报告
+    - Lead合成最终审查意见
+
+  模式二：竞争假设调试
+    - Bug原因不明时，5个队友并行探索不同根因假设
+    - 队友间互相交流，用科学辩论模式排除错误假设
+
+  模式三：跨层协调开发
+    - 4个队友各自负责独立代码层（frontend / backend / database / test）
+    - Lead负责跨层接口契约定义
+
+  模式四：新模块并行开发
+    - 每个队友负责独立模块或组件
+    - 使用计划批准模式确保质量
+
+  模式五：复用子代理定义作为队友
+    - 已有.claude/agents/子代理定义直接复用
+    - 自动继承tools/model/permissions，无需重复配置
+
+================================================================================
+  第六部分：MCP协议核心
+================================================================================
+
+1. MCP三大原语
+
+  1.1 Tools（工具）
+    - 定义：模型可调用的函数/操作
+    - 作用：让Claude与外部系统交互（查询数据库、调用API、执行命令）
+    - 特点：模型主动选择调用时机
+
+  1.2 Resources（资源）
+    - 定义：模型可读取的外部数据源
+    - 作用：提供上下文信息（文件内容、数据库记录、API响应）
+    - 特点：类似文件系统，模型按需读取
+
+  1.3 Prompts（提示模板）
+    - 定义：预定义的提示词模板
+    - 作用：标准化常见交互模式
+    - 特点：可由用户或系统触发
+
+2. MCP 架构
+
+  2.1 组件关系：
+    MCP Client（Claude） ↔ Transport层（stdio/SSE） ↔ MCP Server（外部数据源）
+
+  2.2 Transport层：
+    (1) stdio：本地进程通信，简单高效
+    (2) SSE（Server-Sent Events）：HTTP长连接，适合远程服务
+
+3. MCP 安全原则
+  (1) 暴露结构化搜索而非原始查询：减少Agent负担和风险
+  (2) 限定于特定Subagent：不全局共享敏感MCP连接
+  (3) 连接失败优雅降级：不因MCP不可用阻塞主流程
+  (4) 基础跑通后才建MCP连接：不跳过基础验证
+
+================================================================================
+  第七部分：核心技能与最佳实践
+================================================================================
+
+1. 子代理设计原则
+
+  1.1 单一职责原则
+    - 每个子代理只做好一件事，不泛化
+    - 使用明确角色：reviewer / debugger / docs writer / release helper / data fetcher
+    - 禁止模糊的"资深工程师"人格包办一切
+    - 角色重叠是Agent Teams失败最快的原因
+
+  1.2 独立上下文原则
+    - 子代理在独立Context Window中工作
+    - 只返回摘要，不污染主Agent上下文
+    - "子代理上下文窗口从零开始，父到子的唯一通道是Agent工具提示词字符串"
+
+  1.3 最小权限原则
+    - 只读分析型 → Read/Grep/Glob
+    - 代码修改型 → + Write/Edit
+    - 系统操作型 → + Bash（限定命令集合）
+    - 外部连接型 → + MCP（指定服务器）
+    - 插件子代理不支持 hooks/mcpServers/permissionMode
+
+  1.4 探索与编辑分离原则
+    - 只读subagent先map子系统 → 写发现到文件 → 主agent带完整信息编辑
+    - 避免Agent在探索过程中就开始修改
+
+2. 多Agent协作模式选择
+
+  2.1 从单Agent到多Agent的正确路径：
+    (1) 先把单Agent做到可控：定义清晰、固定输出格式、10-30样本评估集
+    (2) 出现信号再上多Agent：只在上下文噪音/搜索空间大/工具冲突时考虑
+    (3) 按信息流切分，不按任务类型切分
+    (4) 把流程写成Skill，别写进Prompt
+    (5) 外部系统统一走MCP
+    (6) 最后再谈"聪明"
+
+  2.2 三原则：
+    - 从简单开始：默认用Agent，遇到瓶颈再升级
+    - 成本敏感：Agent Teams很强大，但别为了炫技浪费Token
+    - 场景匹配：专业化用Subagent，协作用Agent Teams，简单用Agent
+
+3. Claude Code高效开发流程
+
+  3.1 Skills编写规范：
+    (1) Skills是上下文工程，不是提示词工程
+    (2) 文件夹即上下文分层：SKILL.md(导航页) / references/ (详细说明) / scripts/ (可执行) / assets/ (模板)
+    (3) 渐进式披露：L1(100 tokens) → L2(500行以内) → L3(按需加载)，安装50个Skill仅占5000 tokens
+    (4) Instructions vs Scripts 分工：
+      - Instructions：提供经验和判断（"Stripe返回200不意味支付成功，需检查payment_events表"）
+      - Scripts：提供能力和执行（check_payment_events()函数直接调用）
+    (5) Gotchas是Skill含金量最高的部分：每一条都有血有肉
+      - "这个表不能按 created_at 排序"（而非"注意排序字段"）
+      - "staging返回200不代表成功"（而非"注意API返回值"）
+    (6) Skill跟着用跟着更新：Agent哪里犯错就往Gotchas加一条
+
+  3.2 九类Skill分类体系：
+
+    | 类别 | 定义 |
+    |------|------|
+    | 库和API参考 | 教Agent使用内部库/CLI/SDK |
+    | 产品验证 ★ | 教Agent测试/验证代码是否工作（回报最大） |
+    | 数据获取与分析 | 连接数据栈，提供查询路径 |
+    | 业务流程自动化 | 把重复工作流压成命令 |
+    | 代码脚手架 | 生成框架模板和样板代码 |
+    | 代码质量与审查 | 强制代码风格、审查流程 |
+    | CI/CD与部署 | 推代码、部署、监控 |
+    | 运维手册 | 多工具排查→结构化报告 |
+    | 基础设施操作 | 日常维护，带破坏性护栏 |
+
+  3.3 Hooks触发时机：
+
+    | Hook | 触发时机 | 典型用途 |
+    |------|---------|---------|
+    | SessionStart | 会话启动 | 动态加载上下文 |
+    | SessionStop | 会话结束 | 自动反思、更新CLAUDE.md |
+    | PreToolUse | 工具调用前 | 操作前验证、风险检查 |
+    | PostToolUse | 工具调用后 | 自动lint、结果校验 |
+    | SubagentStart | 子代理启动 | 注入额外上下文 |
+    | SubagentStop | 子代理结束 | 结果摘要、日志记录 |
+    | Notification | 系统通知 | 状态变更告警 |
+
+  3.4 插件打包发布：
+    (1) 本地开发：claude --plugin-dir ./my-plugin
+    (2) 验证：claude plugin validate
+    (3) 提交市场：通过应用内表单提交审查
+    (4) 版本管理：显式version字段或依赖git提交SHA
+
+4. Token成本控制策略
+
+  4.1 双级保险：
+    (1) TaskBudget(total)：全局Token硬上限，Agent感知剩余预算自主收尾
+    (2) AgentDefinition.maxTurns：子代理级别最大循环数
+
+  4.2 成本估算参考：
+
+    | 方案 | 模型 | 相对成本 | 适用场景 |
+    |------|------|---------|---------|
+    | 单会话 | Haiku/Sonnet | 1x | 日常任务 |
+    | Subagents | Sonnet | 1.5-3x | 聚焦并行任务 |
+    | Agent Teams(小) | Sonnet×2-4 | 3-8x | 模块化开发 |
+    | Agent Teams(大) | Opus×16 | 50-100x | 编译器级项目 |
+
+  4.3 成本优化策略：
+    (1) 团队成员使用Sonnet（非Opus），平衡成本与能力
+    (2) 控制团队规模：只在真正需要并行时才增加成员
+    (3) 精简启动提示词：成员自动加载CLAUDE.md/MCP/Skills
+    (4) 及时清理团队：空闲成员消耗Token
+    (5) 轻量任务用Haiku：文档写作等任务Haiku足够且更便宜
+
+  4.4 个人决策阈值：
+    "三个或更多独立任务，每个任务预计消耗10K+ Token（使用Opus时）——低于此阈值坚持单Agent。"
+
+================================================================================
+  来源标注
+================================================================================
+
+  本知识库文档整合以下来源：
+  [1] Anthropic Academy 官方学习平台: anthropic.skilljar.com
+  [2] Anthropic 官方文档: docs.anthropic.com
+  [3] Claude Code 官方文档: code.claude.com/docs （插件/子代理/Agent Teams）
+  [4] claude-agent-sdk 0.2.82 源码与类型系统
+  [5] 社区深度解读：Agent/Subagent/Agent Teams 六维对比
+  [6] 社区实操教程：Claude Agent SDK Subagent Orchestration Tutorial
+
+  采集轮次：第R77轮 (2026-06-11)
+
+================================================================================
+  文档结束
+================================================================================

@@ -1,0 +1,89 @@
+========================================
+公众号文章核心要点提炼
+文章标题: Claude Code/Codex 接入飞书教程：Lark Coding Agent Bridge 实践
+作者: 飞书同学Zara（小红书博主"张咋啦"）
+来源: https://mp.weixin.qq.com/s/lp1fV7O1flKzV1AgeMBQ3A
+提炼日期: 2026-06-11
+========================================
+
+一、文章核心观点
+
+核心痛点: AI编程助手（Claude Code/Codex）只能待在本地终端里，团队协作仍靠复制、转发、截图和口头说明完成。
+解决方案: 通过Lark Coding Agent Bridge，把本地Claude Code和Codex桥接到飞书/Lark，成为飞书里的一个bot。
+价值主张: 让coding agent接回大家每天都在用的协作场景，对话、任务、卡片、文档和会话记录在同一环境中流动。
+
+二、关键信息提取
+
+2.1 安装方式（一句话启动）
+npx -y lark-channel-bridge@latest start
+
+2.2 核心能力矩阵
+
+| 能力 | 说明 | 价值 |
+|------|------|------|
+| 移动端对话 | 手机端飞书内与Codex对话+语音输入 | 消除工位绑定 |
+| 多Session管理 | 飞书群聊替代terminal tabs | 会话结构化 |
+| 富文本回复 | 图文/表格/长图输出 | 结果可读性 |
+| 文档协作 | 飞书云文档承载specs/docs | 协作沉淀 |
+| 消息转任务 | 群消息一键转Codex处理 | 工作流闭环 |
+| 历史检索 | 在飞书里检索agent协作过程 | 知识复用 |
+
+2.3 配置命令体系（五大类）
+- 偏好设置: /config /timeout /account
+- 会话管理: /new /resume /status /help
+- 工作空间: /cd /ws (list/save/use/remove)
+- 进程控制: /stop /reconnect /ps /exit
+- 诊断排障: /doctor
+
+2.4 多Profile隔离
+——Claude和Codex可同时运行
+——每个profile独立：应用凭据、会话、工作目录、日志
+——通过--profile参数切换
+
+2.5 计费变化（重要）
+——2026年6月15日起，claude -p与Agent SDK独立计费
+——Pro $20/Max 5x $100/Max 20x $200月额度
+——超额走API付费或升级套餐
+
+三、可复用的SOP模板
+
+3.1 Bug修复自动化
+飞书群 → 创建issue卡片 → Codex领取 → 自动修复PR → 飞书状态更新
+
+3.2 文档自动生成
+飞书文档评论@bot → 读取文档 → 生成技术方案spec → 写入飞书文档
+
+3.3 代码审查流转
+PR提交 → GitHub Webhook → 飞书群通知 → Codex自动审查 → PR+飞书同步
+
+3.4 日报周报汇总
+定时触发 → 读取群讨论 → 汇总关键事项 → 生成日报卡片 → 发送指定群
+
+四、对龙虾AI体系的价值
+
+4.1 现有协议覆盖
+——协议#188: 超级应用Agent融合协议（Codex+ChatGPT合体，6角色110技能）
+——协议#223: 腾讯效率智能体工具集全链路工业化对齐协议
+
+4.2 补充价值
+——飞书作为协作入口，补充了Codex从"本地工具"到"团队协作Agent"的最后一公里
+——多Session管理+历史沉淀解决了Agent协作过程中的上下文丢失问题
+——斜杠命令体系为龙虾Agent的飞书桥接提供了直接可复用的产品设计参考
+
+4.3 后续迭代建议
+——飞书Base多维表格自动化（数据报表生成）
+——飞书日历+会议联动（会议纪要自动生成）
+——飞书审批流Agent接入（审批自动化）
+
+五、相关开源项目索引
+
+- lark-channel-bridge: larksuite/cli（飞书官方）
+- Larkspur: Codex飞书远程控制台
+- feishu-codex-bridge: liangdabiao/feishu_X_codex
+- feishu-claude-bridge: Claude Code桥接
+
+========================================
+归档路径: E:\龙虾AI主控中心\我的AI分身\Obsidian知识库\共享知识库\公众号文章核心要点提炼-Codex飞书桥接.txt
+知识库标签: #Codex #飞书 #Agent桥接 #团队协作 #自动化
+========================================
+（内容由AI生成，仅供参考）

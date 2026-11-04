@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>P15 大模型技术底座（唐杰·智谱·GLM）｜乐享归档索引</title>
+<style>
+body{font-family:-apple-system,"Microsoft YaHei",sans-serif;line-height:1.75;max-width:900px;margin:0 auto;padding:24px;color:#1a1a1a;font-size:15px}
+h1{font-size:26px;border-bottom:2px solid #0b6bcb;padding-bottom:8px}
+h2{font-size:20px;margin-top:26px;color:#0b3d91}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid #d0d7de;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#f2f6fb}
+tr:nth-child(even) td{background:#fafbfc}
+code{background:#f3f4f6;padding:1px 5px;border-radius:3px;color:#b5314a;font-size:13px}
+blockquote{border-left:4px solid #0b6bcb;background:#f2f6fb;margin:12px 0;padding:10px 16px}
+.meta{color:#666;font-size:12.5px;background:#f7f7f7;padding:8px 12px;border-radius:4px;margin-bottom:18px}
+</style></head><body>
+
+<h1>P15 大模型技术底座（唐杰·智谱·GLM）</h1>
+<div class="meta">乐享归档索引 ｜ 2026-11-02 ｜ 本地正本：Obsidian <code>P15_大模型技术底座（唐杰·智谱·GLM）</code> 共 30 篇 ｜ 云端副本：WorkBuddy 资料库同节点</div>
+
+<blockquote><strong>一句话</strong>：唐杰七年只做了一件事——把「关系」变成可计算的东西。2019 年他把人与论文的关系算成 GNN；2026 年他把模型与真实世界的关系算成可验证奖励。骨架没换，对象换了。</blockquote>
+
+<h2>一、先纠三个最容易说错的事实</h2>
+<table>
+<thead><tr><th>常见错误</th><th>事实</th></tr></thead>
+<tbody>
+<tr><td>「唐杰是院士」</td><td><strong>不是院士</strong>。他是 ACM / AAAI / IEEE 三 Fellow，清华计算机系教授、KEG 实验室、智谱创始人兼首席科学家、AMiner 之父。2026 胡润榜身家约 275 亿元。</td></tr>
+<tr><td>「杨植麟、刘知远是唐杰的学生」</td><td><strong>错</strong>。二人师从<strong>孙茂松</strong>（同属 KEG 实验室）。唐杰直系可确认的是<strong>张鹏</strong>（智谱 CEO）。媒体把「KEG 一家人」当成了「唐杰的学生」。</td></tr>
+<tr><td>「GLM-5 用 FP8 训练」</td><td><strong>不准确</strong>。论文正文：SFT 阶段用 <strong>INT4 QAT</strong>，FP8 只用于 <strong>RL rollout 推理</strong>；中文芯片上 Attention/MLP 用 W8A8，MoE 专家压到 W4A8。<strong>没有独立的「FP8 主训练」章节。</strong></td></tr>
+</tbody></table>
+
+<h2>二、唐杰演讲思想编年（2019 → 2026）</h2>
+<table>
+<thead><tr><th>时间</th><th>场合</th><th>关心的问题</th><th>答案</th></tr></thead>
+<tbody>
+<tr><td>2019-11</td><td>清华「图形图像前沿知识学习班」/ 集智复杂系统研讨会</td><td>关系怎么算？</td><td>GCN→GraphSAGE→GAT；<strong>路径即推理</strong></td></tr>
+<tr><td>2026-01-10</td><td>AGI-Next 峰会（清华基础模型北京市重点实验室 + 智谱发起）</td><td>Chat 之后干什么？</td><td><strong>Action</strong>；RLVR；系统一/系统二/自学习三模块</td></tr>
+<tr><td>2026-10-17</td><td>ICAIS 2026 圆桌（致敬达特茅斯 70 年）</td><td>AGI 还有多远？</td><td><strong>十年内只有 8%</strong>；看调用量别看榜单</td></tr>
+<tr><td>2026-10-31</td><td>世界顶尖科学家论坛（上海临港）</td><td>规模还能不能信？</td><td>规模化<strong>正确性</strong>；六维失效；<strong>自净化</strong></td></tr>
+</tbody></table>
+
+<h3>可直接照录的四句原话</h3>
+<ul>
+<li>「<strong>DeepSeek 后，Chat 仗打完，下一仗是 Action。</strong>」（2026-01-10）</li>
+<li>「<strong>Benchmark 成绩并不等于用户体验。能不能一次跑通，才是决定模型价值的关键。</strong>」（2026-01-10）</li>
+<li>「<strong>基准测试上的分数一直在涨，但真实世界的模型调用量却停住了。</strong>」（2026-10-17，寒冬预警信号）</li>
+<li>「递归式自我改进能不能跑通，不取决于模型能否生成下一步，而是取决于<strong>它能否准确判断这一步是不是『进步』</strong>。」（2026-10-31）</li>
+</ul>
+
+<h3>规模化失效的六个维度（唐杰 2026-10-31）</h3>
+<table>
+<thead><tr><th>#</th><th>维度</th><th>自检问题</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>优化与超参数</td><td>这个 lr/warmup 在 10× 规模还稳吗？</td></tr>
+<tr><td>2</td><td>模型架构</td><td>深度/宽度翻倍后残差与归一化还成立吗？</td></tr>
+<tr><td>3</td><td>数值精度</td><td>降到 FP8 后 loss spike 吗？scale 策略对吗？</td></tr>
+<tr><td>4</td><td>并行与系统工程</td><td>张量并行切分后 all-reduce 精度够吗？</td></tr>
+<tr><td>5</td><td>数据</td><td>去重与配比在 10× 数据量下还成立吗？</td></tr>
+<tr><td>6</td><td>后训练</td><td>RLVR 的奖励在大规模下还能防 hack 吗？</td></tr>
+</tbody></table>
+
+<h2>三、GLM-5 架构与训练的硬数字（arXiv 2602.15763 全文实读）</h2>
+<table>
+<thead><tr><th>项</th><th>GLM-5</th></tr></thead>
+<tbody>
+<tr><td>总参数 / 激活</td><td><strong>744B / 40B</strong>（激活占比 5.4%；GLM-4.5 为 9.0%）</td></tr>
+<tr><td>专家数 / 层数</td><td><strong>256 专家 / 80 层</strong>（刻意减层以压专家并行通信开销）</td></tr>
+<tr><td>预训练</td><td><strong>28.5T tokens</strong>（Base 27T + mid-training 1.55T，早期重代码与推理）</td></tr>
+<tr><td>上下文扩展</td><td>三阶段：32K（1T）→ 128K（500B）→ 200K（50B）</td></tr>
+<tr><td>注意力</td><td>MLA + <strong>Muon Split</strong>（按头拆 up-projection 分别正交化）+ <strong>MLA-256</strong>（头维 192→256）</td></tr>
+<tr><td>稀疏注意力</td><td><strong>DSA</strong>（DeepSeek Sparse Attention），top-k=2048，内容驱动而非固定窗口，长序列省 1.5~2×</td></tr>
+<tr><td>DSA 接入</td><td>继续预训练：<strong>稠密预热 1000 步</strong>（14×202,752 token，lr=5e-3）→ <strong>稀疏适配 20B token</strong></td></tr>
+<tr><td>MTP</td><td><strong>3 层参数共享</strong>，接受长度 <strong>2.76</strong>（DeepSeek-V3.2 为 2.55），不加显存不加参数</td></tr>
+<tr><td>量化</td><td>SFT 阶段 <strong>INT4 QAT</strong>，kernel 与推理同源；原文：「ensures bitwise-identical behavior between training and inference」</td></tr>
+<tr><td>后训练</td><td>Reasoning RL → Agentic RL → General RL + On-Policy 跨阶段蒸馏防遗忘</td></tr>
+<tr><td>RL 超参</td><td>GRPO + IcePop，无 KL，β=2，ε=0.2/0.28，group=32，batch=32</td></tr>
+<tr><td>RL 致命坑</td><td>DSA 必须用<strong>确定性 torch.topk</strong>，且 <strong>RL 期间冻结 indexer</strong>，否则熵骤降崩溃</td></tr>
+<tr><td>异步框架</td><td><strong>slime</strong>：Multi-Task Rollout Orchestrator 解耦训推，>1k 并发 rollout，TITO 网关，DP-aware routing</td></tr>
+<tr><td>关键分数</td><td>HLE 30.5（w/ tools 50.4）｜SWE-bench Verified <strong>77.8</strong>｜Terminal-Bench 2.0 56.2/60.7｜CyberGym 43.2｜Vending-Bench 2 <strong>$4,432</strong>｜AA Intelligence Index <strong>50</strong>（首个达 50 的开放权重模型）</td></tr>
+</tbody></table>
+
+<blockquote><strong>读表要点</strong>：GLM-5 在开放权重模型里全面第一，但绝对分数仍落后 Claude Opus 4.5（SWE-bench 80.9）与 Gemini 3 Pro（GPQA 91.9）。真正的领先项是<strong>「开放权重」这个属性本身</strong> + CyberGym（43.2 vs DeepSeek-V3.2 的 17.3，接近翻倍）。</blockquote>
+
+<h2>四、清华《高级机器学习》16 周</h2>
+<p>课程真名<strong>《高级机器学习》</strong>，2026 秋 9/17 开课，16 周，评分 <strong>作业 40% + Final 60%</strong>（2–3 人组队，W6 提案 / W10 中报 / W16 报告 + 现场 demo，NeurIPS 格式英文）。</p>
+<p>主线：<strong>数据 → 结构 → 规模 → 对齐 → 做事 → 证明</strong>。五个作业串起来就是一个完整的大模型研发闭环。</p>
+<table>
+<thead><tr><th>作业</th><th>内容</th><th>本机可跑性</th></tr></thead>
+<tbody>
+<tr><td>HW1</td><td>从零写 Tokenizer + Transformer，训 0.1B</td><td>✅ 已用纯 numpy 跑通（缩到 0.064M）</td></tr>
+<tr><td>HW2</td><td>手写 Triton attention kernel，测多卡增益</td><td>❌ 需 CUDA，本机无卡</td></tr>
+<tr><td>HW3</td><td>raw dump 洗语料，拟合 scaling law 外推</td><td>✅ 已跑通</td></tr>
+<tr><td>HW4</td><td>同基座 SFT / DPO / RLVR 三路对照</td><td>⚠️ 公式与小规模模拟可做</td></tr>
+<tr><td>HW5</td><td>可验证环境 harness 训长程 Agent + self-judge loop</td><td>✅ 已跑通</td></tr>
+</tbody></table>
+
+<h3>三个已跑通的实测结果（不是"看代码觉得对"）</h3>
+<ul>
+<li><strong>HW1</strong>：梯度检查 <strong>17/17 通过</strong>（rel_err ~1e-8）；loss <strong>5.896 → 0.037</strong>；能生成正确中文词组。</li>
+<li><strong>HW3</strong>：用已知真参数生成数据再反推 —— α 真值 0.340 → 拟合 0.343，β 真值 0.280 → 拟合 0.271；留一外推误差仅 <strong>0.024</strong>。</li>
+<li><strong>HW5</strong>：两个 reward hacking 样本（<code>return True</code> / 测试名特判）<strong>全部被 judge 抓住</strong>。</li>
+</ul>
+
+<blockquote><strong>三个实测挖出的真坑</strong>：① BPE 的 <code>vocab_size</code> 必须 &gt; 256；② N 与 D 完全共线时 α、β 不可识别（拟合出的 tokens/param = 0 完全荒谬）；③ 我一个标记为 BUG 的空块除零，在 7 个测试里<strong>从未被触发</strong>——<strong>测试集有盲区，通过了不代表没问题</strong>。这就是「Benchmark 不等于体验」的最小复现案例。</blockquote>
+
+<h2>五、智谱生态伙伴变现路径（商业落地）</h2>
+<p><strong>先分清两条通道，走错门白忙：</strong></p>
+<table>
+<thead><tr><th></th><th>通道 A：企业用户权益</th><th>通道 B：大模型合作伙伴计划</th></tr></thead>
+<tbody>
+<tr><td>地址</td><td>open.bigmodel.cn/corporateequitys</td><td>bigmodel.cn/partner</td></tr>
+<tr><td>本质</td><td>按消费额解锁折扣与特权</td><td>按资质审核的商业联盟</td></tr>
+<tr><td>等级</td><td>普通 / V0 / V1 / V2 / V3</td><td>启航级 / 远航级 / 领航级</td></tr>
+<tr><td>一人公司</td><td><strong>可以</strong></td><td>基本进不去（要团队 + 私有化交付案例）</td></tr>
+</tbody></table>
+<p><strong>四级权益</strong>：普通=原价 · V0=9折 · V1=8折 · V2=7折 · V3=6折。服务特权：技术支持/直播课程从 V0 起；<strong>Academy 特权与商业合作（入选伙伴库 + 优先推荐权）从 V2 起</strong>；微调平台/编排工具/Alltools 从 V1 起。</p>
+<blockquote><strong>两个被低估的点</strong>：① V0 的「技术支持」是免费官方顾问，一人公司等于白得半个技术合伙人 —— 第一件事就去问 V1/V2 的真实门槛。② V1 的微调平台是「只能做 prompt 套壳」和「能卖专属模型」的分水岭。</blockquote>
+<p><strong>「优先推荐权」的真实含义</strong>：有人问智谱「谁帮我做」时，会从伙伴库推。在库里 → 有概率被推；不在库里 → 100% 不被推。是<strong>概率不是保底</strong>，别许诺。</p>
+<p><strong>毛利真相</strong>：标准包 ¥8,000，模型成本（V2 七折）约 150~400，<strong>毛利率 &gt; 93%</strong>。真实成本是你的时间。<strong>瓶颈不是钱，是时间；扩张靠模板化，不靠多接单。</strong></p>
+
+<h2>六、这个知识库怎么用</h2>
+<ol>
+<li><strong>要判断一个人/一个技术值不值得跟</strong> → 读「思维模型卡」的六条判断准则</li>
+<li><strong>要评一个大模型方案靠不靠谱</strong> → 用「规模化失效六维表」逐条过</li>
+<li><strong>要自己做实验证明结论</strong> → 跑 <code>_code/</code> 里的三个脚本，每个都有 <code>[验收]</code> 段</li>
+<li><strong>要把知识变成钱</strong> → 读「智谱生态伙伴变现路径 v2」，按 30 天清单走</li>
+<li><strong>要检验自己学会了没有</strong> → 做「掌握度验收 100 问」</li>
+</ol>
+
+<h2>七、诚实边界</h2>
+<ul>
+<li>❌ <strong>PDF 原件与 GitHub clone 未下载</strong>：本机沙箱出网全断（curl 返 000）、香港服务器 22 端口被<strong>对端拒绝</strong>（非我方限制）。已改用 arXiv HTML 全文，内容等价，缺图表矢量原文件。</li>
+<li>❌ <strong>B 站字幕逐字稿未做</strong>：两个视频的 subtitle 接口返回空列表，确实无字幕轨。已用同场演讲的媒体实录替代。</li>
+<li>⚠️ <strong>课程中间周次为推演</strong>：W1/W6/W10/W16 与五个作业是事实，其余按作业梯度反推，文档内已标置信度。</li>
+<li>⚠️ <strong>V1/V2 的具体消费门槛官方未公开</strong>：只写"按用量"，不编造金额。只能用 V0 顾问去问。</li>
+</ul>
+
+</body></html>

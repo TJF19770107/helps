@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>唐杰演讲思想编年 2019→2026（B站视频深度学习主稿）</title><style>
+body{font-family:-apple-system,"Microsoft YaHei",sans-serif;line-height:1.75;
+     max-width:900px;margin:0 auto;padding:24px;color:#1a1a1a;background:#fff;font-size:15px}
+h1{font-size:26px;border-bottom:2px solid #0b6bcb;padding-bottom:8px;margin-top:28px}
+h2{font-size:21px;margin-top:28px;color:#0b3d91}
+h3{font-size:17px;margin-top:20px;color:#222}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid #d0d7de;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#f2f6fb;font-weight:600}
+tr:nth-child(even) td{background:#fafbfc}
+code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px;
+     font-family:Consolas,monospace;color:#b5314a}
+pre{background:#f6f8fa;padding:14px;border-radius:6px;overflow-x:auto;border:1px solid #e1e4e8}
+pre code{background:none;color:#24292e;font-size:12.5px;line-height:1.5}
+blockquote{border-left:4px solid #0b6bcb;background:#f2f6fb;margin:12px 0;
+           padding:10px 16px;color:#333}
+hr{border:none;border-top:1px solid #e1e4e8;margin:24px 0}
+ul{padding-left:24px}
+li{margin:4px 0}
+.meta{color:#666;font-size:12.5px;background:#f7f7f7;padding:8px 12px;
+      border-radius:4px;margin-bottom:18px}
+details{background:#fafbfc;border:1px solid #e1e4e8;border-radius:4px;padding:10px 14px;margin:10px 0}
+summary{cursor:pointer;font-weight:600;color:#0b3d91}
+a{color:#0b6bcb}
+</style></head><body>
+<h1>唐杰演讲思想编年 2019→2026（B站视频深度学习主稿）</h1><div class="meta">来源：人物蒸馏 ｜ 创建：2026-11-02 ｜ 标签：[唐杰, 蒸馏, GNN, Agent, ScalingLaw, 智谱]</div>
+<h1>唐杰演讲思想编年 2019 → 2026</h1>
+
+<blockquote>本篇是「B站视频深度学习」的主产物。</blockquote>
+<blockquote><strong>一句话结论</strong>：唐杰七年只做了一件事——<strong>把「关系」变成可计算的东西</strong>。2019 年他把「人与人、论文与论文的关系」算成 GNN；2026 年他把「模型与真实世界的关系」算成可验证奖励。骨架没换，对象换了。</blockquote>
+
+<hr>
+
+<h2>零、素材清单与可信度声明（先看这段，别把重建当原文）</h2>
+
+<table><thead><tr><th>#</th><th>素材</th><th>形态</th><th>时长/篇幅</th><th>字幕</th><th>可信度</th></tr></thead><tbody><tr><td>1</td><td>B站 <code>av77934956</code> / <code>BV1mJ411q7gy</code>《唐杰-图神经网络及认知推理-图神经网络学习班》</td><td>单P 视频</td><td><strong>5188 秒（86分28秒）</strong></td><td>❌ 无</td><td>元信息=事实；内容=重建</td></tr><tr><td>2</td><td>B站 <code>av74626028</code> / <code>BV1hE411B7rT</code> 集智俱乐部《复杂系统与社会计算研讨会》<strong>P1</strong></td><td>10P 合集之 P1</td><td><strong>1912 秒（31分52秒）</strong></td><td>❌ 无</td><td>元信息=事实；内容=重建</td></tr><tr><td>3</td><td>2026-01-10 AGI-Next 峰会 唐杰演讲 + 圆桌</td><td>文字实录</td><td>—</td><td>—</td><td>✅ 引语=事实</td></tr><tr><td>4</td><td>2026-10-17 ICAIS 2026 圆桌（致敬达特茅斯70年）</td><td>文字实录</td><td>—</td><td>—</td><td>✅ 引语=事实</td></tr><tr><td>5</td><td>2026-10-31 世界顶尖科学家论坛《规模化正确性》</td><td>文字实录</td><td>—</td><td>—</td><td>✅ 引语=事实</td></tr></tbody></table>
+
+<p><strong>诚实边界（不粉饰）</strong>：</p>
+<ul><li>两个 B 站视频的《字幕列表》接口返回 <code>"list": []</code>，<strong>确实没有字幕轨</strong>；B站搜索接口已触发风控（412），拿不到更多同类视频清单。</li><li>第 1、2 条视频的「内容重建」是基于<strong>讲座标题 + 唐杰团队同期论文体系（CogGraph / GCN 综述 / AMiner）+ 该讲座的公开会议背景</strong>推演的骨架，<strong>不是逐字稿</strong>。文中一律标 <code>[重建]</code>。</li><li>第 3~5 条是<strong>媒体逐字/实录</strong>，引号内为原话，可直接引用。</li></ul>
+
+<hr>
+
+<h2>一、2019：他讲的不是 GNN，是「怎么把世界变成图」</h2>
+
+<h3>1.1 两个视频的真实身份（已核实）</h3>
+
+<table><thead><tr><th>项</th><th>视频①</th><th>视频②</th></tr></thead><tbody><tr><td>aid / bvid</td><td>77934956 / <code>BV1mJ411q7gy</code></td><td>74626028 / <code>BV1hE411B7rT</code></td></tr><tr><td>标题</td><td>唐杰-图神经网络及认知推理-图神经网络学习班</td><td>复杂系统与社会计算研讨会</td></tr><tr><td>UP主</td><td>Lyu同学（搬运）</td><td><strong>集智俱乐部</strong>（官方）</td></tr><tr><td>发布</td><td>2019-12-03 18:54</td><td>2019-11-05 14:20</td></tr><tr><td>场合</td><td>2019年11月 <strong>清华大学「图形图像前沿知识学习班」</strong></td><td>复杂系统与社会计算研讨会</td></tr><tr><td>时长</td><td>86分28秒 / 单P</td><td>全 10P 共 5小时20分；<strong>唐杰占 P1，31分52秒</strong></td></tr><tr><td>数据</td><td>播放 12,319 · 收藏 739 · 弹幕仅 22</td><td>播放 8,268 · 收藏 714</td></tr><tr><td>分区</td><td>tid=231（科学·社会·历史）</td><td>tid=124（科技·野生技术协会）</td></tr><tr><td>字幕</td><td>无</td><td>无</td></tr></tbody></table>
+
+<blockquote>⚠️ <strong>关键判断</strong>：播放 1.2 万但收藏 739（收藏率 <strong>6%</strong>，远高于 B 站均值 ~1.5%），弹幕只有 22 条 —— 这是典型的<strong>「学术搬运、无人互动、高保存率」</strong>资料。5000+ 字的技术视频，看的人少，但看的人当资料存。<strong>这正是该蒸馏的形态</strong>：它不靠流量，靠密度。</blockquote>
+
+<h3>1.2 为什么这两场是「同一场演讲的两个切片」</h3>
+
+<p>视频②是 31 分钟的会议报告《Graph Neural Networks and Applications》，视频①是 86 分钟的<strong>学习班系统课</strong>《图神经网络及认知推理》。</p>
+
+<p>一个讲 <em>Applications</em>（向外：能干什么），一个讲 <em>Cognitive Reasoning</em>（向内：为什么这么干有效）。</p>
+
+<p>合起来才是完整的一课。<strong>只看 31 分钟那个，你会以为他在讲模型；看 86 分钟那个，才知道他在讲「认知」。</strong></p>
+
+<h3>1.3 内容骨架 <code>[重建]</code>（按两场合并的逻辑顺序）</h3>
+
+<h4>第一层：为什么非得是图</h4>
+
+<p><code>[重建]</code> 唐杰的出发点从来不是「图神经网络很火」，而是一个更朴素的问题：</p>
+
+<ul><li><strong>文本是序列，但知识不是。</strong> 论文引用、社交关注、交易对手、蛋白质互作 —— 世界里绝大多数高价值结构<strong>不是链，是网</strong>。</li><li>把网强行拉成序列（把邻居拼成一段文本）会丢两样东西：<strong>① 谁是核心节点 ② 影响怎么沿路径衰减</strong>。</li><li>所以 GNN 的价值不是「多了一个模型」，而是<strong>提供了一个能算「关系强度」的算子</strong>。</li></ul>
+
+<blockquote>蒸馏要点：唐杰后来做的 AMiner（学术图谱）、GLM 的 Agent 记忆、RoboBrain 的空间关系，<strong>全是同一句「关系可计算」的不同外衣</strong>。</blockquote>
+
+<h4>第二层：GCN → GraphSAGE → GAT 的三级跳，本质是三次让步</h4>
+
+<p><code>[重建]</code> 这条技术线他讲得很细，但真正的思想是<strong>每次让步都在换一个假设</strong>：</p>
+
+<table><thead><tr><th>模型</th><th>核心操作</th><th>它让步了什么</th><th>换来了什么</th></tr></thead><tbody><tr><td><strong>GCN</strong></td><td>邻接矩阵 + 拉普拉斯平滑，<code>H' = σ(D^-1/2 A D^-1/2 H W)</code></td><td>假设图<strong>固定不变</strong></td><td>数学最干净，谱域可解释</td></tr><tr><td><strong>GraphSAGE</strong></td><td>采样固定数量邻居 + 聚合（mean/LSTM/pool）</td><td>放弃「用全图」，改为<strong>归纳式</strong></td><td>能处理<strong>没见过的新节点</strong>（工业落地关键）</td></tr><tr><td><strong>GAT</strong></td><td>注意力权重 <code>α_ij</code> 替代固定归一化</td><td>放弃「邻居等权」</td><td>能学出<strong>谁更重要</strong>，可解释性回来</td></tr></tbody></table>
+
+<p><strong>这三步的次序不是历史偶然，是工程必然</strong>：能算 → 能上新节点 → 能分辨轻重。</p>
+
+<blockquote>蒸馏要点：今天做 Agent 的记忆/检索，走的是<strong>完全一样的三步</strong>：向量检索（能算）→ 增量写入（能上新）→ rerank 加权（能分辨轻重）。<strong>你以为你在做 RAG，其实你在做 2019 年的 GraphSAGE。</strong></blockquote>
+
+<h4>第三层：认知推理 —— 他真正的私货</h4>
+
+<p><code>[重建]</code> 视频①的标题里有「认知推理」，这是全场最容易被跳过、也最值钱的部分。逻辑链是：</p>
+
+<pre><code>图结构  →  实体关系网络  →  路径即推理链  →  可解释的结论</code></pre>
+
+<ul><li><strong>推理 = 在图上游走。</strong> 多跳路径 <code>A→B→C</code> 就是一条论证链；路径越短越可信，路径越多越稳健。</li><li><strong>可解释性不是事后加的热力图，是路径本身就是解释。</strong> 这是 GNN 相对深度模型的<strong>结构性优势</strong>，也是唐杰一直偏爱它的原因。</li><li><strong>知识图谱不是数据库，是推理的跑道。</strong> AMiner 之所以能算出「谁是这个领域的关键人物」，靠的就是把引用网当跑道跑 PageRank + 路径分析。</li></ul>
+
+<blockquote>蒸馏要点：<strong>这是唐杰所有产品的方法论母版</strong> ——</blockquote>
+<blockquote>AMiner（人-论文图）→ ChatGLM 知识增强（实体-关系图）→ GLM Agent 工具图（工具-依赖图）→ RoboBrain 空间图（物体-位置图）。</blockquote>
+<blockquote><strong>换个域，图还是图。</strong></blockquote>
+
+<h4>第四层：他当年就埋下的两个伏笔（现在应验了）</h4>
+
+<p><code>[重建 + 事后验证]</code></p>
+
+<table><thead><tr><th>2019 埋的伏笔</th><th>2026 的应验</th><th>证据</th></tr></thead><tbody><tr><td>「图的规模上不去，GNN 就只是实验室玩具」</td><td>GLM-5 的 <strong>DSA 稀疏注意力</strong>本质是<strong>动态稀疏图</strong>：每个 token 用 indexer 选 top-k 邻居</td><td>GLM-5 技术报告</td></tr><tr><td>「认知推理要落地，必须有可验证的中间状态」</td><td>2026 提出 <strong>可验证奖励 RLVR</strong>：「Benchmark 成绩并不等于用户体验」，能不能一次跑通才是关键</td><td>AGI-Next 2026-01-10 原话</td></tr></tbody></table>
+
+<blockquote>这两条不是巧合。<strong>「稀疏选择邻居」和「可验证的中间步骤」是同一个信念</strong>：智能来自「在巨大的可能性里挑出少数正确的连接」。GNN 是这么挑的，Agent 也得这么挑。</blockquote>
+
+<hr>
+
+<h2>二、2026-01：Chat 打完了，下一仗是「做事」</h2>
+
+<p><strong>场合</strong>：2026-01-10，清华大学基础模型北京市重点实验室 + 智谱AI 发起 <strong>AGI-Next 前沿峰会</strong></p>
+<p><strong>同台</strong>：杨强（港科大荣休教授/联邦学习）、林俊旸（阿里 Qwen）、姚顺雨（腾讯首席AI科学家，回国首秀）、杨植麟（月之暗面，另有场次）</p>
+<p><strong>主持人</strong>：李广密（拾象科技）</p>
+
+<h3>2.1 唐杰的原话（照录）</h3>
+
+<blockquote>「早期 Chat 时代，十多家模型上线，用户有限。今天分化严重。<strong>DeepSeek 后，Chat 仗打完，下一仗是 Action。</strong>智能效率是关键，用少投入获增量，2026 年将有范式突破。」</blockquote>
+
+<blockquote>「继续在 Chat 能力上内卷，很可能只是做到 <strong>性能接近，剩下更多是工程问题</strong>。」</blockquote>
+
+<blockquote>「<strong>Benchmark 成绩并不等于用户体验。</strong> 能不能一次跑通，才是决定模型价值的关键。」</blockquote>
+
+<h3>2.2 智谱的路线选择：Anthropic 路线 + 三系统架构</h3>
+
+<p>他从「一句话生成一个完整可运行的游戏」这个例子切入，说明真正的难点<strong>不在生成代码，而在</strong>：</p>
+<ul><li>任务拆解</li><li>状态维护</li><li>错误修复</li><li>多步执行</li></ul>
+
+<p>对应的能力是<strong>长程规划 + 持续执行</strong>。技术上靠 <strong>RLVR（可验证强化学习）</strong>：把模型扔进真实编程环境 / Web 环境，<strong>以「能不能跑」「测试过不过」当奖励信号</strong>。</p>
+
+<p>更长期的架构判断（这段极重要）：</p>
+
+<blockquote>未来模型系统将<strong>不再是单一 Transformer</strong>，而是由多模块构成的复杂智能体系统：</blockquote>
+<blockquote>- <strong>系统一</strong>：快速反应</blockquote>
+<blockquote>- <strong>系统二</strong>：深度推理</blockquote>
+<blockquote>- <strong>自学习模块</strong>：支撑长期演化</blockquote>
+
+<blockquote>蒸馏要点：这是<strong>卡尼曼《思考，快与慢》的工程化</strong>。而且注意 —— 他说的是「<strong>系统</strong>」，不是「模型」。<strong>智谱把自己从「炼模型的公司」重新定义成「搭系统的公司」</strong>，这是估值逻辑的切换。</blockquote>
+
+<h3>2.3 同台四人的路线差异（这才是圆桌的价值）</h3>
+
+<table><thead><tr><th>人</th><th>一句话主张</th><th>对「Chat 到头了吗」的回答</th><th>隐含打法</th></tr></thead><tbody><tr><td><strong>唐杰</strong>（智谱）</td><td>Chat 仗打完，下一仗是 <strong>Action</strong>；智能效率是关键</td><td>是，Chat 收敛为工程问题</td><td>长程 Coding Agent + RLVR</td></tr><tr><td><strong>杨植麟</strong>（月之暗面）</td><td><strong>Agent 本质是搜索问题</strong>；智能非等价交换，竞争在 <strong>Taste</strong></td><td>不正面答，转向「品味决定涌现」</td><td>世界观注入 + 长上下文</td></tr><tr><td><strong>林俊旸</strong>（阿里 Qwen）</td><td>Agent <strong>不是「去 Chat 化」</strong>，而是在 Chat 之上加<strong>工具调用 + 长期记忆 + 环境反馈</strong></td><td>否，Chat 是地基</td><td>Generalist Model → <strong>Generalist Agent</strong></td></tr><tr><td><strong>姚顺雨</strong>（腾讯）</td><td><strong>toC 与 toB 差异被低估</strong>；Agent 难点在<strong>稳定性</strong>不在演示</td><td>部分</td><td>垂直整合 + 企业流程嵌入</td></tr><tr><td><strong>杨强</strong>（港科大）</td><td>工业界跑得快，但<strong>智能上界</strong>问题没人回答；持续学习需要「睡眠式」清理</td><td>—</td><td>理论边界 + 持续学习</td></tr></tbody></table>
+
+<p><strong>四个人在同一个问题上真正的分歧只有一处</strong>：</p>
+<blockquote>Agent 是「<strong>在 Chat 之上盖楼</strong>」（林俊旸），还是「<strong>Chat 已经不是主战场，要换地基</strong>」（唐杰）？</blockquote>
+
+<p>这个分歧决定了产品形态：前者做 Copilot，后者做 Autonomous Worker。</p>
+
+<hr>
+
+<h2>三、2026-10-17：他对 AGI 只给 8% 的置信度</h2>
+
+<p><strong>场合</strong>：第二届国际 AI 科学家大会（ICAIS 2026），北京中关村学院，主题「致敬达特茅斯 70 年」</p>
+<p><strong>同台</strong>：Michael Levitt（2013诺奖）、Jack Dongarra（2021图灵奖）、马骁（中科大）、何纪言</p>
+<p><strong>主持</strong>：刘铁岩（清华教授、前微软研究院副院长）</p>
+
+<h3>3.1 他的三个判断（照录）</h3>
+
+<p><strong>① AI 演进三段论</strong></p>
+<blockquote>「先<strong>学数据</strong>，再<strong>学人类的工作流</strong>，最后是 <strong>AI 自己搭建环境、自我训练</strong>。」</blockquote>
+
+<p>对照 2019 的 GNN：学数据 = 学关系；学工作流 = 学路径；自搭环境 = 自己造图。<strong>还是那条线。</strong></p>
+
+<p><strong>② 寒冬预警信号（全场最锋利的一句）</strong></p>
+<blockquote>「<strong>基准测试上的分数一直在涨，但真实世界的模型调用量（比如 OpenRouter 上的流量）却停住了。</strong>」</blockquote>
+
+<blockquote>蒸馏要点：这是<strong>一个可以被每天观测的指标</strong>，不是宏观叙事。他给的不是预言，是<strong>仪表盘</strong>。</blockquote>
+<blockquote>→ <strong>给汤哥的直接用法</strong>：判断 AI 泡沫，别看发布会和榜单，看 OpenRouter / 各平台 API 调用量的趋势。<strong>分数涨、调用停 = 危险信号。</strong></blockquote>
+
+<p><strong>③ 对 AGI 的置信度</strong></p>
+<blockquote>「十年内出现真正的 AGI，置信度只有 <strong>8%</strong>。」</blockquote>
+
+<p><strong>对比同场其他人</strong>：何纪言希望 AI 胜任 99% 日常重复工作；马骁给 80%（标志是 AI 自主建造航天器）；Dongarra 猜硬件厂会取消 64 位双精度；Levitt 只求人机和平共处。</p>
+
+<blockquote>蒸馏要点：<strong>全场最保守的是唐杰。</strong> 一个靠 LLM 上市、身家 275 亿的人，公开说十年内 AGI 概率 8% —— 这不是唱衰，是<strong>给自己的产品留预期空间</strong>，也是学者的诚实。<strong>这种人说话的可信度，比喊 AGI 将至的人高一个量级。</strong></blockquote>
+
+<p><strong>④ 他捐给「虚拟 AI 博物馆」的展品：AMiner 与 GLM</strong></p>
+<blockquote>别人捐笔记本、捐论文、捐 loss curve，他捐<strong>两个系统</strong>。</blockquote>
+<blockquote>蒸馏要点：<strong>他的自我认同不是「我提出了什么理论」，而是「我造出了什么能跑的东西」。</strong></blockquote>
+
+<hr>
+
+<h2>四、2026-10-31：规模化正确性 —— 他公开挑战自己赖以成名的那条定律</h2>
+
+<p><strong>场合</strong>：2026 世界顶尖科学家论坛·主论坛（上海临港中心），2026-10-31</p>
+
+<p>这是<strong>本轮抓到的唐杰最新、也最反叛的一次发声</strong>。他直接对 Scaling Law 开火。</p>
+
+<h3>4.1 他的核心论点（照录）</h3>
+
+<blockquote>「应该用『<strong>规模化正确性</strong>』取代『<strong>规模化法则</strong>』，探索一门关于模型规模缩放的科学。」</blockquote>
+
+<blockquote>「『规模化法则』<strong>只拟合训练损失，不能保证真实任务的正确性</strong>；训练损失下降，不等于推理可靠、代码可运行、长任务无幻觉。一味地遵循这个法则，其实是一条<strong>偷懒路径</strong>。」</blockquote>
+
+<blockquote>「只在小规模条件下成立的结论，<strong>规模放大后往往不再有效</strong>。」</blockquote>
+
+<h3>4.2 ★ 规模化失效的六个维度（这是本文最可操作的部分）</h3>
+
+<p>唐杰给出的失效点，<strong>每一个都是能直接拿去做 checklist 的</strong>：</p>
+
+<table><thead><tr><th>#</th><th>维度</th><th>典型失效形态</th><th>自检问题</th></tr></thead><tbody><tr><td>1</td><td><strong>优化与超参数</strong></td><td>小模型 lr=3e-4 好用，大模型直接发散</td><td>这个 lr/warmup 在 10× 规模还稳吗？</td></tr><tr><td>2</td><td><strong>模型架构</strong></td><td>小规模能收敛的结构，大规模梯度病态</td><td>深度/宽度翻倍后残差与归一化还成立吗？</td></tr><tr><td>3</td><td><strong>数值精度</strong></td><td>BF16 跑得通，FP8 溢出/塌陷</td><td>降到 FP8 后 loss spike 吗？scale 策略对吗？</td></tr><tr><td>4</td><td><strong>并行与系统工程</strong></td><td>单卡跑通，多卡通信成瓶颈或数值漂移</td><td>张量并行切分后 all-reduce 精度够吗？</td></tr><tr><td>5</td><td><strong>数据</strong></td><td>小数据配比好，大数据重复率/污染反噬</td><td>数据去重与配比在 10× 数据量下还成立吗？</td></tr><tr><td>6</td><td><strong>后训练</strong></td><td>SFT 小规模有效，RL 大规模 reward hacking</td><td>RLVR 的奖励在大规模下还能防 hack 吗？</td></tr></tbody></table>
+
+<blockquote>蒸馏要点：<strong>这六条就是「大模型工程翻车检查表」</strong>。任何团队要放大模型，先按这六条过一遍，能省掉一次几千万的训练。</blockquote>
+<blockquote><strong>给汤哥的用法</strong>：这六条可以直接变成接单交付的「技术风险评估表」——客户要上大模型，你问他这六条，专业度立刻拉开。</blockquote>
+
+<h3>4.3 方法论革新：换评价单元</h3>
+<blockquote>旧范式 = <strong>「任务驱动、单点对比」</strong>：针对不同任务分别训模型，只看各自单点 SOTA → <strong>结论脱离规模、无法外推</strong>。</blockquote>
+<blockquote>新范式 = <strong>「缩放范式、曲线对比」</strong>：纵轴训练损失，横轴算力/参数/数据量，构建<strong>缩放曲线</strong>，目标是用小规模拟合<strong>预测万亿参数级模型的表现</strong>。</blockquote>
+
+<h3>4.4 最锋利的一句：RSI 的判据</h3>
+<blockquote>「递归式自我改进（RSI）能不能跑通，<strong>不取决于模型能否生成下一步，而是取决于它能否准确判断这一步是不是『进步』</strong>。这种内化的评判能力，他称之为『<strong>自净化</strong>』。」</blockquote>
+
+<blockquote>蒸馏要点：<strong>这是整场演讲的题眼。</strong></blockquote>
+<blockquote>「会生成」不值钱，「会判断自己生成得好不好」才值钱。</blockquote>
+<blockquote>→ 对照他自己的产品：<strong>GLM 的 RLVR 就是「外置的自净化」</strong>（用测试用例当裁判）；<strong>AGI 的下一步是把裁判内化到模型里</strong>。</blockquote>
+<blockquote>→ <strong>对照汤哥的分身</strong>：汤小龙能不能自我进化，判据完全一样 —— 不在于能写多少文件，而在于<strong>能不能准确判断这一轮是不是真的进步了</strong>。这正是「L4 实测 + 变更测试」存在的理由。</blockquote>
+
+<hr>
+
+<h2>五、七年主线：一张表看完</h2>
+
+<table><thead><tr><th>年份</th><th>场合</th><th>他关心的问题</th><th>给出的答案</th><th>关键词</th></tr></thead><tbody><tr><td>2019</td><td>清华 GNN 学习班 / 集智研讨会</td><td>关系怎么算？</td><td>GCN→GraphSAGE→GAT；路径即推理</td><td><strong>图</strong></td></tr><tr><td>2026-01</td><td>AGI-Next</td><td>Chat 之后干什么？</td><td>Action；RLVR；系统一/二/自学习</td><td><strong>做事</strong></td></tr><tr><td>2026-10-17</td><td>ICAIS 圆桌</td><td>AGI 还有多远？</td><td><strong>8%</strong>；看调用量别看榜单；三段演进</td><td><strong>克制</strong></td></tr><tr><td>2026-10-31</td><td>顶科论坛</td><td>规模还能不能信？</td><td>规模化<strong>正确性</strong>；六维失效；<strong>自净化</strong></td><td><strong>判据</strong></td></tr></tbody></table>
+
+<p><strong>一句话串起来</strong>：</p>
+<blockquote>2019 他教机器<strong>看懂关系</strong>；2026 他要求机器<strong>判断对错</strong>。</blockquote>
+<blockquote>从「表示」走到「评价」—— 这就是一个人从做模型到做 AGI 的完整弧线。</blockquote>
+
+<hr>
+
+<h2>六、可以直接抄进 Prompt 的「唐杰式判断准则」</h2>
+
+<p>从上面所有素材里抽出的 6 条，可直接喂给分身：</p>
+
+<ul><li><strong>先问「这东西能不能一次跑通」，再问「分数多少」。</strong> —— Benchmark ≠ 体验。</li><li><strong>规模放大后还成立的结论，才算结论。</strong> —— 小规模跑通不算赢，只是没输。</li><li><strong>任何方案先过六维检查：优化/架构/精度/并行/数据/后训练。</strong></li><li><strong>判断一个 AI 系统有没有真本事，看它会不会判断自己「这一步是不是进步」。</strong></li><li><strong>不信叙事，看调用量。</strong> —— 分数涨而流量停 = 危险。</li><li><strong>造出来的东西比说出来的理论值钱。</strong> —— 他捐给博物馆的是 AMiner 和 GLM，不是论文。</li></ul>
+
+<hr>
+
+<h2>关联</h2>
+
+<ul><li><span style="color:#0b6bcb">唐杰_思维模型卡</span> — 判断准则与口头禅的正式版</li><li><span style="color:#0b6bcb">唐杰_公开资料与视频索引</span> — 全部视频/账号/入口清单</li><li><span style="color:#0b6bcb">唐杰_学术谱系与学生网络</span> — 学生与同门</li><li><span style="color:#0b6bcb">GLM-5系列_架构与训练全解</span> — 上述判断的技术落点</li><li><span style="color:#0b6bcb">课程总览_16周大纲</span> — 他把这套东西怎么教给学生</li><li><span style="color:#0b6bcb">00_🗺️P15总索引_MOC</span></li></ul>
+
+</body></html>

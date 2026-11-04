@@ -1,0 +1,1242 @@
+ANTHROPIC 官方课程  核心知识体系
+====================================
+编译时间：2026-06-10
+来源：Anthropic 官方文档（docs.anthropic.com、code.claude.com）、社区深度解读
+覆盖主题：Claude Code、Agent SDK、子代理/Swarm、Skills、Hooks、MCP、Agent Teams
+
+
+================================================================================
+第一部分：官方课程体系概览
+================================================================================
+
+Anthropic 官方提供以下培训课程（来源：docs.anthropic.com）：
+
+1. Claude 101
+   学习在日常工作任务中使用 Claude，理解核心功能，探索高级学习资源。
+
+2. Claude Code 101
+   学习在日常开发工作流中有效使用 Claude Code。
+
+3. Introduction to Claude Cowork
+   在真实文件和项目上与 Claude 协作。涵盖 Cowork 任务循环、插件和技能、
+   文件和研究工作流，以及如何负责任地引导多步骤工作。
+
+4. Claude Code in Action
+   将 Claude Code 集成到开发工作流中。
+
+5. AI Fluency: Framework & Foundations
+   学习如何有效、高效、合乎道德和安全地与 AI 系统协作。
+
+6. Building with the Claude API
+   覆盖使用 Claude API 与 Anthropic 模型工作的全谱系内容。
+
+7. Introduction to Model Context Protocol (MCP)
+   使用 Python 从零构建 MCP 服务器和客户端。
+   掌握 MCP 三大核心原语  tools、resources、prompts  连接 Claude 与外部服务。
+
+8. AI Fluency for Educators
+   赋能教师、教学设计者和教育领导者将 AI Fluency 融入教学实践和机构策略。
+
+9. AI Fluency for Students
+   赋能学生发展 AI Fluency 技能，提升学习、职业规划和学术成功。
+
+10. Model Context Protocol: Advanced Topics
+    发掘高级 MCP 实现模式，包括采样、通知、文件系统访问和传输机制，
+    用于生产级 MCP 服务器开发。
+
+11. Claude with Amazon Bedrock
+    与 AWS 合作的认证课程，面向 AWS 员工的专业培训。
+
+
+学习路径推荐：
+
+  入门级：Claude 101（通用用户）
+          AI Fluency for Students（学生）
+          AI Fluency for Educators（教育工作者）
+
+  开发级：Claude Code 101   Claude Code in Action
+          Building with the Claude API   Introduction to Claude Cowork
+
+  专家级：Introduction to MCP   MCP Advanced Topics
+          Claude with Amazon Bedrock
+
+  企业级：AI Fluency: Framework & Foundations（全员 AI 素养）
+
+
+================================================================================
+第二部分：Claude Code 核心能力与最佳实践
+================================================================================
+
+2.1 Claude Code 是什么
+
+Claude Code 是一个代理式编码环境（Agentic Coding Environment）。
+与等待回答问题的聊天机器人不同，Claude Code 可以读取文件、运行命令、进行更改，
+并在你观看、重定向或完全离开的情况下自主解决问题。
+
+核心差异：
+  传统：你编写代码，Claude 审查
+  Claude Code：你描述目标，Claude 探索、规划并实现
+
+
+2.2 核心约束：Context Window
+
+Claude 的 context window 保存整个对话历史，包括每条消息、每个读取的文件、
+每个命令输出。当 context 填充时，LLM 性能下降。
+
+关键策略：
+  频繁使用 /clear 在任务之间重置 context
+  使用 subagents 进行隔离调查
+  使用 /compact 指令主动压缩
+  在 CLAUDE.md 中定义压缩行为
+  使用 /btw 进行不影响 context 的快速查询
+
+
+2.3 给 Claude 一种验证其工作的方式
+
+提供可运行的验证：测试、构建、linter、对比脚本、浏览器截图。
+这是"你观看的会话"和"你可以离开的会话"之间的区别。
+
+策略对照表：
+  之前：实现一个函数
+  之后：实现函数 + 提供测试用例 + 运行测试验证
+
+  之前：构建失败
+  之后：提供错误信息 + 修复并验证 + 解决根本原因
+
+  之前：改善 UI
+  之后：提供设计截图 + 实现 + 截图对比 + 列出差异并修复
+
+验证方式层级：
+  单次提示内：要求 Claude 运行检查并迭代修复
+  整个会话中：设置 /goal 条件，评估器每次转换后重新检查
+  确定性门：Stop hook 运行检查脚本，阻止转换直到通过
+  第二意见：子代理在新鲜 context 中审查
+
+
+2.4 先探索，再规划，最后编码
+
+四阶段工作流：
+
+  阶段1  探索：进入 Plan Mode。Claude 只读文件，不做更改。
+    示例：read /src/auth and understand session/login handling
+
+  阶段2  规划：要求 Claude 创建详细实现计划。
+    示例：I want to add Google OAuth. What files need to change? Create a plan.
+
+  阶段3  实现：切换出 Plan Mode，根据计划编码。
+    示例：implement the OAuth flow from your plan. write tests.
+
+  阶段4  提交：使用描述性消息提交并创建 PR。
+    示例：commit with a descriptive message and open a PR
+
+适用场景：方法不确定、多文件改动、代码不熟悉时最有价值。
+不适用场景：修复拼写错误、添加日志行、简单重命名  直接执行即可。
+
+
+2.5 在提示中提供具体上下文
+
+有效策略：
+  限定任务范围：指定文件、场景、测试偏好
+  指向信息来源：引导 Claude 到 git 历史、文档等
+  参考现有模式：指向代码库中已有的模式作为范例
+  描述症状：提供具体症状、可能位置、"修复"的定义
+  提供丰富内容：使用 @ 引用文件、粘贴截图、管道数据
+
+
+2.6 配置你的环境
+
+2.6.1 CLAUDE.md
+  运行 /init 生成启动文件，随时间精化。
+  CLAUDE.md 在每个对话开始时自动加载，提供持久上下文。
+  
+  应该包括：
+    非标准 Bash 命令
+    与默认值不同的代码风格
+    测试指令和首选测试运行器
+    存储库礼仪
+    架构决策
+    环境怪癖和必需的环境变量
+    常见陷阱或非显而易见的行为
+  
+  不应包括：
+    Claude 可以从代码推断的内容
+    标准语言约定
+    详细 API 文档（改为链接）
+    经常变化的信息
+    自明的实践（如"编写干净的代码"）
+    逐个文件描述的代码库
+  
+  多位置支持：
+    ~/.claude/CLAUDE.md（全局，所有会话）
+    ./CLAUDE.md（项目根目录，团队共享）
+    ./CLAUDE.local.md（个人项目特定，加入 .gitignore）
+    父目录和子目录（monorepo 支持）
+
+  支持 @path/to/file 引用外部文件。
+
+2.6.2 权限配置
+  Auto mode：分类器模型审查命令，只阻止风险操作
+  权限允许列表：对已知安全的命令白名单（如 npm run lint）
+  沙箱：操作系统级隔离，限制文件系统和网络访问
+
+2.6.3 CLI 工具集成
+  安装 gh（GitHub CLI）、aws、gcloud、sentry-cli 等
+  Claude 能自适应学习不熟悉的 CLI 工具
+
+
+2.7 有效沟通
+
+2.7.1 代码库问答
+  "日志如何工作？"
+  "我如何创建新的 API 端点？"
+  "第 134 行的 async move { ... } 做什么？"
+  "CustomerOnboardingFlowImpl 处理哪些边界情况？"
+
+2.7.2 让 Claude 采访你
+  用 "Interview me in detail using the AskUserQuestion tool" 启动
+  Claude 会问技术实现、UI/UX、边界情况、权衡等问题
+  采访完成后，Claude 输出完整规范到 SPEC.md
+  然后启动新会话执行规范（干净 context）
+
+
+2.8 会话管理
+
+2.8.1 尽早且经常改正方向
+  Esc：中途停止 Claude，保留 context
+  Esc + Esc 或 /rewind：恢复到之前检查点
+  "撤销那个"：让 Claude 恢复更改
+  /clear：不相关任务间重置 context
+
+  如果连续改正 2 次以上仍失败，/clear 后用更具体的提示重新开始。
+
+2.8.2 检查点与 Rewind
+  每个提示都创建检查点。可将对话和代码恢复到任意之前状态。
+  检查点在会话中持久存在，关闭终端后仍可恢复。
+
+2.8.3 恢复对话
+  /rename 命名会话，像分支一样管理
+  claude --continue 继续最近会话
+  claude --resume 从列表中选择
+
+
+2.9 自动化和扩展
+
+2.9.1 非交互模式
+  claude -p "your prompt"                       # 一次性查询
+  claude -p "prompt" --output-format json       # 结构化输出
+  claude -p "prompt" --output-format stream-json --verbose  # 流式输出
+
+2.9.2 并行会话
+  多个 Claude 会话并行运行，加速开发、运行隔离实验。
+  
+  Writer/Reviewer 模式：
+    会话A（Writer）：实现功能
+    会话B（Reviewer）：在新鲜 context 中审查，查找边界情况
+
+2.9.3 跨文件扇出
+  for file in $(cat files.txt); do
+    claude -p "Migrate $file from React to Vue" --allowedTools "Edit,Bash(git commit *)"
+  done
+
+2.9.4 对抗性审查
+  在将任务视为完成前，让子代理在新鲜 context 中审查差异并报告缺陷。
+  只标记影响正确性或陈述要求的缺陷，避免过度工程化。
+
+
+2.10 常见失败模式
+
+  厨房水槽会话：一个会话混入多个不相关任务  context 被污染
+   修复：任务之间 /clear
+
+  反复改正：Context 积累失败方案，性能下降
+   修复：2 次失败后 /clear，用更好的初始提示重启
+
+  过度指定的 CLAUDE.md：太长导致关键规则被忽略
+   修复：无情修剪，只保留 Claude 缺失时会犯错的规则
+
+  信任-验证差距：实现看起来合理但不处理边界情况
+   修复：始终提供验证（测试/脚本/截图），无法验证就不发布
+
+  无限探索：未限定范围的调查导致 context 爆满
+   修复：狭隘限定或使用 subagents
+
+
+================================================================================
+第三部分：子代理（Sub-agents）体系
+================================================================================
+
+3.1 Claude Code Swarm（Agent Teams）
+
+3.1.1 概述
+  Swarm 模式（或称为 Claude Code agent teams）将 Claude Code 从单 AI 助手
+  转变为多 Agent 编排系统。核心洞察：不是一个强大的模型尝试做所有事情，
+  而是一组专注的专业人员协调工作。
+
+3.1.2 工作流程
+  (1) 与团队领导对话：领导 agent 不写代码，而是规划、委派、综合。
+  (2) 领导生成专家：进入委派模式，创建特定角色的 agent。
+  (3) Agent 并行工作：每个专家有新鲜 context，共享任务板 + 依赖管理。
+  (4) 结果回流：工人完成任务、标记完成、报告给领导，领导综合结果。
+
+3.1.3 TeammateTool 操作为 13 个
+  团队生命周期：spawnTeam、discoverTeams、cleanup
+  加入工作流：requestJoin、approveJoin、rejectJoin
+  协调：直接消息、广播消息、计划审批协议
+
+3.1.4 任务系统
+  共享任务列表位于 ~/.claude/tasks/{team-name}/
+  任务属性：id、subject、status、owner、blocks（依赖）、description
+  工人自组织：
+    (1) 检查 TaskList 寻找可用工作
+    (2) 认领未分配、未阻塞的任务
+    (3) 完成后标记
+    (4) 发现额外工作时创建新任务
+
+3.1.5 Git Worktree 隔离
+  每个 agent 在独立的 Git worktree 中工作，防止并发文件冲突。
+  仅在测试通过后合并代码，保持主分支稳定。
+
+3.1.6 环境变量
+  CLAUDE_CODE_AGENT_ID      唯一标识符
+  CLAUDE_CODE_AGENT_TYPE    角色（frontend/backend 等）
+  CLAUDE_CODE_TEAM_NAME     团队归属
+  CLAUDE_CODE_PLAN_MODE_REQUIRED  是否需要计划审批
+
+3.1.7 适用场景
+  适用：大型重构、多组件功能开发、需要并行工作流的项目、超单 agent context 限制的代码库
+  不适用：快速修复和小改动、范围不清晰的探索工作、安全关键代码、不需要并行的简单任务
+
+
+3.2 SDK 子代理编程（Agent SDK Subagents）
+
+3.2.1 三种创建方式
+  (1) 编程方式：在 query() 中使用 agents 参数（TypeScript / Python）
+  (2) 文件系统方式：在 .claude/agents/ 目录定义 Markdown 文件
+  (3) 内置通用子代理：Claude 可随时通过 Agent 工具调用 built-in general-purpose
+
+3.2.2 编程方式（推荐）
+  子代理定义结构：
+    name：唯一标识符
+    description：何时激活的描述（Claude 据此决定是否调用）
+    tools：允许的工具列表
+    model：指定模型（可选）
+    instructions：系统提示（可选）
+
+  示例（TypeScript）：
+    agents: {
+      "code-reviewer": {
+        description: "Reviews code for bugs and style issues",
+        tools: ["Read", "Grep"],
+        model: "opus"
+      },
+      "test-runner": {
+        description: "Runs tests and reports failures",
+        tools: ["Bash(cd test && npm test *)", "Read"],
+        instructions: "You are a test engineer..."
+      }
+    }
+
+3.2.3 文件系统方式
+  目录：.claude/agents/security-reviewer.md
+  
+  ---
+  name: security-reviewer
+  description: Reviews code for security vulnerabilities
+  tools: Read, Grep, Glob, Bash
+  model: opus
+  ---
+  You are a senior security engineer. Review code for:
+  - Injection vulnerabilities (SQL, XSS, command injection)
+  - Authentication and authorization flaws
+  - Secrets or credentials in code
+  - Insecure data handling
+  Provide specific line references and suggested fixes.
+
+3.2.4 上下文隔离
+  子代理在独立 context 中运行，拥有自己的工具集。
+  适用于：读取大量文件、需要专门关注、不污染主对话的任务。
+
+3.2.5 调用方式
+  "use subagent to review this code for security issues"
+  "use subagents to investigate how auth handles token refresh"
+  "use a subagent to review this code for edge cases"
+
+
+3.3 四件套扩展栈：Skills + Hooks + Agents + MCP
+
+这是 Claude Code 成为可编程 AI 平台的四大核心扩展原语：
+
+  Skills：将工作流编码为斜杠命令
+  Hooks：在非确定性 AI 行为上实施确定性护栏
+  Agents：在隔离的 Git worktree 中生成并行子进程
+  MCP：通过开放协议连接 1000+ 外部工具
+
+四者组合解决了"最后一英里"问题，使 Claude Code 从个人玩具变成团队可编程平台。
+
+扩展能力矩阵：
+  需求          最佳选择
+  每次必执行     Hook（确定性保证）
+  按需加载知识   Skill（上下文效率）
+  并行处理       Agent/Subagent（隔离 context）
+  外部连接       MCP（开放协议）
+
+
+================================================================================
+第四部分：Skills 技能系统
+================================================================================
+
+4.1 Skills 概念
+
+Skills 根据任务上下文动态加载，实现：
+  无限容量：知识分散在多个文件中
+  上下文效率：仅加载所需内容
+  渐进式披露：三层加载机制
+
+三层加载：
+  (1) 前置元数据：启动时加载（触发条件）
+  (2) SKILL.md 主体：激活时加载
+  (3) references/：需要详细信息时加载
+
+
+4.2 目录结构
+
+  skills/
+    skill-name/
+      SKILL.md          # 核心内容
+      references/        # 详细文档
+        deep-dive.md
+      examples/           # 工作代码示例
+        example.md
+      scripts/            # 实用工具
+        tool.sh
+
+
+4.3 SKILL.md 格式
+
+  ---
+  name: api-conventions
+  description: REST API design conventions for our services
+  ---
+  # API Conventions
+  - Use kebab-case for URL paths
+  - Use camelCase for JSON properties
+  - Always include pagination for list endpoints
+  - Version APIs in the URL path (/v1/, /v2/)
+
+4.4 可重复工作流 Skill
+
+  ---
+  name: fix-issue
+  description: Fix a GitHub issue
+  disable-model-invocation: true
+  ---
+  Analyze and fix the GitHub issue: $ARGUMENTS.
+  1. Use `gh issue view` to get the issue details
+  2. Understand the problem described in the issue
+  3. Search the codebase for relevant files
+  4. Implement the necessary changes to fix the issue
+  5. Write and run tests to verify the fix
+  6. Ensure code passes linting and type checking
+  7. Create a descriptive commit message
+  8. Push and create a PR
+
+  使用 disable-model-invocation: true 时，只能通过 /fix-issue 1234 手动调用。
+
+
+4.5 Skills 类型
+
+  防护栏技能（Guardrail Skills）：
+    目的：强制执行防止错误的关键最佳实践
+    类型：guardrail
+    执行级别：block
+    优先级：critical 或 high
+    使用场景：会导致运行时错误的错误、数据完整性担忧、关键兼容性问题
+
+  领域技能（Domain Skills）：
+    目的：为特定领域提供全面指导
+    类型：domain
+    执行级别：suggest
+    优先级：high 或 medium
+    使用场景：复杂系统深度知识、最佳实践文档、架构模式
+
+
+4.6 安装与位置
+
+  全局通用（所有项目生效）：~/.claude/skills/
+  项目专用（仅当前仓库）：项目根目录的 .claude/skills/
+  Plugins 市场：运行 /plugin 浏览安装
+
+
+================================================================================
+第五部分：Hooks 钩子系统
+================================================================================
+
+5.1 Hooks 概述
+
+Hooks 在 Claude Code 工作流中的特定点自动运行脚本。
+与 CLAUDE.md 指令不同，hooks 是确定性的，保证操作发生。
+
+5.2 钩子事件类型
+
+  事件              触发时机              典型用例
+  PreToolUse         工具使用前            验证、审批
+  PostToolUse        工具使用后            测试、代码检查、lint
+  SessionStart       会话开始时            日志记录、环境设置
+  SessionEnd         会话结束时            清理
+  UserPromptSubmit   用户提交提示时        预处理
+  PreCompact         压缩前                状态保存
+  Notification       显示通知时            自定义提醒
+  Stop               用户停止时            清理
+  SubagentStop       子代理结束时          日志记录
+
+5.3 配置方式
+
+  方式一：内联配置（在 plugin.json 中）
+  {
+    "hooks": {
+      "PostToolUse": [{
+        "matcher": "Write|Edit",
+        "hooks": [{
+          "type": "command",
+          "command": "${CLAUDE_PLUGIN_ROOT}/scripts/lint.sh"
+        }]
+      }]
+    }
+  }
+
+  方式二：独立 hooks.json
+  匹配器支持工具名称正则匹配。
+
+5.4 双 Hook 架构（高级模式）
+
+  (1) UserPromptSubmit Hook（主动建议）
+    触发：在 Claude 看到用户提示之前
+    目的：基于关键词 + 意图模式建议相关技能
+    方法：将格式化的提醒作为上下文注入
+
+  (2) Stop Hook  错误处理提醒（温和提醒）
+    触发：在 Claude 完成响应之后
+    目的：温和提醒自我评估错误处理
+    方法：分析编辑过的文件以查找风险模式
+
+
+================================================================================
+第六部分：MCP (Model Context Protocol)
+================================================================================
+
+6.1 MCP 概述
+
+MCP 是连接 AI 代理与企业系统的通用标准协议。
+三大核心原语：tools、resources、prompts。
+
+6.2 MCP 生产部署 15 个最佳实践
+
+  (1) 将每个服务器视为有界上下文：围绕单个微服务域构建
+  (2) 首选无状态、幂等的工具设计：接受请求 ID，确定性结果
+  (3) 选择正确的传输方式：stdio（最大兼容）+ 可流式 HTTP（网络化部署）
+      注意：SSE 传输已弃用，被可流式 HTTP 取代
+  (4) 实现请求取消和超时：防止长时间运行调用占用资源
+  (5) 拥抱启发式（Elicitation）：填补缺失参数，但绝不收集敏感数据
+  (6) 首先构建安全性（OAuth 2.1）：自 2025 年 3 月起 OAuth 2.1 是 HTTP 传输的强制要求
+  (7) 采用"为代理和人类"的用户体验：响应必须 LLM 可解析且人类可读
+  (8) 像生产微服务一样检测：结构化日志、相关 ID、延迟、成功率、令牌成本
+  (9) 对表面积进行版本控制：语义版本控制、功能声明
+  (10) 保持提示、工具和资源解耦和独立
+  (11) 负责任地处理流式传输和大型输出：增量块，返回资源 URI 而非内联大数据
+  (12) 使用真实主机和故障注入进行测试：针对多个 MCP 客户端验证
+  (13) 像微服务一样打包和交付：容器化，提供 README 和示例
+  (14) 尊重平台和生态系统现实：跨 IDE 和供应商生态系统的兼容性
+  (15) 持续关注规范演进：MCP 规范快速迭代，保持跟踪
+
+
+6.3 MCP 连接方式
+
+  claude mcp add  连接外部工具
+  支持的工具生态：Notion、Figma、数据库、问题跟踪器、监控系统等
+
+
+================================================================================
+第七部分：Agent SDK 开发
+================================================================================
+
+7.1 快速入门
+
+  前置条件：Node.js 18+ 或 Python 3.10+、Anthropic 账户
+
+  安装：
+    TypeScript: npm install @anthropic-ai/claude-agent-sdk
+    Python: pip install claude-agent-sdk
+
+  设置 API Key：
+    获取 API key：Claude Console
+    创建 .env 文件：ANTHROPIC_API_KEY=your-api-key
+
+  也支持第三方提供商：
+    Amazon Bedrock：CLAUDE_CODE_USE_BEDROCK=1
+    Google Vertex AI：CLAUDE_CODE_USE_VERTEX=1
+    Microsoft Azure：CLAUDE_CODE_USE_FOUNDRY=1
+
+7.2 Python SDK 示例
+
+  import asyncio
+  from claude_agent_sdk import query, ClaudeAgentOptions
+  from claude_agent_sdk import AssistantMessage, ResultMessage
+
+  async def main():
+      async for message in query(
+          prompt="Review utils.py for bugs. Fix any issues.",
+          options=ClaudeAgentOptions(
+              allowed_tools=["Read", "Edit", "Glob"],
+              permission_mode="acceptEdits",
+          ),
+      ):
+          if isinstance(message, AssistantMessage):
+              for block in message.content:
+                  if hasattr(block, "text"):
+                      print(block.text)
+                  elif hasattr(block, "name"):
+                      print(f"Tool: {block.name}")
+          elif isinstance(message, ResultMessage):
+              print(f"Done: {message.subtype}")
+
+  asyncio.run(main())
+
+
+7.3 Agent SDK 核心概念
+
+  代理循环（Agentic Loop）：
+    流式返回消息，Claude 自主工作
+    消息类型：AssistantMessage（推理/工具调用）、ResultMessage（最终结果）
+
+  权限模式：
+    acceptEdits：自动批准文件编辑
+    工具白名单：通过 allowed_tools 限定可用工具
+    auto mode：分类器模型审查，阻止高风险操作
+
+  子代理：
+    通过 agents 参数定义
+    支持编程方式和文件系统方式
+
+7.4 TypeScript SDK 示例
+
+  import { query } from "@anthropic-ai/claude-agent-sdk";
+
+  const options = {
+    allowedTools: ["Read", "Edit", "Glob"],
+    permissionMode: "acceptEdits",
+    agents: {
+      reviewer: {
+        description: "Code reviewer subagent",
+        tools: ["Read", "Grep"]
+      }
+    }
+  };
+
+  for await (const message of query({
+    prompt: "Review and fix bugs in utils.ts",
+    options
+  })) {
+    console.log(message);
+  }
+
+
+================================================================================
+第八部分：Prompt Engineering 最佳实践
+================================================================================
+
+8.1 2025 年新特性
+
+  多模态提示：组合文本、图像和代码
+  更长上下文窗口：Claude 最长 200K tokens
+  改进的推理：更好的 Chain-of-Thought 能力
+  函数调用：原生工具集成
+  微调可访问性：更容易的自定义模型训练
+
+8.2 基本原则
+
+  清晰优于简洁：
+    错误：Make this better
+    正确：Refactor this React component to improve performance by memoizing
+          expensive calculations and reducing unnecessary re-renders.
+          Focus on components that receive frequent prop updates.
+
+  慷慨提供上下文：
+    Role：AI 应该扮演的角色
+    Task：需要完成的任务
+    Format：输出格式
+    Constraints：限制条件
+    Examples：展示你想要的
+
+8.3 多 Agent 提示策略
+
+  给团队领导角色：你是一个团队领导，协调多个专家 agent
+  定义子任务边界：明确每个 agent 的职责范围
+  设置验证标准：每个子任务完成后如何验证
+  指定整合方式：多个 agent 的结果如何整合
+
+
+================================================================================
+第九部分：扩展与自动化进阶
+================================================================================
+
+9.1 插件系统（Plugins）
+
+  Plugins 将 skills、hooks、subagents 和 MCP 服务器捆绑为单一可安装单元。
+  
+  运行 /plugin 浏览市场。
+  
+  推荐插件：
+    代码智能插件：为类型化语言提供精确的符号导航和自动错误检测
+
+9.2 CI/CD 集成
+
+  非交互模式：
+    claude -p "review this PR" --output-format json
+
+  Pre-commit Hooks：
+    在提交前运行 Claude 进行代码审查
+
+  批量迁移：
+    for file in $(cat files.txt); do
+      claude -p "Migrate $file" --allowedTools "Edit,Bash(git commit *)"
+    done
+
+9.3 对抗性审查工作流
+
+  (1) 实现 agent 完成任务
+  (2) 审查子代理在新鲜 context 中评估差异
+  (3) 根据审查反馈修复
+  (4) 重新审查直到通过
+
+  捆绑的 /code-review skill 自动执行此流程。
+
+9.4 Agent Teams 自动化
+
+  使用 agent teams 进行无人值守运行：
+    团队领导：规划、委派、综合
+    前端 agent：实现 UI 组件
+    后端 agent：实现 API 和服务
+    测试 agent：编写和运行测试
+    文档 agent：生成文档
+
+
+================================================================================
+第十部分：Anthropic API 与工具使用
+================================================================================
+
+10.1 Claude API 核心能力
+
+  文本生成：对话、分析、创作
+  工具使用（Tool Use）：连接外部系统
+  多模态：图像理解
+  长上下文：高达 200K tokens
+
+10.2 Tool Use 最佳实践
+
+  工具定义清晰：名称、描述、参数 schema 必须精确
+  错误处理：工具返回明确错误信息，Claude 据此调整
+  幂等性：相同输入产生相同输出
+  预算管理：设置工具调用预算，防止无限循环
+
+10.3 多模态提示
+
+  结合文本和图像：
+    提供截图要求 UI 更改
+    提供设计稿要求实现
+    提供图表要求分析
+
+
+================================================================================
+第十一部分：AI Agent 设计原则（SOUL.md 补充素材）
+================================================================================
+
+11.1 代理设计核心理念
+
+  (1) 自主但不失控：
+      给 agent 明确的边界和验证标准
+      使用 Hooks 实现确定性护栏
+      使用 auto mode 分类器进行运行时安全检查
+
+  (2) 上下文是稀缺资源：
+      每个 token 都有成本
+      使用 subagents 隔离上下文
+      频繁清理不相关对话
+
+  (3) 验证优先于信任：
+      始终提供可运行的验证
+      新鲜 context 审查（对抗性审查）
+      检查点支持快速回滚
+
+  (4) 先探索再行动：
+      Plan Mode 将探索与执行分离
+      清晰的规范比盲目编码更高效
+
+  (5) 专业化优于通才化：
+      子代理按角色分工
+      每个 agent 有自己的工具集和 context
+      Skills 按需加载领域知识
+
+11.2 多 Agent 设计原则
+
+  (1) 团队领导模式：
+      领导 agent 只规划和综合，不执行
+      避免单个 agent 负载过重
+
+  (2) Git Worktree 隔离：
+      并发 agent 使用独立工作目录
+      仅在验证通过后合并
+
+  (3) 任务依赖管理：
+      共享任务板，支持阻塞关系
+      Agent 自组织认领任务
+
+  (4) 状态同步：
+      通过任务板和环境变量传递状态
+      避免 agent 间直接共享状态
+
+
+================================================================================
+第十二部分：多 Agent 协作流程（USER.md 补充素材）
+================================================================================
+
+12.1 标准协作流程
+
+  步骤1：需求分析
+    主 Agent 理解用户需求，判断是否需要多 Agent 协作
+    如需协作，进入规划阶段
+
+  步骤2：任务分解
+    将需求拆解为独立子任务
+    定义子任务间的依赖关系
+    为每个子任务选择合适的 Agent 类型
+
+  步骤3：并行执行
+    Agent 团队并行处理各自任务
+    通过任务板通信和协调
+    领导 Agent 监控进度
+
+  步骤4：结果整合
+    各 Agent 完成后报告结果
+    领导 Agent 综合所有结果
+    对抗性审查验证最终输出
+
+  步骤5：交付与归档
+    生成最终交付物
+    提交代码和文档
+    清理临时资源
+
+12.2 Writer/Reviewer 模式
+
+  阶段1：Writer Agent 实现功能
+  阶段2：Reviewer Agent 在新鲜 context 中审查
+  阶段3：Writer 根据审查反馈修复
+  阶段4：重复直到通过
+
+12.3 专家团队模式
+
+  适合场景：大型全栈功能开发
+
+  Team Lead：协调、规划、综合
+  Frontend Agent：UI 组件实现
+  Backend Agent：API 和服务实现
+  Test Agent：测试编写和执行
+  Docs Agent：文档生成
+
+12.4 扇出模式
+
+  适合场景：批量迁移、大规模重构
+
+  (1) 生成任务列表（列出所有需处理的文件）
+  (2) 编写脚本循环调用 Claude
+  (3) 少量试点验证
+  (4) 全量执行
+  (5) 结果汇总
+
+
+================================================================================
+第十三部分：子代理管理与自动化配置（AGENTS.md 补充素材）
+================================================================================
+
+13.1 子代理配置标准
+
+  文件位置：
+    全局：~/.claude/agents/
+    项目：.claude/agents/
+
+  配置模板：
+    ---
+    name: {agent-name}
+    description: {when to use this agent}
+    tools: {allowed tools list}
+    model: {model name, optional}
+    ---
+    {system instructions}
+
+13.2 推荐子代理类型
+
+  security-reviewer：
+    工具：Read, Grep, Glob, Bash
+    模型：opus
+    用途：安全审查
+
+  code-reviewer：
+    工具：Read, Grep
+    模型：sonnet
+    用途：代码质量审查
+
+  test-runner：
+    工具：Bash, Read
+    模型：haiku
+    用途：运行测试
+
+  doc-writer：
+    工具：Read, Write, Bash
+    模型：sonnet
+    用途：文档生成
+
+  refactor-agent：
+    工具：Read, Edit, Glob, Bash
+    模型：sonnet
+    用途：重构代码
+
+13.3 自动化配置清单
+
+  (1) CLAUDE.md 基础配置
+      构建/测试命令
+      代码风格规则
+      项目架构说明
+
+  (2) Skills 领域知识
+      按模块创建独立的 SKILL.md
+      渐进式披露，不要把所有内容放一个文件
+
+  (3) Hooks 自动化护栏
+      PostToolUse lint 检查
+      PreToolUse 安全验证
+      SessionStart 环境检查
+
+  (4) Subagents 专业化
+      按职责分离 agent
+      最小权限原则分配工具
+
+  (5) MCP 外部集成
+      数据库连接
+      API 网关
+      监控系统
+
+  (6) Plugins 可选增强
+      代码智能（类型化语言）
+      社区插件
+
+13.4 多 Agent 环境变量标准
+
+  CLAUDE_CODE_AGENT_ID       每个 agent 的唯一标识
+  CLAUDE_CODE_AGENT_TYPE     角色分类
+  CLAUDE_CODE_TEAM_NAME      团队归属
+  CLAUDE_CODE_PLAN_MODE_REQUIRED  强制计划审批
+
+
+================================================================================
+附录A：关键术语表
+================================================================================
+
+  Swarm / Agent Teams   Claude Code 的原生多 Agent 编排系统
+  TeammateTool           Swarm 底层的编排层，包含 13 个操作
+  Subagent               在主 agent 之外独立运行的 agent 实例
+  Skill                  按需加载的领域知识和可重用工作流
+  Hook                   在特定事件触发时确定性地运行的脚本
+  MCP (Model Context Protocol)   连接 AI 代理与外部工具的开放协议
+  Plan Mode              只读模式，探索和规划但不执行更改
+  Auto Mode              分类器模型自动审查命令的安全模式
+  Context Window          对话历史的总 token 容量
+  Compact                对话历史压缩机制
+  Rewind                 恢复到之前的对话和代码检查点
+  Git Worktree           并行 agent 的隔离工作目录
+
+
+================================================================================
+附录B：快速参考卡片
+================================================================================
+
+扩展方式选择指南：
+  每次必须执行且无例外              Hook
+  按需加载的领域知识                Skill
+  上下文隔离的并行处理              Agent / Subagent
+  连接外部工具和数据源              MCP
+  社区和官方的打包功能              Plugin
+  持久化的全局指令                  CLAUDE.md
+
+权限控制选择指南：
+  信任任务方向，减少点击              Auto Mode
+  已知安全，频繁重复                 权限白名单
+  高风险环境，需要隔离              沙箱
+  关键操作，手工批准                 默认模式（需确认）
+
+会话管理速查：
+  /clear                              清理 context，开始新任务
+  /compact                            压缩对话历史
+  /rewind 或 Esc+Esc                   恢复到检查点
+  /btw                                不影响 context 的快速查询
+  /init                               生成 CLAUDE.md 启动文件
+  /plugin                             浏览插件市场
+  /rename                             命名会话
+  /resume                             恢复历史会话
+（内容由AI生成，仅供参考）
+
+================================================================================
+[2026-06-11 澧為噺鏇存柊]
+================================================================================
+绗簩閮ㄥ垎锛欰nthropic Academy 13闂ㄥ厤璐硅绋嬪畬鏁翠粙缁?================================================================================
+
+Anthropic浜?026骞?鏈堟寮忔帹鍑篈nthropic Academy锛屾暣鍚堣繃鍘绘暎钀藉湪鍗氬銆?鏂囨。涓嶨itHub鐨勫涔犺祫婧愪负鍗曚竴骞冲彴銆?3闂ㄨ绋嬪叏鏁板厤璐广€佽嚜淇埗锛?瀹屾垚鍚庡彲鑾峰緱瀹樻柟缁撲笟璇佷功銆備緷鎶€鏈棬妲涘垎涓轰袱澶ц矾寰勶細
+
+涓€銆佷竴鑸娇鐢ㄨ€呰矾寰勶紙6闂紝鏃犻渶缂栫▼鑳屾櫙锛?
+  1. Claude 101锛堝叆闂ㄩ閫夛級
+     - 鏁欎綘鐢–laude澶勭悊鏃ュ父宸ヤ綔锛氬啓淇°€佹暣鐞嗘暟鎹€佸垎鏋愭枃浠躲€佽崏鎷熷唴瀹?     - 鏍稿績锛氥€屾€庝箞璺烝I瀵硅瘽鎵嶈兘寰楀埌鏈夌敤鐨勭粨鏋溿€?     - 娑电洊Projects銆丄rtifacts銆丼kills銆丆onnectors銆丒nterprise Search銆?       Research Mode绛夊姛鑳?     - 鏃犻渶鎶€鏈儗鏅?
+  2. Introduction to Claude Cowork
+     - Cowork璁〤laude鐩存帴鎿嶄綔浣犵殑鏂囦欢銆佹枃浠跺す涓庡簲鐢ㄧ▼搴?     - 鍐呭锛欳owork浠诲姟寰幆锛坱ask loop锛夈€丼kills涓嶱lugins銆?       鏂囦欢涓庣爺绌跺伐浣滄祦绋嬨€佸皢Claude鎵╁睍鍒癈hrome/Word绛夊簲鐢?
+  3. AI Fluency绯诲垪锛?闂級
+     - 涓庣埍灏斿叞绉戝厠澶у鏁欐巿Joseph Feller鍙婄憺鏋楄壓鏈笌璁捐瀛﹂櫌鏁欐巿
+       Rick Dakan鍚堜綔寮€鍙戯紝鍥寸粫銆?E妗嗘灦銆嶏細
+       Effective锛堟湁鏁堬級銆丒fficient锛堥珮鏁堬級銆丒thical锛堜鸡鐞嗭級銆丼afe锛堝畨鍏級
+     
+     3.1 Framework & Foundations锛堥€氱敤鐗堬級
+         - 鏁欎綘鎬濊€冩鏋惰€岄潪鎸夐挳鎿嶄綔
+         - AI鐨勮兘鍔涜竟鐣屻€佸摢浜涗换鍔¤浜ょ粰AI銆佷粈涔堟椂鍊欎汉绫诲垽鏂笉鍙浛浠?     
+     3.2 For Students
+         - 瀛︽湳鐮旂┒銆佽亴娑鍒掋€佸涔犵瓥鐣?     
+     3.3 For Educators
+         - 灏咥I铻嶅叆鏁欏銆佽绋嬭璁°€佽瘎閲忕瓥鐣?     
+     3.4 Teaching AI Fluency
+         - 鏁欏埆浜烘€庝箞鐢ˋI锛屽満鏅璁′笌瀛︿範鎴愭晥璇勪及
+
+浜屻€佸紑鍙戣€呰矾寰勶紙7闂紝闇€Python鎴朇LI缁忛獙锛?
+  1. Building with the Claude API锛堝紑鍙戣€呭繀淇锛?     - 浠庣涓€涓狝PI璋冪敤鍒癆gent绯荤粺鏋舵瀯
+     - 娑电洊锛欰PI璁惧畾涓庡瘑閽ョ鐞嗐€佸杞璇濅笌System Prompt璁捐銆?       Prompt Engineering锛圶ML鏍囩缁撴瀯銆丗ew-shot Learning锛夈€?       Tool Use锛堣Claude璋冪敤鑷畾涔夊閮ㄥ嚱鏁帮級銆?       RAG锛堣Claude瀛樺彇浣犵殑鏁版嵁锛夈€?       Extended Thinking涓嶱rompt Caching銆?       Agent鏋舵瀯锛堝苟琛屽寲銆佽矾鐢便€佸姝ラ缂栨帓锛?
+  2. Claude Code 101锛圓gentic缂栫爜宸ュ叿鍏ラ棬锛?     - 瀹夎锛堢粓绔満/VS Code/JetBrains/Claude Desktop/缃戦〉鐗堬級
+     - 鏍稿噯妯″紡銆丳lan妯″紡
+     - Explore鈫扨lan鈫扖ode鈫扖ommit宸ヤ綔娴佺▼
+     - 涓婁笅鏂囩鐞嗙瓥鐣ャ€佽嚜璁㈡寚浠?
+  3. Claude Code in Action锛堣繘闃跺疄鎴橈級
+     - 宸ュ叿绯荤粺濡備綍涓庝唬鐮佸簱浜掑姩
+     - 涓婁笅鏂囩鐞嗙瓥鐣?     - 鑷鎸囦护锛堣嚜鍔ㄥ寲閲嶅浠诲姟锛?     - MCP Server鏁村悎锛堣繛鎺ユ祻瑙堝櫒鑷姩鍖栫瓑澶栭儴宸ュ叿锛?     - Thinking Mode vs Planning Mode浣跨敤鏃舵満
+
+  4. Introduction to Agent Skills
+     - Agent Skills閫氳繃Markdown鏂囦欢锛圫KILL.md锛夋墿灞旵laude Code鑳藉姏
+     - 鏁欏鍐呭锛歋kills涓嶤LAUDE.md/Hooks/Subagents鐨勫樊寮傘€?       浠庨浂鎾板啓SKILL.md锛坒rontmatter鏍煎紡/瑙﹀彂鏉′欢鎻忚堪锛夈€?       鐩綍缁撴瀯璁捐锛堟帶鍒朵笂涓嬫枃绐楀彛娑堣€楋級銆?       杩涢樁閰嶇疆锛堥檺鍒跺伐鍏峰瓨鍙?鑳屾櫙鑴氭湰锛夈€?       鍥㈤槦鍏变韩涓庝紒涓氶儴缃?
+  5. MCP绯诲垪锛?闂級
+     5.1 Introduction to MCP
+         - 鐢≒ython浠庨浂寤烘瀯MCP Server涓嶤lient
+         - 瀛︿範涓夊ぇ鏍稿績鍘熻锛歊esources/Tools/Prompts
+         - 浣跨敤MCP Server Inspector杩涜娴嬭瘯闄ら敊
+     
+     5.2 MCP: Advanced Topics
+         - 娣卞叆鐢熶骇鐜璁
+         - 閫傚悎闇€瑕侀儴缃睲CP Server鐨勫伐绋嬪笀
+
+  6. 浜戠骞冲彴璇剧▼锛?闂級
+     6.1 Claude with Amazon Bedrock
+         - 鍦ˋWS Bedrock涓婇儴缃睠laude
+         - 娑电洊Tool Use/RAG/Agent鏋舵瀯
+     
+     6.2 Claude with Google Vertex AI
+         - 鍦℅CP Vertex AI涓婇儴缃?         - 棰濆娑电洊Vision/PDF澶勭悊/Citations
+
+涓夈€佽瘉涔﹀埗搴﹁鏄?
+  璇剧▼缁撲笟 vs Claude Certified Architect锛圕CA锛夋槸瀹屽叏涓嶅悓鐨勪袱浠朵簨锛?  - 璇剧▼缁撲笟璇佷功锛氳瘉鏄庝綘銆屼笂杩囪銆?  - CCA Foundations璁よ瘉锛?026骞?鏈?2鏃ュ甯冿級锛氶拡瀵硅В鍐虫柟妗堟灦鏋勫笀涓?    鍚堜綔浼欎即鐨勪笓涓氳瘉鐓э紝鑰冭瘯闅惧害涓庤绋嬬粨涓氬畬鍏ㄤ笉鍚?  - CCA璇佹槑浣犮€屾湁鑳藉姏璁捐鐢熶骇绾laude搴旂敤銆?
+鍥涖€佸缓璁涔犺矾寰勶紙鎸夎鑹查€夋嫨锛?
+  涓€鑸娇鐢ㄨ€咃細
+    Claude 101 鈫?AI Fluency Framework & Foundations 鈫?Claude Cowork
+    锛堜笁闂ㄥ氨瓒冲鏃ュ父浣跨敤锛?
+  寮€鍙戣€咃紙鍒氭帴瑙laude Code锛夛細
+    Claude Code 101 鈫?Claude Code in Action 鈫?Building with Claude API
+    鈫?MCP绯诲垪
+
+  寮€鍙戣€咃紙宸叉湁Claude Code缁忛獙锛夛細
+    鐩存帴浠嶤laude Code in Action寮€濮?鈫?鎸夐渶琛ュ厖API涓嶮CP璇剧▼
+
+  浼佷笟鍥㈤槦锛?    涓婅堪鍩虹 + Agent Skills璇剧▼ + 瀵瑰簲浜戠骞冲彴璇剧▼锛圔edrock鎴朧ertex AI锛?
+
+================================================================================
+绗笁閮ㄥ垎锛欳laude Code Agent Teams 瀹屽叏鎸囧崡
+================================================================================
+
+涓€銆丄gent Teams姒傝堪
+
+  2026骞?鏈圕laude Opus 4.6寮曞叆Agent Teams锛屾槸AI杈呭姪寮€鍙戠殑鑼冨紡杞彉銆?  涓嶅啀鏄崟涓€AI鍔╂墜鎸夐『搴忓鐞嗕换鍔★紝鑰屾槸缂栨帓澶氫釜鑷富鍗忚皟銆佺浉浜掕川鐤戝彂鐜?  骞跺苟琛屽鐞嗗鏉備唬鐮佸簱鐨凜laude瀹炰緥銆?
+  Agent Teams璁╁涓狢laude瀹炰緥锛?  - 骞惰宸ヤ綔锛屽鐞嗙嫭绔嬪瓙浠诲姟
+  - 鐩存帴鐩镐簰鍙戦€佹秷鎭紙涓嶄粎鍚戦瀵兼眹鎶ワ級
+  - 閫氳繃鍏变韩浠诲姟娓呭崟鍗忚皟锛屽叿鏈夎嚜鍔ㄤ緷璧栫鐞?  - 璐ㄧ枒鍙戠幇骞堕獙璇佸郊姝ょ殑宸ヤ綔
+
+浜屻€佷笁缁勪欢鏋舵瀯
+
+  缁勪欢          瑙掕壊
+  鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
+  鍥㈤槦棰嗗       浣犵殑涓籆laude Code浼氳瘽銆傚缓绔嬪洟闃熴€?  (Team Lead)    鐢熸垚闃熷弸銆佸垎閰嶄换鍔″苟缁煎悎缁撴灉
+
+  闃熷弸           鎷ユ湁鑷繁涓婁笅鏂囩獥鍙ｇ殑鐙珛Claude瀹炰緥銆?  (Teammates)    鐙珛宸ヤ綔骞跺彲涓庡叾浠栭槦鍙嬮€氫俊
+
+  鍏变韩浠诲姟娓呭崟   涓績鍗忚皟鏈哄埗锛屽叿鏈夊緟澶勭悊/杩涜涓?宸插畬鎴?  (Shared Task   鐘舵€佸拰鑷姩渚濊禆瑙ｉ櫎闃诲
+   List)
+
+涓夈€丄gent Teams vs 瀛愪唬鐞嗭細鍏抽敭鍖哄埆瀵规瘮琛?
+  鐗规€?         瀛愪唬鐞?Subagents)          Agent Teams
+  鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
+  閫氫俊          浠呭悜涓讳唬鐞嗘眹鎶ョ粨鏋?        鐩存帴鐩镐簰鍙戦€佹秷鎭?  涓婁笅鏂?       鍏变韩浼氳瘽                   姣忎釜浠ｇ悊鐙珛浼氳瘽
+  鍗忚皟          涓讳唬鐞嗙紪鎺?                鑷崗璋?鍏变韩浠诲姟鍒楄〃)
+  鏈€閫傚悎        蹇€熻仛鐒︿换鍔?              澶嶆潅骞惰宸ヤ綔
+  Token浣跨敤     杈冧綆(缁撴灉姹囨€昏繑鍥?          鏄捐憲杈冮珮(鐙珛瀹炰緥)
+  浣跨敤闂ㄦ      Claude Code v2.1.32+
+  鍚敤浠?        榛樿鍙敤                   闇€璁剧疆瀹為獙鎬у紑鍏?
+鍥涖€佷娇鐢ㄥ満鏅笌鍐崇瓥鏍?
+  浣跨敤瀛愪唬鐞嗙殑鍦烘櫙锛?  - 闇€瑕佸揩閫熴€佽仛鐒︾殑宸ヤ綔鑰呮眹鎶ョ粨鏋?  - 浠诲姟鏄『搴忕殑鎴栨湁绠€鍗曚緷璧栧叧绯?  - 銆屽幓鐮旂┒X骞跺憡璇夋垜浣犲彂鐜颁簡浠€涔堛€嶅瀷浠诲姟
+
+  浣跨敤Agent Teams鐨勫満鏅?鍥涘ぇ鏈€浣冲満鏅?锛?  
+  1. 鐮旂┒涓庝唬鐮佸鏌?     澶氫釜鎴愬憳鍚屾椂璋冩煡闂涓嶅悓鏂归潰锛屽垎浜拰鎸戞垬褰兼鍙戠幇
+     绀轰緥锛氭垚鍛楢鍒嗘瀽鍓嶇XSS椋庨櫓銆丅鍒嗘瀽鍚庣娉ㄥ叆婕忔礊銆丆鍒嗘瀽璁よ瘉绯荤粺
+
+  2. 鏂版ā鍧楁垨鍔熻兘寮€鍙?     姣忎釜鎴愬憳璐熻矗鐙珛浠ｇ爜妯″潡锛屼簰涓嶅共鎵?     绀轰緥锛欰瀹炵幇鍓嶇React缁勪欢銆丅瀹炵幇鍚庣API绔偣銆丆鍐欐暟鎹簱杩佺Щ銆丏鍐欐祴璇?
+  3. 绔炰簤鍋囪璋冭瘯
+     澶氫釜鎴愬憳骞惰娴嬭瘯涓嶅悓鍋囪锛屾洿蹇敹鏁涘埌绛旀
+     绀轰緥锛欰鍋囪鏁版嵁搴撹繛鎺ラ棶棰樸€丅鍋囪缂撳瓨澶辨晥銆丆鍋囪绔炴€佹潯浠?
+  4. 璺ㄥ眰鍗忚皟
+     淇敼妯法鍓嶇/鍚庣/娴嬭瘯鐨勫姛鑳斤紝姣忓眰鐢变笉鍚屾垚鍛樿礋璐?
+  涓嶉€傜敤Agent Teams鐨勫満鏅細
+  - 椤哄簭浠诲姟锛堟楠蹇呴』鍦ㄦ楠涔嬪墠瀹屾垚锛?  - 鍚屾枃浠剁紪杈戯紙澶氫釜鎴愬憳淇敼鍚屼竴鏂囦欢浜х敓鍐茬獊锛?  - 渚濊禆鎬у己鐨勫伐浣滐紙姣忎竴姝ラ兘渚濊禆涓婁竴姝ョ粨鏋滐級
+  - 蹇€熶竴娆℃€ч棶棰樸€侀绠楀彈闄愰」鐩?
+浜斻€佺湡瀹炴渚嬶細16涓狝gent鏋勫缓Rust C缂栬瘧鍣?
+  涓哄睍绀篈gent Teams鐨勮妯″寲鑳藉姏锛屼竴浣嶅紑鍙戣€呰16涓狢laude浠ｇ悊浠庨浂
+  鏋勫缓鍩轰簬Rust鐨凜缂栬瘧鍣ㄢ€斺€旇兘缂栬瘧Linux鏍稿績鐨勭紪璇戝櫒銆?
+  鍏抽敭鏁版嵁锛?  - 浠ｇ悊鏁帮細16涓苟琛屽伐浣?  - 浼氳瘽鏁帮細绾?,000涓狢laude Code浼氳瘽
+  - 鎴愭湰锛氱害$20,000 API璐圭敤
+  - 浜у嚭锛?00,000+琛孯ust浠ｇ爜
+  - 鑳藉姏锛氬湪x86/ARM/RISC-V涓婄紪璇慙inux 6.9
+
+  浠ｇ悊鑷富鍗忚皟鈥斺€斾竴涓鐞嗚В鏋愶紝鍙︿竴涓鐞嗕唬鐮佺敓鎴愶紝
+  鍙︿竴涓鐞嗕紭鍖栭亶鍘嗏€斺€斿叏閮ㄧ浉浜掗€氫俊骞堕獙璇佸郊姝ゅ伐浣溿€?  姝ら」鐩嫢鐢变汉绫诲洟闃熷畬鎴愰渶鏁版湀鏃堕棿銆?
+鍏€佽缃楠わ紙5姝ワ級
+
+  鍓嶆彁鏉′欢锛?  - 宸插畨瑁匔laude Code
+  - Opus 4.6妯″瀷璁块棶鏉冮檺
+  - Claude Code v2.1.32鎴栨洿楂樼増鏈?
+  姝ラ涓€锛氬惎鐢ˋgent Teams
+    鍦▇/.claude/settings.json鎴栭」鐩殑.claude/settings.json涓細
+    {
+      "env": {
+        "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+      }
+    }
+    鎴栫幆澧冨彉閲忥細export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+
+  姝ラ浜岋細鐞嗚ВTeammateTool
+    TeammateTool鐢熸垚鏂伴槦鍙嬶紝姣忎釜闃熷弸锛?    - 鑾峰緱鑷繁鐨勪笂涓嬫枃绐楀彛
+    - 鍔犺浇椤圭洰涓婁笅鏂囷紙CLAUDE.md/MCP鏈嶅姟鍣?Skills锛?    - 鐙珛宸ヤ綔浣嗗彲鍚戝叾浠栭槦鍙嬪彂閫佹秷鎭?
+  姝ラ涓夛細璁捐浠诲姟鍒嗚В
+    濂界殑鍒嗚В锛?      鈹溾攢鈹€ Agent A锛氬垎鏋愯璇佹ā鍧?      鈹溾攢鈹€ Agent B锛氬垎鏋愭暟鎹簱灞?      鈹溾攢鈹€ Agent C锛氬垎鏋怉PI绔偣
+      鈹斺攢鈹€ Agent D锛氫氦鍙夊紩鐢ㄥ彂鐜板苟璇嗗埆瀹夊叏婕忔礊
+
+    宸殑鍒嗚В锛?      鈹溾攢鈹€ Agent A锛氫慨澶嶆墍鏈塨ug锛堝お瀹芥硾锛?      鈹斺攢鈹€ Agent B锛氱瓑寰匒gent A锛堜笉蹇呰渚濊禆锛?
+  姝ラ鍥涳細鐢熸垚鍥㈤槦
+    鍦–laude Code涓敤鑷劧璇█鎻忚堪锛?    "鍒涘缓涓€涓狝gent鍥㈤槦瀹℃煡浠ｇ爜搴撶殑瀹夊叏婕忔礊銆傜敓鎴?涓槦鍙嬶細
+     1. 璁よ瘉瀹℃煡鍛樷€斺€斾笓娉ㄨ璇佹祦绋嬪拰浼氳瘽澶勭悊
+     2. 杈撳叆楠岃瘉瀹℃煡鍛樷€斺€旀鏌ユ墍鏈夌敤鎴疯緭鍏?     3. 鏁版嵁搴撳畨鍏ㄥ鏌ュ憳鈥斺€斿垎鏋愭煡璇㈠拰鏁版嵁璁块棶
+     4. 鏁村悎瀹℃煡鍛樷€斺€旀煡鐪婣PI杈圭晫鍜屽閮ㄨ皟鐢?     璁╀粬浠垎浜彂鐜板苟璐ㄧ枒褰兼鐨勭粨璁恒€?
+
+  姝ラ浜旓細鐩戞帶鍜屽崗璋?    浣跨敤Shift+Up/Down鎴杢mux鏁村悎鍦ㄤ唬鐞嗛棿鍒囨崲鍜岀洃鎺ц繘搴︺€?    鍏变韩浠诲姟娓呭崟浼氬湪浠ｇ悊瀹屾垚宸ヤ綔鏃惰嚜鍔ㄦ洿鏂般€?
+涓冦€佹渶浣冲疄璺碉紙5鏉★級
+
+  1. 浠庢竻鏅扮殑浠诲姟杈圭晫寮€濮?     姣忎釜浠ｇ悊搴旀湁鏄庣‘瀹氫箟鐨勮寖鍥淬€傞噸鍙犲鑷存贩涔卞拰娴垂token銆?
+  2. 浣跨敤鍏变韩浠诲姟娓呭崟
+     涓嶅井绠＄悊銆傝浠ｇ悊浠庡叡浜竻鍗曚腑璁ら浠诲姟骞惰嚜琛屽崗璋冦€?
+  3. 鍚敤浜ゅ弶楠岃瘉
+     Agent Teams鐨勫己澶т箣澶勫湪浜庝唬鐞嗙浉浜掕川鐤戙€傞紦鍔辫繖涓€鐐癸細
+     "鍦ㄥ垵姝ュ垎鏋愬悗锛岃浠ｇ悊瀹℃煡褰兼鐨勫彂鐜板苟鏍囪浠讳綍鍒嗘鎴栧叾浠栭棶棰樸€?
+
+  4. 棰勭畻Token浣跨敤
+     - 鍒濆娴嬭瘯浠庡皬鍥㈤槦寮€濮嬶紙2-4涓唬鐞嗭級
+     - 浜嗚Вtoken娑堣€楁ā寮忓悗鍐嶆墿澶ц妯?     - 鍙负骞惰鍔犻€熻兘甯︽潵鐪熸浠峰€肩殑浠诲姟浣跨敤Agent Teams
+     - 鎴愭湰浼樺寲锛氭垚鍛樼敤Sonnet鑰岄潪Opus锛堟樉钁楅檷浣庢垚鏈級
+
+  5. 鍒╃敤鎸佷箙鍖栬蹇嗕綋
+     璁惧畾浠ｇ悊浣跨敤鎸佷箙鍖栬蹇嗕綋鑼冨洿锛屼互渚胯法浼氳瘽寤烘瀯鐭ヨ瘑锛?     ---
+     name: security-reviewer
+     memory: project
+     ---
+
+鍏€侀檺鍒朵笌娉ㄦ剰浜嬮」
+
+  - 瀹為獙鎬у姛鑳斤細Agent Teams鏄爺绌堕瑙堢増锛岄鏈熸湁绮楃硻杈圭紭
+  - Token鎴愭湰锛氭樉钁楅珮浜庡崟浠ｇ悊宸ヤ綔娴佺▼
+  - 鍗忚皟寮€閿€锛氬鏉傚洟闃熷姩鎬佹湁鏃朵細鍑忔參杩涘害
+  - 宸茬煡闄愬埗锛氫細璇濇仮澶?浠诲姟鍗忚皟/鍏抽棴琛屼负鏂归潰瀛樺湪闂
+  - 绌洪棽鎴愬憳浠嶆秷鑰梩oken锛岄渶鍙婃椂娓呯悊鍥㈤槦
+
+
+================================================================================
+绗洓閮ㄥ垎锛欳laude Code Advanced Patterns Webinar 瑕佺偣
+================================================================================
+
+2026骞?鏈?4鏃nthropic瀹樻柟Webinar锛岀敱Lizzie Alvarado Ford锛圓pplied AI锛夈€?Alon Krifcher锛圓pplied AI锛夈€並acie Jenkins锛圕laude Code Marketing锛変富璁层€?
+鏍稿績鍥涗富棰橈細
+
+涓€銆丼ubagents
+  - Subagent鍜孒ooks灏咰laude Code杞彉涓虹紪鎺掑櫒
+  - 骞惰杩愯浠诲姟銆佹墽琛岄槻鎶ゆ爮銆侀摼寮忓伐鍏疯皟鐢紝鏃犻渶浜哄伐瀹堝湪姣忎竴姝?  - 閫傜敤浜庯細鑷姩鍖朠R瀹℃煡銆佹祴璇曠敓鎴愩€丆I绠￠亾涓殑鍥炲綊鎹曡幏
+
+浜屻€丮CP锛圡odel Context Protocol锛?  - 灏咰laude Code杩炴帴鍒板唴閮ㄥ伐鍏峰拰鏈嶅姟
+  - 鐭ラ亾浣曟椂鍊煎緱鏋勫缓鑷畾涔夊伐鍏穠s浣曟椂鑴氭湰灏卞鐢?  - 涓嶤I绠￠亾闆嗘垚鈥斺€旇嚜鍔ㄥ寲PR瀹℃煡鍜屾祴璇曠敓鎴?
+涓夈€丼caling to Real Codebases锛堝ぇ瑙勬ā瀹炴垬绛栫暐锛?  - Monorepo鐨凜LAUDE.md缁撴瀯璁捐
+  - 鍦ㄦ暟鍗佷竾琛屼唬鐮佷腑绠＄悊涓婁笅鏂囩獥鍙?  - 淇濇寔Claude涓撴敞鍦ㄥ綋鍓嶄换鍔′笂
+  - 鍥㈤槦宸蹭粠"鍋跺皵浣跨敤Claude Code"杩涘寲鍒?Claude Code铻嶅叆姣忔棩浜や粯"
+
+鍥涖€丆I绠￠亾闆嗘垚
+  - 鑷姩鍖朠R瀹℃煡
+  - 娴嬭瘯鐢熸垚
+  - 鍦ㄤ汉绫荤湅鍒颁箣鍓嶆崟鑾峰洖褰掔殑妯″紡
+
+
+================================================================================
+绗簲閮ㄥ垎锛歋kills鍥涗欢濂楃粍鍚?鈥?Skills + Hooks + MCP + Subagents
+================================================================================
+
+鍏崇郴涓庡樊寮傚叏鏅細
+
+  缁勪欢          鏍稿績浣滅敤              绫绘瘮              鍔犺浇鏃舵満
+  鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
+  CLAUDE.md     鎸佷箙鍖栧叏灞€鎸囦护        鍏徃瀹珷          濮嬬粓鍔犺浇
+  Skills        鎸夐渶鍔犺浇鐨勯鍩熺煡璇?   涓撲笟椋熻氨          鐩稿叧鏃惰嚜鍔ㄥ姞杞?  Hooks         寮哄埗鎵ц鐨勪簨浠跺搷搴?   瀹夊叏闂ㄧ          瑙﹀彂浜嬩欢鏃舵墽琛?  MCP           杩炴帴澶栭儴宸ュ叿鍜屾暟鎹簮  鍘ㄦ埧璁惧          闇€瑕佹椂璋冪敤
+  Subagents     涓婁笅鏂囬殧绂荤殑骞惰澶勭悊  澶栧寘鎵垮寘鍟?       鎸変换鍔″姩鎬佸垱寤?  Agent Teams   澶氬疄渚嬭嚜鍗忚皟鍗忎綔      椤圭洰鍥㈤槦鍦ㄥ悓涓€涓埧闂? 鎵嬪姩鍒涘缓鍥㈤槦
+
+鍥涗欢濂楀崗鍚屽伐浣滄祦锛?
+  1. CLAUDE.md璁惧畾鍏ㄥ眬鍩虹嚎锛堜綘鏄皝銆佸仛浠€涔堛€佷笉鍋氫粈涔堬級
+  2. Hooks鍦ㄥ叧閿妭鐐硅嚜鍔ㄥ搷搴旓紙PreToolUse/PostToolUse/SubagentStart绛夛級
+  3. Skills鍦ㄧ浉鍏充换鍔″嚭鐜版椂娓愯繘寮忓姞杞斤紙涓夌骇娓愯繘鎶湶锛?  4. MCP鍦ㄩ渶瑕佸閮ㄦ暟鎹垨宸ュ叿鏃惰璋冪敤
+  5. Subagents/Agent Teams鍦ㄩ渶瑕佸苟琛屾垨闅旂澶勭悊鏃惰缂栨帓
+
+Skills涓嶴ubagents鐨勫樊寮傦細
+  - Skills鏄煡璇嗗眰锛圞nowledge Layer锛夛細鍛婅瘔Claude銆屾€庝箞鍋氥€?  - MCP鏄繛鎺ュ眰锛圕onnectivity Layer锛夛細鎻愪緵Claude銆岀敤浠€涔堝仛銆?  - Subagents鏄墽琛屽眰锛圗xecution Layer锛夛細鎵╁睍Claude銆岃兘鍋氬灏戙€?
+Skills鐨勬笎杩涘紡涓夌骇鎶湶鏈哄埗锛圥rogressive Disclosure锛夛細
+  - 绗竴绾э紙YAML frontmatter锛夛細濮嬬粓鍦ㄧ郴缁熸彁绀轰腑锛屾彁渚沞nough淇℃伅璁〤laude
+    鐭ラ亾浣曟椂浣跨敤璇ユ妧鑳斤紙涓嶅姞杞藉叏閮ㄥ唴瀹瑰埌涓婁笅鏂囷級
+  - 绗簩绾э紙SKILL.md姝ｆ枃锛夛細褰揅laude鍒ゆ柇璇ユ妧鑳戒笌褰撳墠浠诲姟鐩稿叧鏃舵墠鍔犺浇锛?    鍖呭惈瀹屾暣鎸囦护鍜屾寚瀵?  - 绗笁绾э紙鍏宠仈鏂囦欢锛夛細鎶€鑳界洰褰曚腑缁戝畾鐨勯澶栨枃浠讹紝Claude鎸夐渶瀵艰埅鍜屽彂鐜?
+
+================================================================================
+绗叚閮ㄥ垎锛欰gent Teams 鍒嗗伐妯″紡
+================================================================================
+
+涓€銆佽鑹茶璁★細planner 鈫?implementer 鈫?tester 鈫?reviewer
+
+  涓撳瑙掕壊锛堣€岄潪閫氱敤瑙掕壊锛夋槸Agent Teams鎴愬姛鐨勬牳蹇冿細
+  - reviewer锛堝鏌ュ憳锛?  - debugger锛堥櫎閿欏憳锛?  - docs writer锛堟枃浠舵挵鍐欏憳锛?  - release helper锛堝彂甯冨姪鎵嬶級
+  - data fetcher锛堟暟鎹姄鍙栧憳锛?  - 涓嶈鐢ㄦā绯婄殑銆岃祫娣卞伐绋嬪笀銆嶄汉鏍煎寘鍔炰竴鍒?
+浜屻€佹墜閫掓墜浜ゆ帴锛圚andoff Design锛?
+  閾惧紡浜ゆ帴锛?    Planner Agent 鈫?Implementer Agent
+    Implementer Agent 鈫?Tester/Verifier Agent
+    Verifier Agent 鈫?Reviewer/Release Agent
+
+  姣忎釜浠ｇ悊浜у嚭瀵逛笅涓€涓唬鐞嗗彲璇荤殑涓滆タ锛?  - 璁″垝鏂囨。銆乨iff鎽樿銆佸け璐ユ祴璇曟竻鍗曘€佸鏌ュ蹇樺綍
+  - 涓嶈寮€鏀惧紡浜ゆ帴锛屽簲绐勮€屾槑纭?
+涓夈€佸叡浜」鐩厤缃紙Shared Project Configuration锛?
+  MCP涓夌浣滅敤鍩燂細local锛堟湰鍦帮級/ project锛堥」鐩級/ user锛堢敤鎴凤級
+  - 瀵瑰洟闃熶腑鎵€鏈変唬鐞嗛兘閲嶈鐨勮鑹?鈫?鏀惧湪椤圭洰鍏变韩閰嶇疆涓?  - 涓汉宸ュ叿 鈫?鏀惧湪涓汉閰嶇疆涓?  - 鍏变韩椤圭洰閰嶇疆姣斿阀濡欐彁绀鸿瘝鏇撮噸瑕?
+鎬荤粨锛欳laude Agent Teams涓嶄富瑕佹槸鍏充簬鑷富鎬э紝鑰屾槸鍏充簬鍒嗗伐銆?濡傛灉鍥㈤槦浠ｇ悊鎰熻娣蜂贡锛屼慨澶嶆柟妗堥€氬父鏄鑹茶璁″拰浜ゆ帴璁捐锛岃€岄潪鎹㈡ā鍨嬨€?

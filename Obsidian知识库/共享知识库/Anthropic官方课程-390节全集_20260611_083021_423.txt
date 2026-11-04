@@ -1,0 +1,452 @@
+ANTHROPIC 官方课程  核心知识体系 v2026.06.11
+====================================
+编译时间：2026-06-11 11:00
+来源：Anthropic 官方公开文档（docs.anthropic.com、code.claude.com）
+      公开社区深度解读（腾讯云、OAO、Claude Code 社区等）
+访问状态：官方培训平台 anthropic.skilljar.com 需企业登录认证，暂无法爬取390节付费课程
+替代方案：通过 Anthropic 公开文档 + 社区解读重构等同课程的知识体系
+
+覆盖主题：
+  1. Claude Code Sub-agents（子代理）
+  2. Agent Teams（多Agent团队协作）
+  3. Dynamic Workflows（动态工作流编排）
+  4. Claude Managed Agents（托管式Agent服务）
+  5. Model Context Protocol (MCP)
+  6. Claude Code Skills & Hooks
+  7. Claude Cowork & API Building
+  8. Agent View（会话管理面板）
+
+
+================================================================================
+第一部分：官方课程体系清单（17+ 门公开课程）
+================================================================================
+
+1. Claude 101
+   学习在日常工作任务中使用 Claude，理解核心功能，探索高级学习资源。
+
+2. Claude Code 101
+   学习在日常开发工作流中有效使用 Claude Code。
+
+3. Introduction to Claude Cowork
+   在真实文件和项目上与 Claude 协作。涵盖 Cowork 任务循环、插件和技能、
+   文件和研究工作流，以及如何负责任地引导多步骤工作。
+
+4. Claude Code in Action
+   将 Claude Code 集成到开发工作流中。
+
+5. AI Fluency: Framework & Foundations
+   学习如何有效、高效、合乎道德和安全地与 AI 系统协作。
+
+6. Building with the Claude API
+   覆盖使用 Claude API 与 Anthropic 模型工作的全谱系内容。
+
+7. Introduction to Model Context Protocol (MCP)
+   使用 Python 从零构建 MCP 服务器和客户端。
+   掌握 MCP 三大核心原语：tools、resources、prompts，连接 Claude 与外部服务。
+
+8. AI Fluency for Educators
+   赋能教师、教学设计者和教育领导者将 AI Fluency 融入教学实践和机构策略。
+
+9. AI Fluency for Students
+   赋能学生发展 AI Fluency 技能，提升学习、职业规划和学术成功。
+
+10. Model Context Protocol: Advanced Topics
+    发掘高级 MCP 实现模式，包括采样、通知、文件系统访问和传输机制，
+    用于生产级 MCP 服务器开发。
+
+11. Claude with Amazon Bedrock
+    与 AWS 合作的认证课程，面向 AWS 员工的专业培训。
+
+12. Claude Code Sub-agents（子代理专题）
+    创建自定义 Sub-agents，内置 Explore/Plan/General-purpose 三个子代理。
+    核心文档：code.claude.com/docs/zh-CN/sub-agents
+
+13. Agent Teams（团队协作专题）
+    协调多个 Claude Code 实例协同工作，Leader-Teammate 架构。
+    核心文档：code.claude.com/docs/en/agent-teams
+
+14. Dynamic Workflows（动态工作流）
+    JavaScript 脚本编排大规模子代理，支持 /deep-research 等内置工作流。
+    核心文档：code.claude.com/docs/en/workflows
+
+15. Claude Managed Agents（托管代理）
+    Brain-Hands-Session 三层解耦架构，沙箱代码执行，凭据作用域控制。
+    核心文档：claude.ai/platform
+
+16. Claude Code Agent View（会话管理）
+    单屏调度和监控后台会话，claude agents 命令启动。
+    核心文档：docs.anthropic.com/en/docs/claude-code/agents
+
+17. Claude Developer Platform（开发者平台）
+    Code with Claude 2026 大会内容：远程控制、Auto 模式、Routines、Worktrees。
+
+
+================================================================================
+第二部分：Sub-agents 子代理体系（核心技能）
+================================================================================
+
+2.1 内置 Sub-agents
+
+Explore（探索代理）
+  - 模型：Haiku（快速低延迟）
+  - 工具：只读工具（拒绝 Write 和 Edit）
+  - 用途：文件发现、代码搜索、代码库探索
+  - 彻底程度：quick / medium / very thorough
+  - 特点：跳过用户的 CLAUDE.md 和 git 状态，保持研究快速且成本低廉
+
+Plan（规划代理）
+  - 模型：继承自主会话
+  - 工具：只读工具
+  - 用途：在 Plan Mode 下为规划收集上下文
+  - 特点：跳过用户的 CLAUDE.md 和 git 状态
+
+General-purpose（通用代理）
+  - 模型：继承自主会话
+  - 工具：所有工具
+  - 用途：需要同时探索和修改的复杂多步骤任务
+  - 特点：加载 CLAUDE.md 和 git 状态
+
+2.2 Sub-agents 核心价值
+
+  1. 保留上下文：将探索和实现移出主对话，避免搜索结果/日志/文件内容淹没主会话
+  2. 强制执行约束：限制 subagent 可使用的工具
+  3. 跨项目重用：用户级 subagent 在所有项目可用
+  4. 专业化行为：针对特定领域使用聚焦的 system prompt
+  5. 成本控制：将简单任务路由到更快更便宜的 Haiku 模型
+
+2.3 创建自定义 Sub-agent（两种方式）
+
+方式一：/agents 命令（推荐）
+  1. 输入 /agents 打开管理界面
+  2. 点击 Create 描述 Subagent 用途、选择工具范围、指定模型
+  3. 保存后立即生效
+
+方式二：手动创建 Markdown 文件
+  作用域与存放位置：
+    项目级：.claude/agents/code-reviewer.md（团队共享，纳入版本控制）
+    用户级：~/.claude/agents/code-reviewer.md（个人所有项目可用）
+    插件级：插件目录的 agents 子目录（通过插件分发）
+    CLI 参数级：启动时通过 --agent 传递 JSON（一次性或自动化脚本）
+
+示例定义文件：
+  ---
+  name: code-reviewer
+  description: 审查代码质量和最佳实践
+  model: claude-sonnet-4-20250514
+  tools: [Read, Grep, Glob, Bash]
+  color: blue
+  ---
+  你是一个代码审查员。审查代码时指出问题并提供改进建议。
+
+Frontmatter 配置项：
+  name          - 唯一标识符（小写+连括号），必填
+  description   - 描述何时使用，必填
+  tools         - 可用工具列表，省略则继承全部
+  denied_tools  - 明确禁止的工具
+  model         - 使用的模型，默认同主对话
+  max_turns     - 最大轮次后自动停止
+  skills        - 预载入的技能列表
+  color         - UI 中的背景颜色
+
+2.4 Sub-agents 设计原则（Anthropic 官方）
+
+  1. 单一职责：每个 subagent 只处理一种类型的任务
+  2. 清晰描述：description 决定 Claude 何时委托，必须准确
+  3. 最小权限：只授予 subagent 完成任务所需的工具
+  4. 成本分层：简单任务用 Haiku，复杂任务用 Sonnet/Opus
+  5. 上下文隔离：每个 subagent 在自己的 context window 中运行
+
+
+================================================================================
+第三部分：Agent Teams 多Agent团队协作（核心技能）
+================================================================================
+
+3.1 架构概览
+
+Agent Teams 让多个 Claude Code 实例协同工作：
+  - Team Lead：一个会话担任团队领导，协调工作、分配任务、综合结果
+  - Teammates：多个队员独立工作，各自拥有独立上下文窗口
+  - 通信机制：队员之间可以直接互相通信，共享任务列表
+
+3.2 与 Sub-agents 的关键区别
+
+维度            Sub-agents         Agent Teams
+运行范围        单会话内           多会话并行
+通信方式        仅向主代理汇报       队员间可直接通信
+用户交互        不可直接交互         可与单个队员直接交互
+协调者          Claude 自动委托     Team Lead 分配任务
+状态            Experimental       Experimental（需启用开关）
+
+3.3 启用方式
+
+  在 settings.json 中添加：CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS
+  要求：Claude Code v2.1.32 或更高版本
+
+3.4 适用场景
+
+  最强用例：
+    - 大型项目拆分（不同子项目分配不同队员）
+    - 并行探索（多个方案同时评估）
+    - 跨域协作（前端/后端/测试独立进行）
+
+3.5 Agent Teams 设计原则
+
+  1. 任务分区：每个队员负责不同的文件集，避免冲突
+  2. 共享任务列表：队员间通过共享任务列表同步进度
+  3. Leader 综合：Team Lead 负责最终综合和决策
+  4. 独立上下文：每个队员拥有独立上下文，可深度聚焦
+
+
+================================================================================
+第四部分：Dynamic Workflows 动态工作流（核心技能）
+================================================================================
+
+4.1 概念
+
+  Dynamic Workflow 是一个 JavaScript 脚本，大规模编排 subagents。
+  Claude 为你描述的任务编写脚本，运行时在后台执行，主会话保持响应。
+
+4.2 何时使用
+
+  条件：任务需要的 agent 超过单个会话可以协调的数量，
+       或者编排逻辑需要被编码为可重复执行的脚本。
+
+  典型场景：
+    - 全代码库 Bug 扫描
+    - 500 文件迁移
+    - 需要交叉验证来源的研究问题
+    - 需要从多个独立角度起草的复杂计划
+
+4.3 四种并行方式的对比
+
+  方式           谁决定下一步         中间结果存放      可重复性      规模
+  Sub-agents     Claude（逐轮）      主上下文          worker 定义   每轮几个
+  Skills          Claude（遵循 prompt）主上下文        指令            同 Sub-agents
+  Agent Teams    Team Lead（逐轮）   共享任务列表      team 定义     少量长时间运行
+  Workflows      脚本（运行时）      脚本变量          编排本身      每轮几十到几百
+
+4.4 关键特性
+
+  - /deep-research：内置工作流，多角度搜索、交叉验证来源、投票每个声明
+  - ultracode 模式：结合 xhigh 推理 + 自动工作流编排
+  - 可恢复：运行中暂停后可在同一会话恢复
+  - 可保存：运行成功后保存为自定义命令 /<name>
+  - 权限模式：子代理始终以 acceptEdits 模式运行
+
+4.5 运行时约束
+
+  约束              原因
+  无中途用户输入     只有 agent 权限提示可以暂停运行
+  Workflow 脚本无 FS 访问 agent 负责读写和运行命令
+  最多 16 并发 agent  限制本地资源使用
+  每轮最多 1000 agent  防止失控循环
+
+4.6 Dynamic Workflows 设计原则
+
+  1. 计划即代码：将编排逻辑移入脚本，而非依赖 LLM 逐轮判断
+  2. 交叉验证：让独立 agent 对彼此发现进行对抗性审查
+  3. 多角度起草：从多个角度起草方案，互相权衡得出一致结论
+  4. 可重复性：保存工作流为命令，每次运行相同的编排逻辑
+  5. 成本控制：先用小范围试运行评估 token 消耗
+
+
+================================================================================
+第五部分：Claude Managed Agents 托管代理（核心技能）
+================================================================================
+
+5.1 架构
+
+  三层解耦设计：
+    Brain 层：Claude + Harness（推理和决策）
+    Hands 层：Sandbox（代码执行、工具调用）
+    Session 层：Event Log（会话记录、可恢复）
+
+  关键安全机制：
+    - 凭据永远不进入 sandbox
+    - Harness 崩溃可直接重启恢复
+    - 长期任务上下文不受 context window 限制
+
+5.2 能力矩阵
+
+  特性            状态
+  Agent Infra      Public Beta
+  MCP              Public Beta
+  Credential Vault Enterprise
+  Memory           Public Beta
+  Multi-agent      Public Beta
+  Sandbox          Hosted / Self-hosted
+
+5.3 与 Self-hosted 的区别
+
+  维度            Self-hosted（Claude Code）   Managed Agents
+  部署            本地机器                      Anthropic 云端
+  上下文管理       单会话 context window        不受窗口限制
+  凭据安全         需自行管理                    Vault 隔离
+  可恢复性         Session 级别                  Event Log 级别
+  扩展性           受本地资源限制                云端弹性扩展
+
+5.4 Managed Agents 设计原则
+
+  1. Brain-Hands-Session 分离：解耦推理、执行和记录
+  2. 凭据隔离：凭据在 Vault 层注入，sandbox 不可见
+  3. 崩溃恢复：Harness 层可独立重启，不丢失进度
+  4. 长任务友好：上下文管理独立于会话窗口
+
+
+================================================================================
+第六部分：并行 Agent 运行策略总览（核心技能）
+================================================================================
+
+6.1 选择决策树
+
+  谁协调工作？
+    Claude 在一轮对话中委托并收集结果         → Sub-agents
+    你分发独立任务，稍后检查                     → Agent View
+    Claude 规划、分配并监督 worker 团队         → Agent Teams（实验性）
+    脚本持有计划，而非 Claude 逐轮判断          → Dynamic Workflows
+
+  工人需要互相通信吗？
+    Sub-agents：只向主对话报告
+    Agent View：只向用户报告
+    Agent Teams：共享任务列表，队员间直接通信
+
+  任务涉及相同文件吗？
+    使用 Worktrees 隔离：每个会话独立 git checkout
+    Agent Teams 不隔离，需要手动分区文件
+
+6.2 工作进度监控
+
+  Sub-agents：/agents 面板 → Running 标签
+  Agent View：claude agents 命令 → 所有后台会话一览
+  后台任务：/tasks → 列出、附加、停止
+  工作流：/workflows → 阶段进度、agent 详情
+
+6.3 协同工具
+
+  Worktrees：每个会话独立 git checkout，避免编辑冲突
+  /batch：将一个大变更拆分为 5-30 个 worktree 隔离的子代理
+  Routines：在 Anthropic 云端按 cron 计划运行会话
+  Forked Sub-agent：继承完整对话上下文而非从头开始
+
+
+================================================================================
+第七部分：Claude Code 2026 最新更新（Code with Claude 大会）
+================================================================================
+
+7.1 开发者体验
+
+  - 远程控制：会话在一台机器开始，手机上继续
+  - 重新设计的桌面 GUI：分栏视图、助手消息固定为章节、自动生成目录
+  - 内联 diff 评论
+
+7.2 自主能力
+
+  - Auto 模式：权限决策交给分类器，筛查破坏性操作和 prompt 注入
+  - Worktrees：Claude 自行创建和销毁隔离分支
+  - Routines：基于 cron / GitHub webhook / API 端点触发 prompt 执行
+
+7.3 Managed Agents 演示（Jess Yan + Lance Martin）
+
+  - 沙箱代码执行
+  - 检查点（checkpoints）
+  - 凭据作用域控制
+
+7.4 CEO/Founder 主旨（Dario Amodei + Daniela Amodei）
+
+  模型能力的阶段性跃迁影响产品架构、组织设计和基础设施经济性。
+
+7.5 实战演示（Boris Cherny + Jarred Sumner）
+
+  Bun 借助 Robobun 机器人实现自维护：
+  复现 issue → 自动回归测试 → 旧版失败/修复版通过 → 自动创建 PR
+
+
+================================================================================
+第八部分：Agent 设计重构原则（从 Anthropic 课程提炼）
+================================================================================
+
+8.1 上下文管理原则
+
+  1. 仅保留必要的上下文：Exploration/Research 输出不进主对话
+  2. 上下文隔离：每个 worker 独立运行，汇总后仅返回摘要
+  3. 分层记忆：短期（context window）→ 中期（sub-agent 返回）→ 长期（memory 文件）
+
+8.2 工具权限原则
+
+  1. 最小权限：只授予完成任务所需的最小工具集
+  2. 读写分离：Explore/Plan 只读，General-purpose 可写
+  3. 工具约束：denied_tools 明确禁止危险工具
+  4. 继承链路：自定义 sub-agent 默认继承主会话工具，可覆盖
+
+8.3 协作模式原则
+
+  1. 单会话协作（Sub-agents）：简单、快速、低开销
+  2. 多会话并行（Agent Teams）：复杂项目拆解、跨域协作
+  3. 脚本编排（Workflows）：大规模、可重复、交叉验证
+  4. 云端托管（Managed Agents）：长任务、生产级、安全隔离
+
+8.4 成本控制原则
+
+  1. 模型分层：简单任务 Haiku，中等任务 Sonnet，复杂任务 Opus
+  2. 小范围试跑：先跑一个目录/一个窄问题，评估后再全量
+  3. 上限约束：max_turns、1000 agent/run 上限防止失控
+  4. 并行管理：最多 16 并发，保护本地资源
+
+8.5 质量保障原则
+
+  1. 交叉验证：多个独立 agent 对彼此发现进行审查
+  2. 多角度起草：从多个视角出发，综合最优方案
+  3. 自动化回归：Bun 的 Robobun 模式——自动复现 issue + 回归测试
+  4. 检查点恢复：Managed Agents 的 checkpoint 机制
+
+
+================================================================================
+第九部分：与龙虾 Agent 体系的对标映射
+================================================================================
+
+9.1 概念对应
+
+  Anthropic 概念          龙虾 Agent 体系对应
+  Sub-agents              子 Agent（豆包 Agent、Hermes Agent、OpenClaw Agent）
+  Agent Teams             豆包-Hermes-OpenClaw 三引擎协作
+  Dynamic Workflows       龙虾五步法 v2.0（画像→报告→策略→执行→迭代）
+  Managed Agents          全域定时任务自动化执行
+  Agent View              全域模板中的迭代报告索引
+  Worktrees               各 Agent 独立工作目录
+  Routines                每 2 小时循环定时任务
+  MCP                     Marvis 工具/技能/子代理三层架构
+
+9.2 可迁移技能
+
+  1. 上下文隔离：龙虾 Agent 的长期记忆机制已实现等效功能
+  2. 工具权限：各子 Agent 的 dispatch_task 已实现专用工具集
+  3. 协作模式：豆包-Hermes-OpenClaw 三引擎 + Marvis 中枢 = Anthropic Agent Teams 的本地实现
+  4. 脚本编排：龙虾五步法 = Dynamic Workflows 的概念等价物
+  5. 云端托管：定时任务体系 ≈ Routines + Managed Agents 的混合
+
+
+================================================================================
+第十部分：全域学习闭环记录
+================================================================================
+
+学习周期：每 2 小时循环
+数据来源：
+  - 官方公开文档（实时更新）
+  - docs.anthropic.com（Claude Code 文档）
+  - code.claude.com（中文子代理指南）
+  - 社区深度解读（腾讯云、OAO、Claude Code 社区）
+
+无法访问内容：
+  - anthropic.skilljar.com（企业培训平台，需要登录认证）
+  - 390 节付费课程的具体视频/课件内容
+
+替代策略：
+  - 以 Anthropic 公开文档为权威来源
+  - 结合社区解读弥补实操细节
+  - 对标龙虾 Agent 体系进行概念迁移
+
+本次更新：2026-06-11 11:00
+上次更新：2026-06-10
+文件编码：UTF-8
+文件格式：纯 TXT（符合用户偏好规则）
+（内容由AI生成，仅供参考）

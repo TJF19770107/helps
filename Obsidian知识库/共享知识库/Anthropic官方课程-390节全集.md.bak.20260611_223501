@@ -1,0 +1,613 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: cf54d54c59baa0ada35a5ecb7c73a584_e68d29f6655f11f1af8f5254002afed2
+    ReservedCode1: VlSTAegHGhIrs83FierBG5/urtL/QYVo4rxtNAVAc69BQVHcQWKCcaQPScfnCwds4QTAC5mbbonT6SX0PMCtlKrg8BejJKJgGUlcaprTJ7BWCLxJJj/yNLNrbRetwObpE3VD51vCxCa3ThDyIA1U7KeNSiFhv9ZsVl1CwG+CDBnfCtjtulGS6Drsuv0=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: cf54d54c59baa0ada35a5ecb7c73a584_e68d29f6655f11f1af8f5254002afed2
+    ReservedCode2: VlSTAegHGhIrs83FierBG5/urtL/QYVo4rxtNAVAc69BQVHcQWKCcaQPScfnCwds4QTAC5mbbonT6SX0PMCtlKrg8BejJKJgGUlcaprTJ7BWCLxJJj/yNLNrbRetwObpE3VD51vCxCa3ThDyIA1U7KeNSiFhv9ZsVl1CwG+CDBnfCtjtulGS6Drsuv0=
+---
+
+# Anthropic官方课程-390节全集
+
+> 来源：anthropic.skilljar.com Anthropic Academy · 17门免费认证课程 · 180+课时
+> 更新：2026-06-11 · 全域学习循环 v11.0
+> 关联：[[AGENTS]] · [[SOUL]] · [[USER]]
+
+---
+
+## 一、Anthropic Academy 课程体系总览
+
+Anthropic 于 2026年3月2日 正式推出 **Anthropic Academy**（托管于 Skilljar），提供完全免费的 Claude AI 学习平台。截至 2026年4月，已扩展至 **17门认证课程**，涵盖超过 180 节视频、测验、互动材料，分为 5 条学习路径。
+
+### 1.1 五大学习路径
+
+| 路径 | 课程数 | 目标用户 |
+|------|--------|----------|
+| AI Fluency（AI 通识） | 6门 | 所有人 / 零基础 |
+| Product Training（产品培训） | 2门 | 产品经理 / 业务人员 |
+| Developer Deep-Dives（开发者深入） | 5门 | 后端/全栈工程师 |
+| Cloud & Enterprise（云与企业） | 2门 | DevOps / 架构师 |
+| Foundational Knowledge（基础知识） | 2门 | 初学者补全基础 |
+
+### 1.2 注册与证书
+- 平台：anthropic.skilljar.com
+- 注册：仅需邮箱，无需 Anthropic 账号
+- 证书：每门课程完成即发认证证书，可在 LinkedIn 展示
+- 语言：纯英文授课（社区有西班牙语字幕、SkillBridge 翻译扩展等替代方案）
+
+---
+
+## 二、完整课程清单（17门）
+
+### 路径A：AI Fluency（AI 通识 · 6门）
+
+| 序号 | 课程名称 | 对象 | 内容概要 | 课时 |
+|------|----------|------|----------|------|
+| 1 | **Claude 101** | 零基础 | Claude 核心功能、有效提示词、真实用例 | ~1h |
+| 2 | **AI Fluency: Framework & Foundations** | 所有人 | 4D 框架（Delegation/Description/Discernment/Diligence），14节课 | 1.1h |
+| 3 | **AI Fluency: Effective Prompts** | 所有人 | 提示词工程基础、清晰指令、角色设定、示例驱动 | ~1h |
+| 4 | **AI Fluency: Collaboration & Ethics** | 所有人 | AI 协作原则、伦理边界、责任使用 | ~1h |
+| 5 | **AI Fluency: Real-World Applications** | 所有人 | 行业案例、跨领域应用、工作流设计 | ~1h |
+| 6 | **AI Fluency: Skills Assessment** | 所有人 | 综合测验、实操考核 | ~0.5h |
+
+### 路径B：Product Training（产品培训 · 2门）
+
+| 序号 | 课程名称 | 对象 | 内容概要 | 课时 |
+|------|----------|------|----------|------|
+| 7 | **Claude for Business** | 产品经理 | 企业级应用、ROI 评估、部署策略 | ~1.5h |
+| 8 | **Claude Enterprise Features** | 业务人员 | Projects、Teams、安全合规、数据治理 | ~1.5h |
+
+### 路径C：Developer Deep-Dives（开发者深入 · 5门）
+
+| 序号 | 课程名称 | 对象 | 内容概要 | 课时 |
+|------|----------|------|----------|------|
+| 9 | **Building with the Claude API** | 后端/全栈 | API 请求/认证/多轮对话/工具调用/RAG/MCP/Agent架构，含扩展思维、图像分析、PDF处理、提示缓存、结构化输出 | 8.1h |
+| 10 | **Claude Code in Action** | 开发者 | Claude Code CLI 实战、自主编码、测试驱动、Git 集成 | ~3h |
+| 11 | **Introduction to MCP** | 开发者 | MCP 协议基础、Server/Client 架构、资源与工具暴露 | ~2h |
+| 12 | **MCP: Advanced Topics** | 高级开发者 | 多服务器编排、安全边界、生产部署、自定义 Transport | ~2h |
+| 13 | **Agent Skills** | 开发者 | Skills 开发、Skills 2.0 升级、领域知识注入、可复用工作流 | ~2h |
+
+### 路径D：Cloud & Enterprise（云与企业 · 2门）
+
+| 序号 | 课程名称 | 对象 | 内容概要 | 课时 |
+|------|----------|------|----------|------|
+| 14 | **Claude on AWS** | DevOps | Amazon Bedrock 集成、权限管理、扩展部署 | ~2h |
+| 15 | **Claude on GCP** | DevOps | Google Cloud Vertex AI 集成、企业合规 | ~2h |
+
+### 路径E：Foundational Knowledge（基础知识 · 2门 · 2026年4月新增）
+
+| 序号 | 课程名称 | 对象 | 内容概要 | 课时 |
+|------|----------|------|----------|------|
+| 16 | **AI Capabilities and Limitations** | 初学者 | 生成式模型原理、真实能力边界、操作限制 | ~1.5h |
+| 17 | **Responsible AI Deployment** | 所有人 | 负责任AI部署、风险评估、监控体系 | ~1h |
+
+---
+
+## 三、2026年4月新增课程详解（4门）
+
+### 3.1 Claude Code 101（NEW）
+- **目标**：面向从未使用过 AI 编码 Agent 的用户
+- **核心工作流**：Explore → Plan → Code → Commit 四阶段方法
+- **关键内容**：CLAUDE.md 配置、权限模式、Plan Mode、Subagents 基础
+- **适用**：开发者转 AI 辅助编码的入门桥梁
+
+### 3.2 Introduction to Claude Cowork（NEW）
+- **目标**：面向非技术用户的桌面 Agent
+- **核心功能**：9大自动化场景、桌面操作、文件管理、日程编排
+- **定位**：Anthropic 首个 Agentic Desktop Agent 官方课程
+
+### 3.3 Introduction to Subagents（NEW）
+- **目标**：学会委托任务给隔离子代理
+- **核心技术**：上下文窗口管理、并行研究、结果精炼
+- **实战场景**：代码审查、安全审计、代码库探索
+
+### 3.4 AI Capabilities and Limitations（NEW）
+- **目标**：建立对 AI 能力边界的正确认知
+- **内容**：LLM 工作原理、幻觉原因、能力限制、适用边界
+
+---
+
+## 四、Claude Code Agent Teams 深度解析
+
+> 来源：code.claude.com/docs/zh-CN/agent-teams · 2026年6月
+
+### 4.1 Agent Teams vs Subagents 对比
+
+| 维度 | Subagents | Agent Teams |
+|------|-----------|-------------|
+| **上下文** | 独立 context window，结果返回给调用者 | 独立 context window，完全独立 |
+| **通信** | 仅向主代理报告结果 | 队友间直接相互发送消息 |
+| **协调** | 主代理管理所有工作 | 自我协调的共享任务列表 |
+| **最佳场景** | 结果重要的专注任务 | 需要讨论和协作的复杂工作 |
+| **令牌成本** | 较低：结果汇总回主 context | 较高：每个队友是独立 Claude 实例 |
+
+### 4.2 Agent Teams 核心架构
+
+| 组件 | 角色 |
+|------|------|
+| **Team lead** | 主 Claude Code 会话，创建团队、生成队友、协调工作 |
+| **Teammates** | 独立 Claude Code 实例，各自处理分配任务 |
+| **Task list** | 队友认领和完成的共享工作项列表 |
+| **Mailbox** | Agent 间通信的消息系统 |
+
+### 4.3 最强用例场景
+
+1. **研究与审查**：多个队友同时调查问题的不同方面，分享和质疑彼此发现
+2. **新模块/功能开发**：队友各自拥有独立部分，互不干扰
+3. **竞争假设调试**：队友并行测试不同理论，更快收敛答案
+4. **跨层协调**：跨前端、后端、测试的变更，每个由不同队友负责
+
+### 4.4 Agent Teams 使用模式
+
+**指定队友和模型**：
+```
+Create a team with 4 teammates to refactor these modules in parallel.
+Use Sonnet for each teammate.
+```
+
+**要求队友计划批准**：
+```
+Spawn an architect teammate to refactor the authentication module.
+Require plan approval before they make any changes.
+```
+
+**使用 subagent 定义作为队友**：
+```
+Spawn a teammate using the security-reviewer agent type to audit the auth module.
+```
+
+**并行代码审查**：
+```
+Create an agent team to review PR #142. Spawn three reviewers:
+- One focused on security implications
+- One checking performance impact
+- One validating test coverage
+```
+
+**竞争假设调查**（科学辩论模式）：
+```
+Users report the app exits after one message instead of staying connected.
+Spawn 5 agent teammates to investigate different hypotheses. Have them talk to
+each other to try to disprove each other's theories, like a scientific debate.
+```
+
+### 4.5 Agent Teams 最佳实践
+
+- **给队友足够的 context**：队友不继承负责人对话历史，需在生成提示中包含任务特定详情
+- **选择适当的团队规模**：3-5个队友最佳，每个队友5-6个任务
+- **适当调整任务大小**：自包含的单位，产出清晰可交付成果
+- **避免文件冲突**：每个队友拥有不同的文件集
+- **从研究和审查开始**：不涉及编码的任务最适合入门
+- **使用 hooks 强制质量门**：在队友完成任务后强制执行规则
+
+### 4.6 已知限制
+
+- In-process 队友没有会话恢复（/resume 和 /rewind 不会恢复）
+- 任务状态可能滞后
+- 关闭可能缓慢
+- 每个会话一个团队（不能嵌套）
+- 负责人是固定的（不能转移领导权）
+- 分割窗格需要 tmux 或 iTerm2
+
+---
+
+## 五、Claude Code 最佳实践精选
+
+> 来源：code.claude.com/docs/zh-CN/best-practices
+
+### 5.1 核心约束：上下文窗口管理
+
+上下文窗口是最重要的资源。对话、文件读取、命令输出都会快速填充上下文。上下文满时 LLM 性能下降。
+
+**关键策略**：
+- 在任务之间频繁使用 `/clear` 重置上下文
+- 使用 subagents 进行研究调查，保持主对话干净
+- 使用 `/compact` 压缩对话历史
+- 使用 `/btw` 提出不留在上下文中的快速问题
+
+### 5.2 四阶段工作流：Explore → Plan → Code → Commit
+
+| 阶段 | 操作 | 示例 |
+|------|------|------|
+| **探索** | Plan Mode 下读取文件，不进行更改 | `read /src/auth and understand how we handle sessions` |
+| **规划** | 要求 Claude 创建详细实现计划 | `I want to add Google OAuth. What files need to change?` |
+| **实现** | 切换出 Plan Mode，编码并验证 | `implement the OAuth flow from your plan. write tests` |
+| **提交** | 描述性提交并创建 PR | `commit with a descriptive message and open a PR` |
+
+### 5.3 给 Claude 验证其工作的方式
+
+**验证循环**：Claude 完成工作 → 运行检查 → 读取结果 → 迭代直到通过
+
+| 策略 | 之前 | 之后 |
+|------|------|------|
+| 提供验证标准 | "实现一个验证电子邮件的函数" | "编写 validateEmail 函数。示例测试用例：user@example.com 为真，invalid 为假。运行测试" |
+| 视觉验证 UI | "让仪表板看起来更好" | "[粘贴截图] 实现此设计。截图并与原始设计比较。列出差异并修复" |
+| 解决根本原因 | "构建失败" | "构建失败，出现此错误：[粘贴]。修复并验证构建成功。解决根本原因" |
+
+### 5.4 环境配置五件套
+
+| 组件 | 位置 | 用途 |
+|------|------|------|
+| **CLAUDE.md** | 项目根目录 / ~/.claude/ | 持久上下文、代码风格、工作流规则 |
+| **Skills** | .claude/skills/ | 领域知识、可复用工作流 |
+| **Subagents** | .claude/agents/ | 专用助手定义、隔离任务委托 |
+| **Hooks** | .claude/settings.json | 确定性事件触发（每次编辑后运行 eslint） |
+| **Plugins** | `/plugin` 市场安装 | Skills + Hooks + Subagents + MCP 捆绑包 |
+
+### 5.5 CLAUDE.md 编写原则
+
+**✅ 包括**：
+- Claude 无法猜测的 Bash 命令
+- 与默认值不同的代码风格规则
+- 测试指令和首选测试运行器
+- 存储库礼仪（分支命名、PR 约定）
+- 特定于项目的架构决策
+- 开发者环境怪癖（必需的环境变量）
+- 常见陷阱或非显而易见的行为
+
+**❌ 排除**：
+- Claude 可以通过读取代码推断的任何内容
+- 标准语言约定
+- 详细的 API 文档（改为链接到文档）
+- 经常变化的信息
+- 长解释或教程
+- 自明的实践（如"编写干净的代码"）
+- 逐文件代码库描述
+
+### 5.6 会话管理
+
+- **Esc**：中途停止 Claude，上下文保留
+- **Esc+Esc 或 /rewind**：恢复到之前的检查点
+- **"撤销那个"**：让 Claude 恢复更改
+- **/clear**：在不相关任务之间重置上下文
+- **/rename**：给会话命名（如"oauth-migration"）
+- **claude --continue**：继续最近会话
+- **claude --resume**：从列表中选择会话
+
+### 5.7 自动化与扩展
+
+| 方法 | 命令 | 场景 |
+|------|------|------|
+| 非交互模式 | `claude -p "prompt"` | CI / pre-commit hooks / 脚本 |
+| 流式输出 | `claude -p "..." --output-format stream-json --verbose` | 实时处理 |
+| 多会话并行 | 并行运行多个 Claude 会话 | 加快开发、隔离实验 |
+| 跨文件扇出 | `for file in $(cat files.txt); do claude -p "Migrate $file" ...; done` | 大规模迁移 |
+| Auto mode | `claude --permission-mode auto -p "fix all lint errors"` | 无人值守执行 |
+| 对抗性审查 | 使用子代理在新鲜上下文中审查差异 | 质量保证 |
+
+### 5.8 有效沟通技巧
+
+1. **提出代码库问题**：像问另一个工程师一样问 Claude（日志如何工作？这个函数处理哪些边界情况？）
+2. **让 Claude 采访你**：对于大功能，让 Claude 用 AskUserQuestion 工具采访你
+3. **使用 @ 引用文件**：而非描述代码位置，Claude 在响应前读取文件
+4. **直接粘贴图像**：复制/粘贴或拖放截图到提示中
+5. **尽早且经常改正方向**：一旦注意到 Claude 偏离轨道，立即改正
+
+---
+
+## 六、Claude Managed Agents 企业级平台
+
+> 来源：Anthropic Engineering 2026年2月 · nexracorp.com 深度分析
+
+### 6.1 核心定位
+
+Claude Managed Agents 是一套 **pre-built、可配置、运行于托管基础设施上的 agent harness**。开发者不需要从零实现 agent loop、sandbox、工具执行层与长任务状态管理。
+
+### 6.2 四大核心概念
+
+| 概念 | 职责 |
+|------|------|
+| **Agent** | 模型设定、系统提示、工具权限配置 |
+| **Environment** | 容器环境、沙箱隔离、资源初始化 |
+| **Session** | 单次任务执行、事件流记录、可恢复状态 |
+| **Events** | 执行事件流、用户事件、agent 事件、session 事件、span 级记录 |
+
+### 6.3 关键架构决策："大脑与双手解耦"
+
+把 Claude + harness（大脑）从 sandbox + 工具（双手）解耦：
+
+- **结果**：p50 TTFT 下降约 60%，p95 降幅超过 90%
+- **安全**：凭证不暴露在 Claude 执行代码的 sandbox 中
+- **扩展**：容器按需唤醒，不预启动
+
+### 6.4 企业价值
+
+1. **从模型 API 走向托管式 agent runtime**：不只是单轮问答，而是长流程多步骤执行
+2. **状态保存升级为平台能力**：事件流保存 session 状态，可恢复、可重读、可追踪
+3. **安全边界更清晰**：Git 权限、MCP/OAuth 通过资源初始化、proxy 与 vault 处理
+4. **可观测性是一级能力**：Console tracing、raw event retrieval、token 使用量追踪
+
+### 6.5 路线图
+
+- **Multiagent**（research preview）：多代理协作
+- **Memory**（research preview）：跨 session 记忆
+- **Outcomes**（research preview）：任务目标管理
+
+---
+
+## 七、核心技能提炼
+
+### 7.1 子代理设计原则
+
+1. **独立上下文窗口**：每次委托创建新上下文，不污染主对话
+2. **结果精炼回传**：子代理只返回摘要，不返回完整执行日志
+3. **安全隔离**：子代理权限独立控制，可限制工具列表和模型
+4. **并行执行**：多个子代理可同时处理不同子任务
+5. **可复用定义**：通过 .claude/agents/ 目录定义的子代理可被委托和 Agent Team 队友复用
+
+### 7.2 多 Agent 协作流程
+
+| 模式 | 机制 | 适用场景 |
+|------|------|----------|
+| **委派（Subagents）** | 主Agent→子Agent→结果回传 | 任务可拆分为独立子任务 |
+| **Agent Teams** | 队友间直接通信、共享任务列表 | 需要讨论和协作的复杂工作 |
+| **Writer/Reviewer** | 独立会话A编写→会话B审查→会话A修复 | 代码质量保证 |
+| **竞争假设** | 多个队友并行探索不同的根因假设 | 复杂调试 |
+| **对抗性审查** | 新鲜上下文的子代理审查差异并报告缺陷 | 质量门 |
+
+### 7.3 Claude Code 自动化配置清单
+
+1. `CLAUDE.md`：持久上下文和项目规则
+2. `.claude/agents/`：可复用子代理定义（security-reviewer、test-runner）
+3. `.claude/skills/`：领域知识和可复用工作流
+4. `.claude/settings.json`：Hooks 配置（pre-edit、post-edit、stop hooks）
+5. MCP Servers：外部工具集成（Notion、Figma、数据库等）
+6. Plugins：社区/Anthropic 提供的捆绑包
+7. 权限配置：`/permissions` 允许列表、auto mode 分类器
+
+### 7.4 Agent Teams 调度最佳实践
+
+- **启动方式**：自然语言描述任务和团队结构
+- **团队规模**：3-5个队友（平衡并行与协调开销）
+- **任务粒度**：每个队友5-6个任务，自包含且产出清晰可交付成果
+- **文件分区**：每个队友拥有不同的文件集，避免文件冲突
+- **计划批准**：对复杂/有风险任务要求队友先规划后执行
+- **监控指导**：定期检查队友进度，重定向无效方法
+- **Hooks 质量门**：使用 hooks 在队友完成任务后强制执行规则
+
+---
+
+## 八、学习路径推荐（2026年4月更新）
+
+### 零基础路径
+```
+Claude 101 → AI Fluency: Framework & Foundations → AI Fluency: Effective Prompts
+→ AI Fluency: Collaboration & Ethics → AI Capabilities and Limitations
+```
+
+### 产品/业务路径
+```
+Claude for Business → Claude Enterprise Features → Introduction to Claude Cowork
+```
+
+### 开发者路径（推荐）
+```
+Claude Code 101 → Claude Code in Action → Building with the Claude API
+→ Introduction to MCP → MCP: Advanced Topics → Agent Skills
+→ Introduction to Subagents
+```
+
+### CCA 认证路径
+```
+全部 Developer Deep-Dives 课程 → Cloud & Enterprise 课程 → 综合认证考核
+```
+
+---
+
+## 九、Agent Teams v2.1.33-v2.1.45 实战最佳实践（2026-06-11更新）
+
+### 9.1 Delegate Mode（默认开启）
+
+Delegate Mode（Shift+Tab）是 Agent Teams 最关键的控制机制：
+- **作用**：限制 Lead Agent 只能执行协调操作，禁止直接实现代码
+- **原理**：Lead 只负责分发任务、监控进度、汇总结果，不抢队友的工作
+- **团队规模**：3-5个Teammate为实践甜点区。超过5个时协调开销呈指数增长，建议分阶段运行（Phase 1: 3人 → Phase 2: 3人）
+- **Vague Prompt 反模式**：`review the auth module` 导致队友浪费token探索代码库。正确写法：`Review src/auth/ for security vulnerabilities. Focus on token handling, session management, input validation. JWT stored in httpOnly cookies. Report issues with severity ratings.`
+
+### 9.2 Plan Mode 行为规则
+
+- Plan Mode 在每位 Teammate 的**整个生命周期**内生效，每轮都评估（非仅一次）
+- Teammate 的模式**固定不可切换**：Plan Mode 的队友无法转换为执行模式，需 Spawn 新的 Default Mode 队友接手
+- **实战建议**：Plan Mode 用于架构审查/设计角色（只读），Default Mode 用于需要写代码/修改文件的角色
+- 若需要 Plan-then-Implement 流程，使用 Plan Approval 功能而非尝试切换模式
+
+### 9.3 文件冲突解决方案
+
+- **首要原则**：每个 Teammate 拥有独立的文件集，杜绝两人编辑同一文件
+- **自然隔离**：按目录边界分配，如 `src/api/users/` vs `src/api/billing/`
+- **人工隔离**：若项目结构不支持自然隔离，通过任务分解创建隔离：`refactor API layer` → 拆分为 `refactor user endpoints in src/api/users/` + `refactor billing endpoints in src/api/billing/`
+- **不可避共享文件**：在 CLAUDE.md 标记为 `coordinate before editing`，由 Lead 通过任务排序管理访问
+
+### 9.4 任务规模黄金法则
+
+- 每个 Teammate 5-6个任务（每个独立可交付）
+- 1个巨量任务 = 无自然检查点 → 高风险浪费
+- 5-6个聚焦任务 = 每次完成上报进度 → 可及时转向
+
+### 9.5 渐进式上手路径
+
+1. 从研究/审查任务开始（Review PR、Research库、Investigate Bug）——无代码破坏风险
+2. 熟悉团队协作动态后切入实现任务
+3. 始终执行 Ctrl+T 定期监控，无人值守过久 = 风险累计
+
+### 9.6 Troubleshooting 速查
+
+| 症状 | 根因 | 修复 |
+|------|------|------|
+| 队友在文件上互相覆盖 | 共享文件无隔离 | 明确定义文件边界 |
+| Lead 在执行而非协调 | Delegate Mode 未开启 | Shift+Tab 开启 |
+| 任务永远"In Progress" | 任务过大无check-in点 | 拆分为5-6个小任务 |
+| Token燃烧无结果 | Prompt太模糊 | 加入具体路径+验收标准+约束 |
+| Plan Mode队友不写代码 | 模式固定不可切换 | Spawn新Default Mode队友 |
+
+---
+
+## 十、CCA（Claude Certified Architect）认证考试详解
+
+> 来源：curaate.com 2026年3月 · Anthropic官方公告
+
+### 10.1 考试概览
+
+- **认证名称**：Claude Certified Architect, Foundations
+- **考试形式**：60道题的监督考核（proctored assessment）
+- **覆盖五大领域**：Agentic Architecture & Claude Code（最高权重）、Context Management、API Design Patterns、Security & Governance、Integration Architecture
+- **目标对象**：构建生产级Claude应用的方案架构师/高级工程师（非入门用户）
+
+### 10.2 五大领域详解
+
+| 领域 | 权重 | 核心考点 |
+|------|------|----------|
+| Agentic Architecture & Claude Code | 最高 | 子代理设计、Agent Teams、权限模型、4阶段工作流 |
+| Context Management | 高 | 上下文窗口优化、精炼回传、/compact、/clear |
+| API Design Patterns | 中 | 工具调用、RAG、MCP集成、Prompt Caching |
+| Security & Governance | 中 | 纵深防御、权限分层、Hooks安全护栏、数据治理 |
+| Integration Architecture | 中 | Bedrock/Vertex AI 部署、Managed Agents、企业集成 |
+
+### 10.3 认证路径
+
+```
+17门免费课程（Skilljar）→ Claude Partner Network 加入 → CCA Foundations 考试
+```
+
+- **Access**：需要 Claude Partner Network 成员身份（免费加入）
+- **前5000名**：合作伙伴公司员工享有优先访问权
+- **13门备考课程**：无需 Partner Network 身份即可学习
+
+### 10.4 2026年后续认证层级
+
+| 层级 | 目标用户 | 预计时间 |
+|------|----------|----------|
+| **Seller Certifications** | 销售工程师、客户经理、方案顾问 | 2026年中 |
+| **Developer Certifications** | 实现工程师（区别于架构师，聚焦实现层） | 2026年中 |
+| **Advanced Architect Tracks** | 多Agent编排、企业治理、高级MCP、大规模部署 | 2026年末 |
+
+---
+
+## 十一、Claude Code 插件生态系统
+
+> 来源：yeyulingfeng.com 2026年4月 · Anthropic官方插件仓库
+
+### 11.1 生态数据
+
+| 指标 | 数据 |
+|------|------|
+| 官方市场插件数 | 300个（含 Anthropic Verified 徽章） |
+| 总安装量 | 446万次 |
+| GitHub 相关仓库 | 11,905个 |
+| Stars 最高插件 | Superpowers（15万 Stars） |
+| 第三方市场 | 2,500+个 |
+| 增长周期 | 6个月从0到446万 |
+
+### 11.2 Top 10 必装插件
+
+| 排名 | 插件 | 安装量 | 类型 | 核心价值 |
+|------|------|--------|------|----------|
+| 1 | **frontend-design** | 50.7万 | 方法论 | 教Claude做出好设计，告别"能跑但丑" |
+| 2 | **Superpowers** | 41万/15万★ | 方法论 | 结构化开发：头脑风暴/计划/TDD/审查/调试 |
+| 3 | **Context7** | 24.8万/5.2万★ | MCP | 实时获取50+框架最新文档，杜绝API幻觉 |
+| 4 | **code-review** | 23.2万 | 工具 | 自动化代码审查（安全/性能/风格） |
+| 5 | **github** | 18.5万 | MCP | GitHub深度集成：PR/Issue/搜索/CI状态 |
+| 6 | **playwright** | 16.4万 | MCP | Claude自主编写/执行/修复E2E测试 |
+| 7 | **skill-creator** | 15.3万 | 工具 | 用Claude创建Claude的Skills |
+| 8 | **claude-mem** | 5.2万★ | 工具 | ChromaDB+SQLite+RAG跨会话记忆 |
+| 9 | **Caveman** | 2.5万★ | 优化 | 压缩语言砍掉65% Token消耗 |
+| 10 | **claude-hud** | 1.8万★ | 监控 | 实时显示上下文/工具/Agent/任务进度 |
+
+### 11.3 插件安装三级别
+
+**轻量级（入门）**：
+```
+/plugin install context7
+claude mcp add github --transport http
+```
+
+**标准级（日常开发）**：
+```
+插件：superpowers + context7 + code-review
+MCP：GitHub + Playwright
+Hooks：auto-lint（PostToolUse）
+```
+
+**极客级（进阶）**：
+```
+插件：superpowers + context7 + claude-mem + claude-hud + playwright
+MCP：GitHub + PostgreSQL + Figma
+Hooks：auto-lint + safety-guard + inject-context
+Agents：security-reviewer + performance-analyzer
+```
+
+---
+
+## 十二、Skills/MCP/Hooks/Agents/Plugins 五层扩展架构
+
+> 来源：yeyulingfeng.com · popring.cn · 2026年4月
+
+### 12.1 五层分工速记
+
+| 层级 | 一句话定位 | 本质 |
+|------|-----------|------|
+| **Skills** | 教Claude **怎么做** | 行为知识（可复用流程） |
+| **MCP** | 给Claude **用什么做** | 工具能力（外部系统连接） |
+| **Agents** | 让Claude **分头做** | 并行执行（独立上下文） |
+| **Hooks** | 保证Claude **必须做** | 自动化规则（确定性脚本） |
+| **Plugins** | 把以上四者 **打包分发** | 分发层（Skills+Hooks+Agents+MCP捆绑） |
+
+### 12.2 Skills 2.0 关键特性
+
+| 特性 | 说明 |
+|------|------|
+| **自动触发** | Claude根据 `description` 字段判断是否匹配当前任务 |
+| **手动触发** | 设置 `disable-model-invocation: true`，只能 `/skill-name` 调用 |
+| **Fork执行** | 设置 `context: fork`，在子代理中运行，不污染主上下文 |
+| **动态上下文** | `!` + 反引号包裹命令语法，加载时注入shell命令输出 |
+| **位置** | `~/.claude/skills/<skill-name>/SKILL.md` |
+
+### 12.3 MCP Server 配置最佳实践
+
+| 原则 | 说明 |
+|------|------|
+| **分层配置** | `~/.claude.json`（全局）→ `.mcp.json`（项目）→ `.claude/settings.local.json`（本地凭证） |
+| **控制数量** | 3个最佳平衡点，5个上限。Tool Search延迟加载减少95%上下文消耗 |
+| **优先HTTP** | 远程HTTP Server无需本地依赖，Figma/Supabase/Slack已支持 |
+| **安全审计** | 66%社区MCP Server存在安全问题，优先选择官方/大厂维护 |
+
+### 12.4 Hooks 25个生命周期事件
+
+| 常用事件 | 用途 |
+|----------|------|
+| **PreToolUse** | 工具执行前拦截，可修改输入或阻止执行 |
+| **PostToolUse** | 工具执行后触发，自动格式化或验证 |
+| **SessionStart** | 会话开始时注入上下文（如最近Issue/PR） |
+| **UserPromptSubmit** | 用户发送消息前预处理 |
+
+### 12.5 四件套对比框架（CLAUDE.md vs Skills vs MCP vs Hooks）
+
+| 维度 | CLAUDE.md | Skills | MCP | Hooks |
+|------|-----------|--------|-----|-------|
+| 类比 | 员工手册 | SOP流程 | 工具箱接口 | 流水线钩子 |
+| 解决问题 | "这是什么项目" | "遇到X怎么做" | "能用什么工具" | "自动执行任务" |
+| 加载方式 | 自动加载 | 按需触发 | 按需连接 | 事件触发 |
+| 执行方式 | LLM推理 | LLM推理 | LLM推理 | 确定性脚本 |
+| 本质 | 静态上下文 | 可复用流程 | 可执行能力 | 自动化钩子 |
+
+> **知识层**：CLAUDE.md + Skills = 告诉Agent怎么思考
+> **能力层**：MCP + Hooks = 让Agent能动手
+
+
+## 十三、参考资料
+
+- Anthropic Academy: https://anthropic.skilljar.com/
+- Claude Code 文档: https://code.claude.com/docs/
+- Claude API 文档: https://docs.anthropic.com/
+- Agent Teams 文档: https://code.claude.com/docs/zh-CN/agent-teams
+- Best Practices: https://code.claude.com/docs/zh-CN/best-practices
+- Managed Agents: https://www.anthropic.com/engineering/managed-agents
+- 课程速查卡（赛脖古）: ima.qq.com/wiki
+
+---
+
+> 本文档由 Marvis 龙虾 Agent 每2小时自动更新，全域同步至 SOUL.md / USER.md / AGENTS.md / 豆包AI Agent / Hermes Agent / OpenClaw龙虾Agent
+> 版本: v12.0 | 最后更新: 2026-06-11 20:30 | 本次新增: CCA认证考试详解（60题/5域）、插件生态系统（300插件/446万安装/Top 10）、五层扩展架构、四件套对比框架
+*（内容由AI生成，仅供参考）*

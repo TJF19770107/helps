@@ -1,0 +1,10 @@
+{
+  "id": "calendar",
+  "version": "0.0.0",
+  "description": "Community plugin placeholder",
+  "minAppVersion": "0.15.0",
+  "author": "Community",
+  "isDesktopOnly": false,
+  "authorUrl": "https://github.com",
+  "name": "calendar"
+}

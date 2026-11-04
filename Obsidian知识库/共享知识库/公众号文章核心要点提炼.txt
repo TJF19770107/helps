@@ -1,0 +1,155 @@
+公众号文章核心要点提炼
+生成日期：2026-06-11
+
+================================================================================
+一、文章标题及来源
+================================================================================
+标题：《如何通过 Codex 对话接入飞书完整版来了！》
+来源：微信公众号
+日期：2026年6月
+主题：Codex AI编程助手与飞书CLI的深度集成方案
+
+================================================================================
+二、核心流程（5步完成接入）
+================================================================================
+
+步骤1：安装飞书CLI
+  命令：npm install -g @larksuite/cli
+  或：npx @larksuite/cli@latest install
+  前置条件：Node.js >= 18.0.0
+
+步骤2：配置应用凭证
+  1. 飞书开发者后台创建企业自建应用
+  2. 获取 App ID 和 App Secret
+  3. 执行：lark-cli config init --new
+  4. 按提示填入凭证信息
+
+步骤3：OAuth授权
+  命令：lark-cli auth login --recommend
+  方式：OAuth 2.0 Device Flow（无密码应用创建）
+  操作：浏览器打开授权页面 → 确认授权范围 → Token自动保存
+
+步骤4：验证接入
+  命令：lark-cli whoami（验证用户身份）
+  命令：lark-cli skills list（确认19个Skills已加载）
+
+步骤5：使用Codex操作飞书
+  方式：在Codex对话中用自然语言描述飞书操作需求
+  示例："帮我在飞书创建一个项目文档"
+  Codex自动调用lark-cli对应命令完成操作
+
+================================================================================
+三、关键命令速查表
+================================================================================
+
+【安装与配置】
+  npm install -g @larksuite/cli          # 全局安装CLI
+  npx @larksuite/cli@latest install      # 一键安装（推荐）
+  npx skills add larksuite/cli -y -g     # 添加Skills
+  lark-cli config init --new             # 初始化配置
+  lark-cli auth login --recommend        # OAuth授权登录
+  lark-cli whoami                        # 验证身份
+  lark-cli update                        # 更新CLI
+
+【文档管理】
+  lark-cli doc create --title "标题"      # 创建文档
+  lark-cli doc get --doc-id <id>         # 获取文档
+  lark-cli doc search --keyword "关键词"   # 搜索文档
+  lark-cli doc update --doc-id <id>       # 更新文档
+
+【知识库】
+  lark-cli wiki space create --name ""   # 创建知识空间
+  lark-cli wiki node create --space-id   # 创建节点
+  lark-cli wiki node patch --node-id     # Markdown局部修改
+  lark-cli wiki node diff --node-id      # 版本对比
+
+【消息群组】
+  lark-cli im send --chat-id --text ""    # 发送消息
+  lark-cli im urgent --chat-id --method   # 消息加急
+  lark-cli im chat create --name ""       # 创建群聊
+
+【邮件】
+  lark-cli mail draft create --subject "" # 创建草稿
+  lark-cli mail draft batch --file ""     # 批量发草稿
+
+【多维表格】
+  lark-cli base record create             # 创建记录
+  lark-cli base batch attach --file ""    # 批量附件
+
+【云空间】
+  lark-cli drive sync --local ""          # 双向同步
+  lark-cli drive history --file-id ""     # 版本历史
+
+【妙记】
+  lark-cli minutes title --id --text ""   # 修改标题
+  lark-cli minutes speaker --id           # 修正发言人
+  lark-cli minutes keywords --id          # AI关键词
+
+================================================================================
+四、实战场景总结（4个典型场景）
+================================================================================
+
+场景1：云盘文档智能处理
+  需求：读取飞书云盘中的文档并自动生成信息图
+  流程：lark-cli drive download → 本地AI分析 → 生成信息图 → lark-cli drive upload
+  价值：端到端自动化，无需手动搬运文件
+
+场景2：多Agent群内协作
+  需求：多个AI Agent在飞书群内分工完成复杂项目
+  流程：主Agent发布任务 → 子Agent认领并执行 → 群内汇报结果 → 人对可见可打断
+  价值：类人协作模式，透明可控
+
+场景3：知识库自动维护
+  需求：自动创建知识空间并批量导入文档
+  流程：lark-cli wiki space create → lark-cli wiki node create（批量） → lark-cli wiki node patch（局部修改）
+  价值：知识管理零手动操作
+
+场景4：邮件批量自动化
+  需求：给大量客户发送个性化邮件
+  流程：准备CSV客户列表 → lark-cli mail draft batch → 审阅 → 批量发送
+  价值：单次处理批量邮件，HTML正文自动适配
+
+================================================================================
+五、常见问题与解决方案
+================================================================================
+
+Q1：安装失败怎么办？
+  A：确保Node.js >= 18.0.0，尝试使用 npx @larksuite/cli@latest install
+
+Q2：授权后Token无法刷新？
+  A：执行 lark-cli auth login --recommend 重新授权
+
+Q3：操作提示权限不足（403）？
+  A：在飞书开发者后台检查应用权限scope，添加必要权限后重新授权
+
+Q4：如何查看CLI支持的所有命令？
+  A：执行 lark-cli --help 或 lark-cli skills list
+
+Q5：如何开启调试模式定位问题？
+  A：在命令前加 --debug，如 lark-cli --debug doc list
+
+Q6：Token存储在哪里？安全吗？
+  A：Token加密存储在本地凭证文件中，不会明文输出到控制台
+
+Q7：多Agent同时操作会冲突吗？
+  A：飞书原生权限体系保证数据一致性，建议不同Agent操作不同资源
+
+================================================================================
+六、核心价值总结（3条）
+================================================================================
+
+价值1：自然语言驱动飞书全业务操作
+  通过Codex对话即可操作飞书12个业务域、200+命令，
+  无需记忆API文档，无需编写代码，大幅降低飞书自动化门槛。
+
+价值2：企业级安全与合规保障
+  OAuth Device Flow无密认证、提示词防注入、敏感数据脱敏、
+  审计日志全记录，满足企业信息安全合规要求。
+
+价值3：三层架构适配全场景需求
+  快捷命令层降低入门门槛，API命令层保持灵活性，
+  原始API层不设天花板，从日常操作到高级定制全覆盖。
+
+================================================================================
+文档结束
+（内容由AI生成，仅供参考）

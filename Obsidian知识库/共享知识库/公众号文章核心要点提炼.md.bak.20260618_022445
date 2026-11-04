@@ -1,0 +1,179 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: cf54d54c59baa0ada35a5ecb7c73a584_7554c9406a2611f1a99c5254007bceed
+    ReservedCode1: avIkTGcZYWmDgYP7FBts7rp7EjihJhxC4SRKmry+1gOXZMKPdTOE39upgCHC5kOfsKXm3W7k/B1gQ6+ncU+xpyMS4XquyN3mBkEVs1N89C0A9bSZrApvBevjPoi8jAMxx9F6a64KlojyzcIdYnAbtHdGuN+zsl1ZzNLKP+S5BWQNa7zGokp99ZazXbg=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: cf54d54c59baa0ada35a5ecb7c73a584_7554c9406a2611f1a99c5254007bceed
+    ReservedCode2: avIkTGcZYWmDgYP7FBts7rp7EjihJhxC4SRKmry+1gOXZMKPdTOE39upgCHC5kOfsKXm3W7k/B1gQ6+ncU+xpyMS4XquyN3mBkEVs1N89C0A9bSZrApvBevjPoi8jAMxx9F6a64KlojyzcIdYnAbtHdGuN+zsl1ZzNLKP+S5BWQNa7zGokp99ZazXbg=
+---
+
+# 公众号文章核心要点提炼：Codex+飞书CLI自动化
+
+> **提炼日期**：2026-06-17
+> **来源材料**：
+> 1. GitHub zhuzhen-team/feishu-user-plugin（飞书MCP+CLI，84工具，3层鉴权）
+> 2. 夜雨聆风「我把Codex接上飞书文档」实践
+> 3. GitHub zifangchen/skill-find-papers（Scholar MCP+飞书CLI双语精读）
+> 4. 腾讯SkillHub 飞书项目MCP对接
+> 5. 飞书官方「飞书CLI教程」
+
+---
+
+## 一、核心价值：从手动复制粘贴到 AI 直接操作飞书
+
+### 范式转变
+
+| 维度 | 旧范式 | 新范式（飞书CLI） |
+|------|--------|------------------|
+| **操作方式** | 人手动操作飞书界面 | AI Agent 直接调用飞书 API |
+| **文档创建** | AI输出 → 人复制 → 打开飞书 → 新建 → 粘贴排版 → 发布 | AI输出 → 人说一句话 → Agent 调用 CLI → 自动创建 |
+| **数据搬运** | 手动复制粘贴 Excel/多维表格数据 | Agent 批量读写，500条/次 |
+| **信息检索** | 人打开飞书逐条搜索 | Agent 搜索知识库/文档/群聊，自动汇总 |
+| **团队协作** | 人手动发消息/建日程/分配任务 | Agent 发消息、创建日程、分配任务 |
+| **错误率** | 复制粘贴易出错 | 结构化传输，零手动错误 |
+
+### 一句话总结
+
+> 飞书 CLI 就是给 AI Agent 的那双「手」——装上之后，Agent 可以直接读你的消息、查你的日历、写文档、建多维表格、搜知识库。不是生成一段文字让你复制粘贴，而是直接在飞书里帮你把事情办了。
+
+---
+
+## 二、飞书CLI给Agent带来的9大能力
+
+| # | 能力 | 典型场景 | 关键工具 | 价值 |
+|---|------|---------|---------|------|
+| 1 | **发消息** | 自动通知团队成员、发送日报 | `send_message` | 以本人身份，无需切号 |
+| 2 | **读群聊** | 总结群消息、提取待办事项 | `read_group_messages`, `merge_forward` | 自动展开合并转发、提取URL |
+| 3 | **文档** | AI生成内容一键发布到飞书 | `doc_create`, `doc_read_markdown` | read_markdown 省 ~60% token |
+| 4 | **多维表格** | 批量导入/导出数据 | `table_read`, `table_append` | 500条/批，速度快 |
+| 5 | **知识库** | 自动沉淀团队知识 | `wiki_search`, `wiki_create_doc` | 搜索→创建→发布全自动 |
+| 6 | **云空间** | 管理项目文件 | `drive_list`, `drive_create_folder` | 取代手动整理文件夹 |
+| 7 | **日历** | 自动安排会议、邀请成员 | `calendar_create` | 日程管理零手动 |
+| 8 | **任务** | 创建/分配/跟踪任务 | `task_create`（v2含成员管理） | 从讨论到任务闭环 |
+| 9 | **OKR** | 读取OKR、记录进展 | `okr_read` | 目标进度可视化 |
+
+---
+
+## 三、可复用的标准化 SOP 模板
+
+### SOP-1：AI 输出 → 飞书文档一键发布
+
+```
+触发条件：AI Agent 生成了需要发布到飞书的文档内容
+
+步骤：
+1. Agent 检查 feishu-tool 状态：npx feishu-user-plugin status
+2. 确认目标知识库/文件夹路径
+3. 调用 doc_create 创建文档
+4. （可选）追加内容块：doc_append_blocks
+5. 返回文档链接供人工确认
+```
+
+### SOP-2：群聊消息总结 → 知识库沉淀
+
+```
+触发条件：需要对群聊进行周期性总结
+
+步骤：
+1. 读群消息：read_group_messages --chat "产品群" --since "24h"
+2. Agent 分析/总结消息内容
+3. 创建知识库文档：wiki_create_doc
+4. （可选）在群里回复总结链接
+```
+
+### SOP-3：多维表格数据批量同步
+
+```
+触发条件：外部数据需要同步到飞书多维表格
+
+步骤：
+1. 准备数据（JSON/CSV）
+2. 搜索目标表格：table_search --name "销售数据"
+3. 批量追加：table_append --id <table_id> --data ./data.json
+4. 验证：table_read --id <table_id> --limit 10
+```
+
+### SOP-4：飞书项目工单管理
+
+```
+触发条件：需要在飞书项目中创建/更新工单
+
+步骤：
+1. 检查 MCP 连接：feishu-project MCP 是否在线
+2. 读取本地业务上下文文件（字段映射、角色配置）
+3. 先命中缓存，仅对缺口实时查询
+4. 创建/更新/查询/流转工单
+```
+
+### SOP-5：论文搜索 → 双语精读 → 飞书文档
+
+```
+触发条件：需要搜索论文并生成精读文档
+
+依赖：skill-find-papers + Scholar MCP + 飞书CLI
+
+步骤：
+1. Scholar MCP 搜索论文：search_literature_graph
+2. 全文导入：ingest_paper_fulltext
+3. 结构化提取：extract_granular_paper_details
+4. 飞书CLI 创建知识库文件夹
+5. 创建双语精读文档
+```
+
+---
+
+## 四、接入方式对比表
+
+| Agent 工具 | 配置文件位置 | MCP 顶层键 | 一键配置 | 推荐场景 |
+|-----------|------------|-----------|---------|---------|
+| **Claude Code** | `~/.claude.json` | `mcpServers.feishu-user-plugin` | `npx feishu-user-plugin setup` | 编码+飞书深度集成 |
+| **Codex CLI** | `~/.codex/config.toml` | `[mcp_servers.feishu-user-plugin]` | `npx feishu-user-plugin setup --client codex` | 本地自动化工作流 |
+| **Codex Desktop** | `~/.codex/config.toml` | 同上 | 同上 | 桌面端+定时任务 |
+| **Cursor** | `.cursor/mcp.json` | `mcpServers.feishu` | 手动添加 | IDE内文档操作 |
+| **VS Code Copilot** | `.vscode/mcp.json` | `servers.feishu` ⚠️ | 手动添加 | VS Code生态 |
+| **OpenClaw** | `~/.openclaw/openclaw.json` | `mcp.servers.feishu-user-plugin` | 手动添加 | 多Agent网关 |
+| **Windsurf** | `~/.codeium/windsurf/mcp_config.json` | `mcpServers.feishu` | 手动添加 | 编码助手扩展 |
+
+### 接入建议
+
+- **个人开发者**：优先 Claude Code 或 Codex，一键配置最快
+- **企业团队**：飞书项目MCP + 本地业务上下文文件，提效明显
+- **多Agent环境**：OpenClaw 统一网关管理所有MCP连接
+- **学术研究**：skill-find-papers + Scholar MCP + 飞书CLI 组合
+
+---
+
+## 五、关键数据点
+
+| 指标 | 数值 | 来源 |
+|------|------|------|
+| feishu-user-plugin 工具总数 | 84个 | GitHub |
+| 鉴权层数 | 3层（cookie/API/OAuth） | GitHub |
+| 多维表格批量操作 | 500条/次 | GitHub |
+| read_doc_markdown 省 token | ~60% | GitHub |
+| MCP Prompts 数量 | 9个（/send, /reply, /digest 等） | GitHub |
+| 飞书CLI 支持 Agent | Claude Code / Codex / Qoder / Cursor / VS Code / OpenClaw / Windsurf / Hermes | 飞书官方 |
+| skill-find-papers 依赖 | 5项（Agent / Git / Python 3.10+ / Node.js 20+ / Scholar MCP + 飞书CLI） | GitHub |
+
+---
+
+## 六、核心洞察
+
+1. **零门槛开源**：飞书CLI无需登记、无需审核，所有用户可直接获取开源代码
+2. **个人身份操作**：区别于官方 Bot API 的 `send_as_user` 能力，以本人身份发消息/读群聊
+3. **Agent 不需要懂 API**：Skill 层隔离了复杂性，Agent 只需自然语言理解 → CLI 执行
+4. **内容生产流水线**：AI输出 → Agent → CLI → 飞书，形成稳定的自动化内容管线
+5. **省 Token 是硬指标**：`read_doc_markdown` 省 60% token，对大规模使用至关重要
+6. **多账号支持**：单台机器一处配置覆盖多个飞书账号/多个企业
+7. **企业级安全**：OAuth 2.1 + 细粒度 scope + 凭证隔离，满足企业合规要求
+
+---
+
+## 七、更新记录
+
+| 日期 | 说明 |
+|------|------|
+| 2026-06-17 | 初始提炼，基于5大材料源综合分析 |
+*（内容由AI生成，仅供参考）*

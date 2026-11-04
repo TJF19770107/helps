@@ -1,0 +1,159 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: cf54d54c59baa0ada35a5ecb7c73a584_45d9ab9c67a911f1a0095254002afed2
+    ReservedCode1: /WfPjrGGYqsaohItZaEdv8CvoQZlzp37goX5S9eH0wS01jndI6cbmWzzzopvjxgE8fBxL5mW60RUV981ng1XhME3/Y3dCJcs3HiSyhpuKw/xW8DyPIC0+PQOGFAxsojZ3fQiYc2nw0Ez0cTTfBR+2GR/GZdmbM+1s+pMJ0cQVWK9TIL7qzuoTDwJ/DI=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: cf54d54c59baa0ada35a5ecb7c73a584_45d9ab9c67a911f1a0095254002afed2
+    ReservedCode2: /WfPjrGGYqsaohItZaEdv8CvoQZlzp37goX5S9eH0wS01jndI6cbmWzzzopvjxgE8fBxL5mW60RUV981ng1XhME3/Y3dCJcs3HiSyhpuKw/xW8DyPIC0+PQOGFAxsojZ3fQiYc2nw0Ez0cTTfBR+2GR/GZdmbM+1s+pMJ0cQVWK9TIL7qzuoTDwJ/DI=
+---
+
+# 公众号文章核心要点提炼：Codex + 飞书 CLI 接入
+
+> **来源文章**：《如何通过 Codex 对话接入飞书完整版来了！》
+> **多源交叉验证**：codexguide.ai / CSDN / php中文网 / 今日头条 / GitCode / niutech
+> **提炼日期**：2026-06-14
+> **版本**：v2.0
+
+---
+
+## 一、文章核心要点
+
+### 1.1 一句话价值主张
+
+**在 Codex 里一句话处理飞书里的所有信息和数据。**
+
+飞书 CLI 是飞书官方于 2026 年 3 月底开源的命令行工具，接入 AI 编程工具（Codex / Claude Code / Cursor / OpenClaw）后，用户可通过自然语言直接操作飞书文档、消息、日历、多维表格等全系功能，无需打开飞书客户端。
+
+### 1.2 核心理念
+
+- **零代码自动化**：用户说人话，Agent 翻译成 CLI 命令，CLI 调用飞书 API
+- **为 Agent 设计**：命令结构适配 AI 调用，智能默认值，结构化输出，错误信息可指导 AI 修复
+- **三层调用架构**：快捷命令（+前缀）→ API 命令 → 通用 API（2500+ 接口）
+
+---
+
+## 二、关键技术架构
+
+```
+┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
+│   用户自然语言  │ ──▶ │ Codex/Claude  │ ──▶ │  飞书 CLI        │
+│ "帮我创建文档" │     │   Agent 翻译   │     │  lark-cli docs   │
+└─────────────┘     └──────────────┘     └────────┬────────┘
+                                                   │
+                                                   ▼
+                                          ┌─────────────────┐
+                                          │ 飞书开放平台 API  │
+                                          │ (2500+ 接口)     │
+                                          └─────────────────┘
+```
+
+**核心组件**：
+- **本地 Agent**（Codex / Claude Code / Cursor / OpenClaw）：自然语言理解和任务编排
+- **飞书 CLI**（@larksuite/cli）：命令翻译和 API 调用
+- **飞书开放平台**：数据存储和业务能力提供
+- **桥接层**（feishu-codex-bridge / cc-connect）：飞书消息 ↔ 本地 Agent 实时通信
+
+---
+
+## 三、接入流程（4 步）
+
+| 步骤 | 命令 | 说明 |
+|------|------|------|
+| ① 安装 CLI | `npm install -g @larksuite/cli` | 全局安装飞书命令行工具 |
+| ② 安装 Skills | `npx skills add larksuite/cli -y -g` | 注册为 Agent 可用技能 |
+| ③ 初始化 | `lark-cli config init --new` | 生成配置文件，获取授权链接 |
+| ④ 授权登录 | `lark-cli auth login --recommend` | OAuth 2.0 设备流授权 |
+
+**权限模式**：
+- **不授权模式**：基础操作（发消息、创建文档）
+- **用户身份模式**：访问个人数据（日历、私信、邮箱）
+
+---
+
+## 四、能力全景（11+ 业务域）
+
+| 业务域 | Skills 数量 | 核心能力 |
+|--------|-----------|---------|
+| 云文档 | 4 | 创建/读取/修改/评论/Markdown 转换 |
+| 即时通讯 | 4 | 消息发送/搜索/群组管理/成员操作 |
+| 日历 | 4 | 日程/忙闲/空闲推荐 |
+| 多维表格 | 3 | 查询/新增/更新记录 |
+| 任务 | 2 | 创建/查询任务 |
+| 知识库 | 3 | 节点创建/读取/更新 |
+| 邮箱 | 3 | 邮件列表/发送/分类 |
+| 云盘 | 3 | 文件上传/下载/列表 |
+| 会议 | 2 | 搜索会议/提取纪要 |
+| 妙记 | 1 | 录制/转写/摘要 |
+| 审批 | 1 | 创建/查询审批 |
+
+---
+
+## 五、飞书长连接桥接方案
+
+飞书长连接桥接使 Codex 在手机/飞书群中可被实时操控：
+
+```
+手机飞书 ──WebSocket──▶ 飞书开放平台 ──长连接推送──▶ 本地桥接程序 ──▶ 本地 Codex CLI
+                                                                           │
+                                                                           ▼
+手机飞书 ◀──WebSocket── 飞书开放平台 ◀──结果回传──── 桥接程序 ◀──── Codex 执行结果
+```
+
+**三种核心方案**：
+
+| 方案 | 协议 | 特色 |
+|------|------|------|
+| feishu-codex-bridge | WebSocket 长连接 | 飞书卡片流式进度，多 session 管理 |
+| cc-connect | WebSocket | Claude Code/Codex/Cursor 统一接入 |
+| lark-coding-agent-bridge | npx 一键启动 | 飞书卡片交互，富文本回复 |
+
+---
+
+## 六、适用场景分析
+
+### 6.1 个人用户
+- 手机上给本地 Codex 下任务
+- 长任务运行时不用一直盯着电脑
+- Markdown 一键转飞书文档
+
+### 6.2 小团队
+- 飞书群里共享 AI 执行进度
+- 会议纪要自动总结并分发
+- 文档自动审稿评论
+
+### 6.3 企业级
+- 构建企业 AI Agent 集成飞书
+- 飞书 CLI 作为官方推荐集成方案
+- 合规审计 + 权限最小化
+- OpenClaw 官方插件直接使用 CLI 能力
+
+---
+
+## 七、与其他方案对比
+
+| 维度 | 飞书 CLI | feishu-codex-bridge | cc-connect |
+|------|---------|-------------------|------------|
+| **定位** | Agent ↔ 飞书 API 调用 | 飞书消息 ↔ Codex 实时通信 | 多 AI 工具统一接入 |
+| **安装** | `npm install -g @larksuite/cli` | `git clone + npm install` | `npm install -g cc-connect` |
+| **使用方式** | 终端自然语言命令 | 飞书群内发消息控制 | 飞书/微信发指令 |
+| **适用场景** | 文档/日历/Base 操作 | 远程控制 + 进度可视化 | 多工具统一入口 |
+| **支持工具** | Codex/Claude/Cursor/OpenClaw | Codex | Claude Code/Codex/Cursor |
+
+**组合使用建议**：飞书 CLI 负责数据操作 + feishu-codex-bridge 负责远程控制，形成完整闭环。
+
+---
+
+## 八、关键洞察
+
+1. **AI Agent 时代的 API 设计范式**：飞书 CLI 不是简单的 API 封装，而是为 Agent 调用方式重新设计——命令结构适配 LLM、错误信息可指导修复、权限不足自动引导补授权
+2. **从"人操作软件"到"Agent 操作软件"**：CLI 成为 AI Agent 的操作界面，打开了「自然语言操作一切 SaaS」的可能性
+3. **三层架构的可扩展性**：快捷命令（高频场景）→ API 命令（标准接口）→ 通用 API（长尾需求），可复用到钉钉/企微/Slack/Notion 等平台
+4. **本地 Agent + CLI = 数据不出本地**：所有操作在本地执行，飞书 CLI 只做 API 调用，数据安全可控
+
+---
+
+> **关联文档**：[Codex+飞书CLI自动化技能手册.md](E:\龙虾AI主控中心\我的AI分身\技能库\Codex+飞书CLI自动化技能手册.md)
+> **上一次版本**：[公众号文章核心要点提炼.md](E:\龙虾AI主控中心\我的AI分身\Obsidian知识库\共享知识库\公众号文章核心要点提炼.md) v1.5 → v2.0
+*（内容由AI生成，仅供参考）*

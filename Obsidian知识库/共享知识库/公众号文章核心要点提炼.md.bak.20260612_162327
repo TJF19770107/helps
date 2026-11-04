@@ -1,0 +1,119 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: cf54d54c59baa0ada35a5ecb7c73a584_db269412661611f1a0095254002afed2
+    ReservedCode1: x0uylLoXDjC08zynHLuiMe2uKP/S+I4N/pvbU110Y/g2yLdli2Lego22M4YPKyYElMZdVKuh7YeG5iTtXCezp5eDdRRZZ3IPRr8c0Udi518Lp/A9NL+H/S8RJxRnju6DrjCLY4S3fOYxhjbC7ie90rP/UeDAfbyGY3OhrO85RyYNkueqAN14UaSrW3I=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: cf54d54c59baa0ada35a5ecb7c73a584_db269412661611f1a0095254002afed2
+    ReservedCode2: x0uylLoXDjC08zynHLuiMe2uKP/S+I4N/pvbU110Y/g2yLdli2Lego22M4YPKyYElMZdVKuh7YeG5iTtXCezp5eDdRRZZ3IPRr8c0Udi518Lp/A9NL+H/S8RJxRnju6DrjCLY4S3fOYxhjbC7ie90rP/UeDAfbyGY3OhrO85RyYNkueqAN14UaSrW3I=
+---
+
+# 公众号文章核心要点提炼：Codex × 飞书 CLI 接入
+
+> 来源文章：如何通过 Codex 对话接入飞书完整版来了！（微信公众号）
+> 提炼日期：2026-06-12 | 版本：v1.1
+> 归档位置：E:\龙虾AI主控中心\我的AI分身\Obsidian知识库\共享知识库\
+
+---
+
+## 一、文章核心论点
+
+飞书 CLI 是 AI 与飞书之间的"桥梁"——通过 CLI 让 Codex/Claude Code 等 AI Agent 能够直接操作飞书中的一切数据和功能。核心理念：**自然语言 → AI 理解意图 → 飞书 CLI 执行命令 → 飞书 API 调用**。
+
+## 二、四步接入 SOP（文章重点）
+
+| 步骤 | 操作 | 关键检查 |
+|------|------|----------|
+| 1 | 安装 CLI：`npm install -g @larksuite/cli` | `lark-cli --version` |
+| 2 | 安装 Skills：`npx skills add larksuite/cli --all -y -g` | 19个Skills全部安装 |
+| 3 | 配置应用 + OAuth 授权 | `lark-cli auth status --verify` → verified: true |
+| 4 | 重启 AI Agent 工具 | 必须完全退出再重启 |
+
+## 三、8大核心能力（按业务域）
+
+1. **云文档**：创建、读取、编辑、搜索、评论协作
+2. **多维表格**：创建表格、读写记录、更新字段/视图/仪表盘
+3. **消息与群组**：搜索群聊、发送消息、回复话题
+4. **日历**：查询日程、创建会议、查询忙闲、推荐时段
+5. **邮件**：搜索、读取、起草、发送、回复、归档（重点增强）
+6. **云盘**：上传下载文件、管理权限
+7. **知识库**：查询空间、管理节点和文档层级
+8. **会议**：搜索会议、获取纪要和逐字稿
+
+## 四、权限配置要点
+
+- **应用身份**（默认）：发消息、创建文档 — 不需要用户授权
+- **用户身份**：访问个人日历/私信/收件箱 — 需额外 OAuth 授权
+- 推荐使用 `lark-cli auth login --recommend` 获取常用安全权限集
+- 可按需在飞书开放平台中调整权限范围
+
+## 五、三大自动化场景（文章示范）
+
+### 场景1：会后即办
+会议结束 → AI读取妙记 → 提取决策+待办 → 写入飞书文档 → 同步多维表格 → 群聊通知
+
+### 场景2：人-AI共创文档
+用户描述需求 → AI搜索知识库获取背景 → 生成初稿 → 写入飞书文档 → 用户审阅反馈 → AI迭代修改
+
+### 场景3：跨时区智能约会
+用户说"安排会议" → AI查日历+时区 → 搜索通讯录 → 对比空闲 → 创建会议+发送邀请
+
+## 六、常见问题与解决
+
+| 问题 | 解决 |
+|------|------|
+| 应用被拒 | 仅选必要权限，不要勾 OKR 相关 |
+| 需管理员审核 | 联系企业管理员 |
+| Skills 不生效 | 必须重启 Agent |
+| 云盘读不到文件 | 检查云盘读取权限 |
+| npm 安装失败 | 使用国内镜像：`--registry=https://registry.npmmirror.com` |
+
+## 七、文章关键洞察
+
+1. **飞书 CLI 是 AI 自动化的分水岭**：从"AI只能建议"到"AI能执行"
+2. **Skills 是关键**：不装 Skills 等于白装 CLI，Agent 不知道它能操作什么
+3. **重启不可省略**：装了 CLI 和 Skills 后必须完全退出并重启 Agent 工具
+4. **用户授权是双刃剑**：不授权可发消息建文档（安全），授权可访问个人数据（强大）
+5. **CLI 不仅连接 Codex**：同样适用于 Claude Code、Cursor、Trae、OpenCode
+
+## 八、可复用 SOP 模板提炼
+
+### 模板1：飞书 CLI 快速接入检查清单
+```
+□ Node.js 环境可用（node --version）
+□ npm 全局安装 @larksuite/cli（lark-cli --version）
+□ Skills 全部安装（npx skills add larksuite/cli --all -y -g）
+□ 飞书开放平台应用已创建（获取 App ID + App Secret）
+□ lark-cli auth login --recommend 完成
+□ lark-cli auth status --verify 返回 verified: true
+□ AI Agent 工具已完全退出并重启
+□ 验证命令执行成功（如"帮我列出飞书能力"）
+```
+
+### 模板2：飞书 CLI 自动化场景评估表
+| 场景 | 涉及业务域 | CLI 支持度 | 复杂度 | 推荐优先级 |
+|------|-----------|-----------|--------|-----------|
+| 会议纪要自动化 | 视频会议+文档+Base+IM | 完整 | 中 | ⭐⭐⭐⭐⭐ |
+| 周报自动生成 | 任务+Base+文档+IM | 完整 | 低 | ⭐⭐⭐⭐⭐ |
+| 邮件智能分类 | 邮件+Base+IM | 完整 | 中 | ⭐⭐⭐⭐ |
+| 知识库维护 | 知识库+文档 | 完整 | 低 | ⭐⭐⭐⭐ |
+| 跨时区会议调度 | 日历+通讯录+IM | 完整 | 高 | ⭐⭐⭐ |
+
+## 九、本次学习迭代成果
+
+基于公众号文章和全网飞书 CLI/Codex 生态信息，已完成以下沉淀：
+
+1. 飞书 CLI 四步接入 SOP（标准化，可直接复用）
+2. 11大业务域能力矩阵（覆盖200+命令19个Skills）
+3. CLI 命令速查表（9个子域）
+4. Codex 四种权限模式说明（suggest/auto-edit/full-auto/yolo）
+5. 四种 Codex-飞书桥接方案（cc-connect/lark-coding-agent-bridge/feishu-codex-bridge/Larkspur）
+6. 7大自动化场景 SOP（含多域联动方案）
+7. 权限与安全配置指南（16项权限代码）
+
+---
+
+> 提炼者：龙虾AI主控中心 · 全域学习迭代系统
+> 技能协议编号：SKILL-CLI-001 | 关联协议：#201/#210/#211
+*（内容由AI生成，仅供参考）*

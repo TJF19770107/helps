@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>黑马策略复盘入口 · 币安合约</title>
+<style>
+:root{--bg:#fbfbfa;--card:#fff;--fg:#1c1c1e;--fg2:#6b6b70;--line:#e6e6e3;
+--up:#c0392b;--down:#1e8449;--accent:#b8860b}
+@media (prefers-color-scheme:dark){:root{--bg:#16161a;--card:#1e1e24;--fg:#ececf1;--fg2:#9a9aa5;
+--line:#2f2f38;--up:#ff6b5e;--down:#3ecf8e;--accent:#d4a017}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:22px;margin:0 0 4px} h2{font-size:16px;margin:32px 0 12px;
+padding-left:9px;border-left:3px solid var(--accent)}
+.sub{color:var(--fg2);font-size:13px;margin-bottom:22px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.card .k{font-size:12px;color:var(--fg2)} .card .v{font-size:20px;font-weight:600;margin-top:3px}
+.up{color:var(--up)} .down{color:var(--down)}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);
+border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{padding:8px 11px;text-align:right;border-bottom:1px solid var(--line)}
+th{background:color-mix(in srgb,var(--card) 70%,var(--line));font-weight:600;font-size:12px;
+color:var(--fg2)}
+td:first-child,th:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.muted{color:var(--fg2);font-size:13px}
+ul.files{list-style:none;padding:0;margin:0;font-size:13px}
+ul.files li{padding:6px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px}
+ul.files li:last-child{border-bottom:none}
+.k{color:var(--fg2);font-size:12px}
+.warn{background:color-mix(in srgb,var(--accent) 12%,var(--card));border:1px solid var(--accent);
+border-radius:10px;padding:14px;font-size:13px}
+.warn b{color:var(--accent)}
+code{background:color-mix(in srgb,var(--line) 60%,transparent);padding:1px 5px;border-radius:4px;font-size:12px}
+</style></head><body><div class="wrap">
+<h1>黑马策略复盘入口 · 币安 U 本位永续</h1>
+<div class="sub">生成于 2026-10-24 02:25:54 · 只读采集（零下单）·
+数据源：GPT 浏览器已登录会话 · 网页版历史记录</div>
+
+<div class="cards">
+  <div class="card"><div class="k">成交笔数</div><div class="v">2123</div></div>
+  <div class="card"><div class="k">涉及标的</div><div class="v">49</div></div>
+  <div class="card"><div class="k">已实现盈亏</div><div class="v up">+6.78</div></div>
+  <div class="card"><div class="k">手续费</div><div class="v">22.68</div></div>
+  <div class="card"><div class="k">净额</div><div class="v down">-15.90</div></div>
+</div>
+
+<h2>一、数据范围</h2>
+<div class="panel">
+<table>
+<tr><th>数据集</th><th>条数</th><th>起</th><th>止</th></tr>
+<tr><td>历史成交</td><td>2123</td><td>2026-08-30 23:39:55</td><td>2026-10-24 01:55:24</td></tr>
+<tr><td>资金流水</td><td>0</td><td>-</td><td>-</td></tr>
+</table>
+</div>
+
+<h2>二、累计已实现盈亏（按日聚合）</h2>
+<div class="panel"><svg viewBox="0 0 880 180" width="100%" height="180"><line x1="0" y1="119.9" x2="880" y2="119.9" stroke="var(--line)" stroke-dasharray="4 3"/><polyline points="10.0,115.0 26.2,134.0 42.5,134.1 58.7,142.9 74.9,116.5 91.1,100.9 107.4,80.6 123.6,114.0 139.8,123.7 156.0,135.0 172.3,139.4 188.5,137.7 204.7,126.9 220.9,160.0 237.2,145.8 253.4,156.9 269.6,157.3 285.8,117.6 302.1,20.5 318.3,46.8 334.5,40.7 350.8,77.9 367.0,87.6 383.2,89.1 399.4,96.6 415.7,89.0 431.9,90.4 448.1,98.5 464.3,97.6 480.6,77.8 496.8,107.2 513.0,104.7 529.2,105.2 545.5,94.1 561.7,105.0 577.9,104.9 594.2,119.4 610.4,115.2 626.6,79.0 642.8,73.9 659.1,75.0 675.3,55.0 691.5,75.5 707.7,129.5 724.0,136.1 740.2,141.2 756.4,72.3 772.6,20.0 788.9,35.8 805.1,43.3 821.3,31.2 837.5,101.5 853.8,101.2 870.0,112.0" fill="none" stroke="var(--up)" stroke-width="2"/><text x="8" y="14" font-size="11" fill="var(--fg2)">累计已实现盈亏 +6.76 USDT</text></svg></div>
+
+<h2>三、资金流水按类型</h2>
+<div class="panel"><p class='muted'>无数据</p></div>
+
+<h2>四、亏损最多的标的</h2>
+<div class="panel"><svg viewBox="0 0 880 370" width="100%" height="370" role="img">
+<line x1="470.0" y1="0" x2="470.0" y2="370" stroke="var(--line)" stroke-width="1"/>
+<text x="142" y="20.84" text-anchor="end" font-size="12" fill="var(--fg)">BRUSDT 永续</text>
+<rect x="150.0" y="5" width="320.0" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="20.84" text-anchor="end" font-size="11" fill="var(--fg2)">-22.49</text>
+<text x="142" y="50.84" text-anchor="end" font-size="12" fill="var(--fg)">HYPEUSDT 永续</text>
+<rect x="212.2" y="35" width="257.8" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="50.84" text-anchor="end" font-size="11" fill="var(--fg2)">-18.12</text>
+<text x="142" y="80.84" text-anchor="end" font-size="12" fill="var(--fg)">JCTUSDT 永续</text>
+<rect x="213.9" y="65" width="256.1" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="80.84" text-anchor="end" font-size="11" fill="var(--fg2)">-18.00</text>
+<text x="142" y="110.84" text-anchor="end" font-size="12" fill="var(--fg)">SIRENUSDT 永续</text>
+<rect x="228.0" y="95" width="242.0" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="110.84" text-anchor="end" font-size="11" fill="var(--fg2)">-17.01</text>
+<text x="142" y="140.84" text-anchor="end" font-size="12" fill="var(--fg)">牛来USDT 永续</text>
+<rect x="245.6" y="125" width="224.4" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="140.84" text-anchor="end" font-size="11" fill="var(--fg2)">-15.77</text>
+<text x="142" y="170.84" text-anchor="end" font-size="12" fill="var(--fg)">IOSTUSDT 永续</text>
+<rect x="274.4" y="155" width="195.6" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="170.84" text-anchor="end" font-size="11" fill="var(--fg2)">-13.75</text>
+<text x="142" y="200.84" text-anchor="end" font-size="12" fill="var(--fg)">TRUTHUSDT 永续</text>
+<rect x="300.8" y="185" width="169.2" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="200.84" text-anchor="end" font-size="11" fill="var(--fg2)">-11.89</text>
+<text x="142" y="230.84" text-anchor="end" font-size="12" fill="var(--fg)">MAGICUSDT 永续</text>
+<rect x="303.5" y="215" width="166.5" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="230.84" text-anchor="end" font-size="11" fill="var(--fg2)">-11.70</text>
+<text x="142" y="260.84" text-anchor="end" font-size="12" fill="var(--fg)">MUBARAKUSDT 永续</text>
+<rect x="304.2" y="245" width="165.8" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="260.84" text-anchor="end" font-size="11" fill="var(--fg2)">-11.65</text>
+<text x="142" y="290.84" text-anchor="end" font-size="12" fill="var(--fg)">QNTUSDT 永续</text>
+<rect x="321.7" y="275" width="148.3" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="290.84" text-anchor="end" font-size="11" fill="var(--fg2)">-10.42</text>
+<text x="142" y="320.84" text-anchor="end" font-size="12" fill="var(--fg)">BTRUSDT 永续</text>
+<rect x="331.4" y="305" width="138.6" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="320.84" text-anchor="end" font-size="11" fill="var(--fg2)">-9.74</text>
+<text x="142" y="350.84" text-anchor="end" font-size="12" fill="var(--fg)">VTHOUSDT 永续</text>
+<rect x="349.5" y="335" width="120.5" height="22" rx="3" fill="var(--down)" opacity=".85"/>
+<text x="464.0" y="350.84" text-anchor="end" font-size="11" fill="var(--fg2)">-8.47</text>
+</svg></div>
+
+<h2>五、盈利最多的标的</h2>
+<div class="panel">
+<table>
+<tr><th>标的</th><th>笔数</th><th>已实现盈亏</th><th>手续费</th></tr>
+<tr><td>AKEUSDT 永续</td><td>345</td><td class='up'>+76.04</td><td>3.17</td></tr><tr><td>BTWUSDT 永续</td><td>312</td><td class='up'>+43.67</td><td>3.64</td></tr><tr><td>QUSDT 永续</td><td>90</td><td class='up'>+32.67</td><td>0.84</td></tr><tr><td>AGTUSDT 永续</td><td>72</td><td class='up'>+31.87</td><td>0.92</td></tr><tr><td>DOODUSDT 永续</td><td>31</td><td class='up'>+31.02</td><td>0.31</td></tr><tr><td>GTCUSDT 永续</td><td>98</td><td class='up'>+19.39</td><td>1.74</td></tr><tr><td>4USDT 永续</td><td>41</td><td class='up'>+10.90</td><td>0.36</td></tr><tr><td>CAPUSDT 永续</td><td>48</td><td class='up'>+9.40</td><td>0.53</td></tr>
+</table>
+</div>
+
+<h2>六、原始件（复盘存证）</h2>
+<div class="panel">
+<ul class="files">
+<li><span>Binance_Contract_Records_20261024_020846.csv</span><span class='k'>55,788 B</span></li><li><span>Binance_Contract_Records_20261024_021301.md</span><span class='k'>3,091 B</span></li><li><span>Binance_Contract_Records_20261024_021729.csv</span><span class='k'>170,722 B</span></li><li><span>Binance_Contract_Records_20261024_021946.csv</span><span class='k'>32,311 B</span></li><li><span>Binance_Contract_Records_20261024_022044.csv</span><span class='k'>2,803 B</span></li><li><span>Binance_Contract_Records_20261024_022112.csv</span><span class='k'>55,788 B</span></li><li><span>Binance_Contract_Records_20261024_022326.csv</span><span class='k'>1,512 B</span></li><li><span>Binance_Contract_Records_20261024_022401.csv</span><span class='k'>32,837 B</span></li><li><span>Binance_Contract_Records_20261024_022448.csv</span><span class='k'>25,106 B</span></li><li><span>Binance_Contract_Records_20261024_022545.md</span><span class='k'>4,644 B</span></li><li><span>TRADE_20261024_020846.csv</span><span class='k'>50,702 B</span></li><li><span>TRADE_20261024_021729.csv</span><span class='k'>154,325 B</span></li><li><span>TRADE_20261024_021946.csv</span><span class='k'>29,345 B</span></li><li><span>TRADE_20261024_022044.csv</span><span class='k'>2,528 B</span></li><li><span>TRADE_20261024_022112.csv</span><span class='k'>50,702 B</span></li><li><span>TRADE_20261024_022326.csv</span><span class='k'>1,345 B</span></li><li><span>TRADE_20261024_022401.csv</span><span class='k'>29,871 B</span></li><li><span>TRADE_20261024_022448.csv</span><span class='k'>22,860 B</span></li><li><span>01_币安账户总览_UID10193698.png</span><span class='k'>210,082 B</span></li><li><span>02_豆包对话框_订单仓位拉取指令.png</span><span class='k'>244,128 B</span></li><li><span>03_豆包主对话框_20261024_020939.png</span><span class='k'>176,361 B</span></li><li><span>04_全屏留证_20261024_020939.png</span><span class='k'>224,000 B</span></li><li><span>raw_TRADE_20261024_020846.json</span><span class='k'>80,899 B</span></li><li><span>raw_TRADE_20261024_021729.json</span><span class='k'>246,627 B</span></li><li><span>raw_TRADE_20261024_021946.json</span><span class='k'>47,229 B</span></li><li><span>raw_TRADE_20261024_022044.json</span><span class='k'>4,426 B</span></li><li><span>raw_TRADE_20261024_022112.json</span><span class='k'>80,899 B</span></li><li><span>raw_TRADE_20261024_022326.json</span><span class='k'>2,547 B</span></li><li><span>raw_TRADE_20261024_022401.json</span><span class='k'>47,777 B</span></li><li><span>raw_TRADE_20261024_022448.json</span><span class='k'>36,590 B</span></li><li><span>历史导出_合约交易历史_20260530.csv</span><span class='k'>1,468,112 B</span></li><li><span>历史导出_合约订单历史_20260530.csv</span><span class='k'>4,402 B</span></li>
+</ul>
+</div>
+
+<h2>七、口径与缺口（必须知道）</h2>
+<div class="warn">
+<b>1. 「方向」是成交方向（BUY/SELL），不是开平仓标记。</b>币安网页历史成交不带 positionSide，
+单向持仓模式下 BUY 可能是在减空仓，不能直接当「开多」。<br><br>
+<b>2. 标记价格不在网页历史成交里</b>，只有当前持仓快照（<code>/fapi/v2/positionRisk</code>）才有。<br><br>
+<b>3. 网页只回溯最近 3 个月、最多 1 万条</b>（币安页面原文提示）。更早的数据要走「导出账单 → 大数据下载」。
+本包已把 2026-05-30 那次官方导出归档在 <code>_raw/</code>（成交 12,885 条，覆盖 2025-08-22 → 2026-05-31）。<br><br>
+<b>4. 缺口：2026-06-01 → 2026-07-23</b>（约 7 周）不在本次回溯窗口，也不在 05-30 那份导出里，需要再导出一次补齐。
+</div>
+
+<div class="sub" style="margin-top:30px">数据库：<code>review.db</code> · 摘要：<code>binance_trade_records/Binance_Contract_Records_*.md</code></div>
+</div></body></html>

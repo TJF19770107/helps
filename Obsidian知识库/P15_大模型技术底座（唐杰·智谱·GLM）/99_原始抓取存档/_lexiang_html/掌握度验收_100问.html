@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>掌握度验收 100 问（学完自测）</title><style>
+body{font-family:-apple-system,"Microsoft YaHei",sans-serif;line-height:1.75;
+     max-width:900px;margin:0 auto;padding:24px;color:#1a1a1a;background:#fff;font-size:15px}
+h1{font-size:26px;border-bottom:2px solid #0b6bcb;padding-bottom:8px;margin-top:28px}
+h2{font-size:21px;margin-top:28px;color:#0b3d91}
+h3{font-size:17px;margin-top:20px;color:#222}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid #d0d7de;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#f2f6fb;font-weight:600}
+tr:nth-child(even) td{background:#fafbfc}
+code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px;
+     font-family:Consolas,monospace;color:#b5314a}
+pre{background:#f6f8fa;padding:14px;border-radius:6px;overflow-x:auto;border:1px solid #e1e4e8}
+pre code{background:none;color:#24292e;font-size:12.5px;line-height:1.5}
+blockquote{border-left:4px solid #0b6bcb;background:#f2f6fb;margin:12px 0;
+           padding:10px 16px;color:#333}
+hr{border:none;border-top:1px solid #e1e4e8;margin:24px 0}
+ul{padding-left:24px}
+li{margin:4px 0}
+.meta{color:#666;font-size:12.5px;background:#f7f7f7;padding:8px 12px;
+      border-radius:4px;margin-bottom:18px}
+details{background:#fafbfc;border:1px solid #e1e4e8;border-radius:4px;padding:10px 14px;margin:10px 0}
+summary{cursor:pointer;font-weight:600;color:#0b3d91}
+a{color:#0b6bcb}
+</style></head><body>
+<h1>掌握度验收 100 问（学完自测）</h1><div class="meta">来源：验收 ｜ 创建：2026-11-02 ｜ 标签：[自测, 验收, 掌握度]</div>
+<h1>掌握度验收 100 问</h1>
+
+<blockquote><strong>用法</strong>：遮住答案区，逐题口述。<strong>答不上来的就是没学会的地方</strong>，回去看对应周次。</blockquote>
+<blockquote><strong>判级</strong>：</blockquote>
+<blockquote>- 90+ 题能答 → 可以对外讲这门课</blockquote>
+<blockquote>- 70~89 → 能用，但被追问就露</blockquote>
+<blockquote>- 50~69 → 知道名词，不会推理</blockquote>
+<blockquote>- &lt;50 → 只是看过，没学过</blockquote>
+
+<hr>
+
+<h2>A 组 · 数据与 Tokenizer（W2）· 10 题</h2>
+
+<ul><li>BPE 训练时，为什么 <code>vocab_size</code> 必须大于 256？</li><li>vocab 从 32K 扩到 128K，embedding 参数怎么变？输出层呢？</li><li>同样的中文句子，中文词表偏小的 tokenizer 会多花几倍 token？为什么？</li><li>语料去重做到 90% 和做到 60%，分别会导致什么后果？哪个更危险？</li><li>MinHash + LSH 为什么能近似 Jaccard 相似度？</li><li>质量过滤常见的三类信号是什么？</li><li>数据配比里「课程学习」指的是什么？为什么后喂的数据影响更大？</li><li>合成数据的最大风险是什么？怎么检测？</li><li>一个 1T token 的语料，去重后剩 600B，你该不该补合成数据？判断依据是什么？</li><li>为什么说 tokenizer 是「唯一一个训练完就冻结、却决定了后面一切」的组件？</li></ul>
+
+&lt;details&gt;&lt;summary&gt;参考要点（A 组）&lt;/summary&gt;
+
+<ul><li>byte-level BPE 初始词表 = 256 个字节。小于 256 时循环条件 <code>nxt &lt; vocab_size</code> 一开始就假，一个 merge 都学不到。</li><li>embedding = 32K×d → 128K×d，涨 4 倍；<strong>输出投影同步涨 4 倍</strong>（若不做 tie）。这一项在大模型里可能是几百 M 参数。</li><li>中文一个字若被切成 2~3 字节 token，同样语义要付 2~3 倍 token 费用 —— 直接体现在推理账单上。</li><li>去重不足（60%）→ 重复数据让模型过拟合、记忆化、评测污染；去重过度（90%）→ 丢掉合法的常见表述，模型语言能力下降。<strong>去重不足更危险</strong>，因为它会污染评测，让你误判。</li><li>用 k 个哈希函数取最小哈希值，两集合最小哈希相等的概率 = Jaccard 相似度。</li><li>① 困惑度/模型打分 ② 启发式规则（长度、符号比、重复率）③ 分类器（高质量语料训练的正例判别器）。</li><li>先喂通用、后喂高质量/领域数据，让模型「最后记住的」是你要的分布。后喂影响大是因为近因效应 + 学习率退火阶段权重更新更稳。</li><li>分布收窄（mode collapse）、错误放大、评测污染。检测：与真实分布做 KL/覆盖率对比、留出真实 held-out。</li><li>看<strong>边际收益</strong>：先在小模型上做「加合成数据 vs 不加」的对照，看下游任务通过率，而不是看 loss。</li><li>它决定了序列长度、embedding 规模、推理成本、多语言公平性 —— 四项全在模型训练之前就锁死了。</li></ul>
+
+&lt;/details&gt;
+
+<hr>
+
+<h2>B 组 · 架构（W3）· 12 题</h2>
+
+<ul><li>写出 self-attention 的完整计算式，标出每一步的显存占用。</li><li>为什么 softmax 的雅可比是 <code>diag(p) - pp^T</code>？</li><li>MHA → MQA → GQA → MLA，每一步在拿什么换什么？</li><li>GQA 的 group 数从 8 降到 1 会怎样？从 8 升到 32 呢？</li><li>KV cache 的大小公式怎么写？哪些项可以量化？</li><li>RoPE 相比绝对位置编码好在哪？它怎么支持长度外推？</li><li>NTK-aware 插值和 YaRN 的核心区别？</li><li>MoE 的负载不均衡会导致什么？auxiliary loss 的副作用是什么？</li><li>共享专家（shared expert）解决了什么问题？</li><li>Pre-LN 和 Post-LN 哪个训练更稳？代价是什么？</li><li>RMSNorm 相比 LayerNorm 省了什么？为什么可以省？</li><li>一个 7B 模型，hidden=4096、32 层、32 头，KV cache 在 8K 上下文下占多少 GB（FP16）？</li></ul>
+
+&lt;details&gt;&lt;summary&gt;参考要点（B 组）&lt;/summary&gt;
+
+<ul><li><code>Q=XWq, K=XWk, V=XWv</code>；<code>S=QKᵀ/√d</code>（B×T×T，<strong>最占显存的一项</strong>）；<code>A=softmax(S)</code>；<code>O=AV</code>。T=8K 时 S 是 64M 元素/样本。</li><li>对 <code>p_i = e^{x_i}/Σe^{x_j}</code> 求导：<code>∂p_i/∂x_j = p_i(δ_ij - p_j)</code>，写成矩阵即 <code>diag(p) - ppᵀ</code>。</li><li>MHA→MQA：KV 从 h 份减到 1 份（省显存，掉质量）；→GQA：折中成 g 份；→MLA：用低秩压缩 KV（省得更多，但要额外计算）。</li><li>group=1 退化成 MQA，质量下降明显；group=32（=头数）退化成 MHA，KV cache 涨 32 倍。</li><li><code>2 × layers × kv_heads × head_dim × seq_len × batch × dtype_bytes</code>。可量化的是 KV 的存储精度（FP8/INT8）。</li><li>相对位置内积只依赖偏移量 m-n，有平移不变性；通过调整旋转基底频率可做外推（NTK 改 base，YaRN 加温度缩放）。</li><li>NTK 改的是 RoPE 的 base（频率分布），是「拉伸」；YaRN 在 NTK 基础上加<strong>注意力温度校正</strong>，是「拉伸 + 补偿」。</li><li>少数专家被打爆、多数闲置 → 有效参数量暴跌、训练不稳。aux loss 的副作用：<strong>干扰主任务梯度</strong>，太大会降低质量。</li><li>共享专家吸收通用知识，让路由专家专注差异化 —— 减少专家冗余。</li><li>Pre-LN 更稳（残差路径干净），代价是<strong>表达力略降</strong>、深层可能需要 final LN。</li><li>省掉均值中心化（不减均值、不加 bias），因为只是缩放不改变方向；实测效果相当且更快。</li><li>KV = 2 × 32 × 32 × 128 × 8192 × 2B ≈ <strong>4.3 GB</strong>（每样本，GQA 未用时）。</li></ul>
+
+&lt;/details&gt;
+
+<hr>
+
+<h2>C 组 · 规模与系统（W4–W5）· 12 题</h2>
+
+<ul><li>Chinchilla 相对 Kaplan 的核心修正是什么？</li><li>「20 token/param」这个经验值是怎么来的？什么情况下不成立？</li><li>给定 7 个 (N, D, loss) 点，怎么拟合 scaling law？为什么 A、B 要取 log？</li><li>R²=0.999 的拟合，为什么不能直接外推？</li><li>留一交叉验证在这里检验的是什么？</li><li>如果 N 和 D 在你的数据里完全共线，会发生什么？</li><li>数据用完了（token 不够）该怎么办？三条路各的代价。</li><li>一个 7B 模型用 AdamW + BF16 训练，参数/梯度/优化器状态各占多少 GB？</li><li>ZeRO 三个阶段分别分片了什么？</li><li>TP 为什么一般不超过单机 GPU 数？</li><li>为什么说「并行会改变数值结果」？举一个具体机制。</li><li>FP8 训练里 E4M3 和 E5M2 分别用在哪？为什么这么分？</li></ul>
+
+&lt;details&gt;&lt;summary&gt;参考要点（C 组）&lt;/summary&gt;
+
+<ul><li>Kaplan 说「参数优先」，Chinchilla 用更多数据、更小模型达到同样 loss —— 数据与参数应同比例增长。</li><li>固定算力 C=6ND 下最小化 loss 的解，在不同 E/A/B 参数下会变。数据受限、或推理成本权重高时都不成立（推理密集场景应更小模型）。</li><li>用 Adam 拟合 E、logA、logB、α、β 五个参数。取 log 是因为 A、B 跨越 1e1~1e9 量级，直接梯度会崩。</li><li>R² 只衡量「在已有数据范围内」的拟合程度，不含任何外推信息。外推误差要靠<strong>留出最大点</strong>来测。</li><li>检验「用小规模预测大规模」的能力 —— 这才是规模化正确性要问的问题。</li><li>α 和 β 不可识别：模型可以随便分配参数与数据的功劳，拟合出的指数无意义（本轮实测出现 β&gt;α、tokens/param=0 的荒谬结果）。</li><li>① 多轮 epoch（代价：过拟合、收益递减）② 合成数据（代价：分布收窄、污染）③ 提高数据质量/换 domain（代价：成本高、覆盖窄）。</li><li>参数 7B×2B=14GB；梯度 14GB；AdamW 的 m+v 各 28GB（FP32）→ 优化器状态 56GB。合计 <strong>84GB</strong>（不含激活）。</li><li>ZeRO-1 分片优化器状态；ZeRO-2 再分片梯度；ZeRO-3 再分片参数。</li><li>因为 TP 每层都要 all-reduce，通信量与层数成正比；跨机带宽远低于 NVLink，会成为瓶颈。</li><li>浮点加法不满足结合律，切分方式改变梯度累加顺序，loss 曲线出现细微差异；小规模调好的超参在 TP=8 时可能直接崩。</li><li>E4M3（4 位指数、3 位尾数）精度高、动态范围小 → 用于<strong>前向的权重/激活</strong>；E5M2 动态范围大、精度低 → 用于<strong>反向的梯度</strong>（梯度量级跨度大）。</li></ul>
+
+&lt;/details&gt;
+
+<hr>
+
+<h2>D 组 · 量化与推理（W7）· 10 题</h2>
+
+<ul><li>权重量化、激活量化、KV cache 量化，三者收益分别体现在哪？</li><li>什么是 outlier？为什么它是量化的万恶之源？</li><li>SmoothQuant 的核心思想，一句话说清。</li><li>per-tensor / per-channel / per-group(128) 三种 scale 粒度，怎么选？</li><li>GPTQ 和 AWQ 的核心差异？</li><li>为什么 KV cache 量化在长上下文场景收益最大？</li><li>投机解码的加速比由什么决定？</li><li>FP8 训练为什么要做 delayed scaling？scale 怎么定？</li><li>INT4 权重量化后，为什么通常还要保留一部分层在 FP16？</li><li>一个 70B 模型，FP8 相比 BF16 能省多少显存？推理速度提升是否等比？</li></ul>
+
+&lt;details&gt;&lt;summary&gt;参考要点（D 组）&lt;/summary&gt;
+
+<ul><li>权重量化省<strong>显存和带宽</strong>（影响 decode 速度）；激活量化省<strong>计算</strong>（影响 prefill）；KV cache 量化省<strong>长上下文的显存</strong>。</li><li>极少数绝对值极大的元素，会逼你把整个 tensor 的 scale 拉大，导致 99% 的正常值精度损失。</li><li>把激活的 outlier「搬」到权重上 —— 因为权重是静态的、好处理，激活是动态的、难处理。</li><li>粒度越细越准、开销越大。权重用 per-channel，激活用 per-tensor（动态量化时）或 per-token，工业常用 per-group 128。</li><li>GPTQ 用二阶信息（Hessian）做逐列误差补偿；AWQ 认为「重要权重由激活分布决定」，按激活幅度保护显著通道。</li><li>KV cache 大小与 seq_len 线性相关，上下文越长占比越大，量化收益越显著。</li><li>draft model 的接受率（acceptance rate）× draft 与 target 的速度比。</li><li>因为 FP8 动态范围窄，需要根据历史最大值滚动确定 scale，避免溢出/下溢。</li><li>因为某些层（如第一层、最后一层、norm）对量化误差极敏感，混精可显著减少质量损失。</li><li>显存约省一半（70B×2B=140GB → 70GB）；decode 速度提升接近 2×（受带宽限制），但<strong>不是等比</strong>（有 kernel 开销、scale 计算）。</li></ul>
+
+&lt;/details&gt;
+
+<hr>
+
+<h2>E 组 · 对齐（W8–W11）· 14 题</h2>
+
+<ul><li>SFT 学到的是「知识」还是「格式」？为什么？</li><li>SFT 的 loss mask 为什么必须只算 assistant 部分？</li><li>灾难性遗忘的成因？三种缓解手段？</li><li>SFT 的天花板在哪？</li><li>RLHF 三阶段分别解决什么问题？</li><li>PPO 要同时驻留几个模型？显存怎么算？</li><li>写出 DPO 的 loss。</li><li>DPO 里的 β 是什么？β→0 和 β→∞ 分别退化成什么？</li><li>DPO 真的「不需要奖励模型」吗？</li><li>DPO 为什么会加剧长度偏置？</li><li>RLVR 和 RLHF 的本质差异是什么？</li><li>reward hacking 在 RLVR 里长什么样？给三个具体例子。</li><li>怎么防「模型硬编码测试用例」？</li><li>唐杰说的「自净化」和 RLVR 是什么关系？</li></ul>
+
+&lt;details&gt;&lt;summary&gt;参考要点（E 组）&lt;/summary&gt;
+
+<ul><li>主要是<strong>格式</strong>（怎么说话、什么结构）。它只能模仿示范者，不能超越。</li><li>因为 prompt 部分是输入不是答案，算了会让模型学「生成用户的问题」。</li><li>成因：分布偏移 + 全部参数更新。缓解：数据混比（掺预训练数据）、LoRA（只训部分参数）、replay（回放旧数据）。</li><li>示范者的水平上限。SFT 不能创造比示范更好的策略。</li><li>① SFT 建立基础能力 ② RM 学会人类偏好 ③ PPO 按偏好优化策略。</li><li>四个：policy、ref、reward、value。显存约为 4× 模型 + 优化器状态。</li><li><code>L = -log σ( β·log(π(y_w|x)/π_ref(y_w|x)) − β·log(π(y_l|x)/π_ref(y_l|x)) )</code></li><li>β 控制偏离 ref 的强度。β→0：不限约束，退化成纯 MLE（无偏好）；β→∞：退化成与 ref 完全一致（不学习）。</li><li>没有省掉 —— 它把奖励<strong>隐式内化</strong>成 policy 与 ref 的 log-ratio。代价是失去单独训练/检查/修正 RM 的能力。</li><li>因为长度与 log-prob 相关，长答案的 log-ratio 累积更大，β 缩放后天然被偏好。</li><li>RLVR 的奖励是<strong>判定的</strong>（测试过不过），RLHF 的奖励是<strong>学出来的</strong>（RM 打分）。</li><li>① 硬编码测试用例 ② 绕过检查（<code>except: pass</code>）③ 学会「让测试跑完」而不是「解决问题」。</li><li>① held-out 测试集（模型看不到）② 代码审查/静态检查 ③ 多目标评分（不只看通过数）。</li><li>RLVR 是「<strong>外置</strong>的自净化」（用测试当裁判）；自净化是把它<strong>内化</strong>到模型里。前者是后者的训练手段。</li></ul>
+
+&lt;/details&gt;
+
+<hr>
+
+<h2>F 组 · Agent 与长程（W12–W13）· 12 题</h2>
+
+<ul><li>ReAct 循环的三步是什么？</li><li>工具描述的质量如何影响调用成功率？举例。</li><li>一个 20 步任务，单步成功率 99%，整体成功率多少？说明什么？</li><li>Agent 崩溃的第一原因是什么？</li><li>短期/长期/工作记忆三层分别指什么？</li><li>上下文被压缩后，怎么保证不忘记目标？</li><li>为什么「把状态写进文件」比「让模型记住」可靠？</li><li>Agent 的 checkpoint 应该存什么？</li><li>幂等性在 Agent 里为什么重要？</li><li>多 Agent 协作的最大风险是什么？</li><li>怎么评估一个 Agent 的「稳定性」？给一个可操作的指标。</li><li>什么任务<strong>不该</strong>用 Agent？</li></ul>
+
+&lt;details&gt;&lt;summary&gt;参考要点（F 组）&lt;/summary&gt;
+
+<ul><li>Thought（推理）→ Action（调工具）→ Observation（结果）。</li><li>描述越具体越好。「查询用户信息」vs「根据 user_id 查用户，返回 name/email/created_at，user_id 为 8 位数字字符串」—— 后者调用成功率高一个量级。</li><li>0.99²⁰ ≈ <strong>81.8%</strong>。说明<strong>长任务的可靠性是乘性的</strong>，单步 1% 的失败率会被放大 20 倍。</li><li><strong>忘了自己在干嘛</strong>（目标漂移），不是智商不够。</li><li>短期=context window；长期=外部存储/向量库；工作记忆=scratchpad/中间文件。</li><li>把目标从 context 里<strong>搬到 context 外的显式状态</strong>（文件、结构化 schema），每次重新注入。</li><li>context 会被压缩、截断、丢失；<strong>文件不会</strong>。文件是可验证的持久状态。</li><li>目标、已完成步骤、当前状态、待办、可回滚点。</li><li>因为 Agent 会重试。非幂等操作（转账、发消息、建文件）重试会造成重复副作用。</li><li><strong>状态不同步</strong> —— 各方对"现在做到哪了"的认知不一致。</li><li>「<strong>连续 N 步不失败的概率</strong>」或「任务完成率 @ N 次尝试」。不要用单次成功率。</li><li>① 目标无法清晰定义 ② 失败成本极高不可回滚 ③ 任务太短（Agent 开销 &gt; 收益）④ 需要人类判断的责任场景。</li></ul>
+
+&lt;/details&gt;
+
+<hr>
+
+<h2>G 组 · 多模态与评测（W14–W15）· 12 题</h2>
+
+<ul><li>视觉编码器与 LLM 的三种对接方式？</li><li>一张 1024×1024 图，patch 14×14，产生多少 token？</li><li>为什么「加了视觉，语言能力反而退化」？</li><li>解法是什么？为什么"多喂文本"不是好解法？</li><li>视频理解的帧采样策略怎么定？</li><li>静态 benchmark 的三大病是什么？</li><li>怎么检测 benchmark 数据污染？给三个可操作方法。</li><li>LLM-as-judge 有哪些系统性偏见？</li><li>任务级评测和单点准确率的区别？</li><li>「连续 N 次通过率」为什么比「一次通过率」更能反映产品体验？</li><li>唐杰的「寒冬预警信号」具体是什么？为什么它比榜单可靠？</li><li>如果你要给客户证明你的方案行，应该怎么设计验收？</li></ul>
+
+&lt;details&gt;&lt;summary&gt;参考要点（G 组）&lt;/summary&gt;
+
+<ul><li>① projector（MLP 映射，LLaVA 式）② cross-attention（Flamingo 式）③ early fusion（原生多模态）。</li><li>(1024/14)² ≈ 73² ≈ <strong>5329 个 patch token</strong>。这意味着一张图的成本约等于 5000 字文本。</li><li>训练数据配比被稀释 —— 加视觉数据必然减少文本数据占比，而模型容量有限。</li><li>让视觉数据<strong>带语言监督</strong>（图像描述、VQA 的答案本身是语言），使视觉训练同时强化语言。</li><li>按事件密度自适应采样（关键帧检测），而不是固定 FPS；长视频分层采样（粗→细）。</li><li>① 数据污染（训练集见过）② 饱和（都刷到 90+，失去区分度）③ 与真实任务脱节。</li><li>① n-gram 重叠检测（测试集与训练集）② 改写扰动测试（改数字/换名词，分数应稳定）③ 时间切分（用截止日期后数据）。</li><li>长度偏好、位置偏好（偏好第一个）、自我偏好（偏好同模型输出）、格式偏好（偏好 Markdown）。</li><li>单点准确率看「平均对多少」；任务级看「整个任务能不能跑完」。</li><li>因为用户体验是乘性的：任何一步崩了，用户就失败了。99% 单步 × 20 步 = 82%。</li><li>「基准测试分数一直在涨，但真实世界模型调用量（如 OpenRouter 流量）停住了」。榜单可被优化，<strong>调用量是钱投出来的票</strong>。</li><li>不看分数，跑客户场景的<strong>真实 case 50 个</strong>，报端到端通过率 + 失败模式分类。</li></ul>
+
+&lt;/details&gt;
+
+<hr>
+
+<h2>H 组 · 综合判断题（跨周）· 18 题</h2>
+
+<ul><li>为什么说「读懂量化，等于读懂整个推理优化」？</li><li>GNN 的 GraphSAGE「采样邻居」和稀疏注意力「选 top-k」是同一个动作吗？</li><li>SFT → DPO → RLVR，这条演进线的内在逻辑是什么？</li><li>唐杰为什么说「规模化法则是一条偷懒路径」？</li><li>「规模化失效」的六个维度，你会在项目哪个阶段逐条检查？</li><li>为什么「自净化」是 RSI 的真正瓶颈？</li><li>一个团队说「我们小模型上验证过了，放大一定行」，你怎么反驳？</li><li>客户要你上大模型，你怎么用六维风险表建立专业度？</li><li>为什么 Tokenizer 的决策比模型架构更"不可逆"？</li><li>如果一个模型 benchmark 全 SOTA 但用户抱怨难用，最可能是什么问题？</li><li>为什么「Demo 很好，上线就崩」是常态？</li><li>你怎么判断一个 AI 产品是真的有能力，还是只是 prompt 调得好？</li><li>唐杰给 AGI 十年内 8% 的置信度，这个数字该怎么用？</li><li>「造出来的东西比说出来的理论值钱」—— 这条准则对你自己的产出意味着什么？</li><li>如果只能保留一条唐杰的判断准则，你选哪条？为什么？</li><li>这门课的五个作业，哪一个最能检验「你是否真的理解大模型」？</li><li>学完这门课，你最应该能回答的一个问题是什么？</li><li>用一句话说清：唐杰这七年到底在追什么？</li></ul>
+
+&lt;details&gt;&lt;summary&gt;参考要点（H 组 · 只给思路，不讲死）&lt;/summary&gt;
+
+<ul><li>因为推理的瓶颈是<strong>显存带宽</strong>，而量化直接减少要搬运的字节数。理解了"搬多少字节"，就理解了所有推理优化的共同目标。</li><li>是。都是「在巨大的可能性里挑出少数正确的连接」。这就是唐杰七年方法的统一内核。</li><li>SFT 教格式 → DPO 教偏好 → RLVR 教<strong>正确性</strong>。从"像不像"到"对不对"。</li><li>因为它只拟合 loss，不保证真实任务正确性 —— 优化一个代理指标，而不是优化目标本身。</li><li>立项时（六维风险表）→ 小规模验证后（外推检验）→ 放大前（逐维过一遍）→ 上线前（真实 case）。</li><li>因为"生成"是容易的，"判断生成得对不对"需要一个不比生成弱的内化评价器。而这个评价器本身要么靠外部（RLVR），要么要自己训（难）。</li><li>要求他给出<strong>外推误差的实测证据</strong>（留一/留多验证），而不是 R²。R² 高不含任何外推信息。</li><li>逐条问：lr 在 10× 规模稳吗？FP8 会 spike 吗？TP 切分后精度够吗？数据去重在大规模还成立吗？RL 会 reward hack 吗？</li><li>因为模型可以重训，tokenizer 换了等于<strong>整个语料要重编、embedding 要重训、已有 checkpoint 全废</strong>。</li><li>评测与真实任务脱节（benchmark 污染或饱和），或者产品层没做好（延迟、稳定性、错误处理）。</li><li>因为 Demo 是单次成功，产品是连续 N 次不崩。可靠性是乘性的。</li><li>看它在<strong>没见过的任务</strong>上的表现，以及<strong>失败时的行为</strong>（是否诚实、是否能恢复）。prompt 调得好只在新颖输入上就露馅。</li><li>用来<strong>校准自己的投入预期</strong>，不要用来否定方向。8% 不等于不做，等于"别 all in，留后手"。</li><li>每轮交付必须有<strong>能跑的东西</strong>（脚本、页面、报告），不是只有分析和建议。</li><li>开放题。参考答案：「Benchmark 成绩不等于用户体验，能不能一次跑通才是关键」—— 因为它同时约束了训练、评测和交付。</li><li>HW1。因为它同时要求你理解数据（tokenizer）、结构（attention）、以及<strong>能自己验证自己写对了</strong>（梯度检查）。</li><li>「我怎么知道这东西是真的行，而不只是看起来行？」</li><li>把「关系」变成可计算的东西 —— 从图的边，到推理的路径，到可验证的奖励。</li></ul>
+
+&lt;/details&gt;
+
+<hr>
+
+<h2>成绩换算表</h2>
+
+<table><thead><tr><th>答对题数</th><th>等级</th><th>对应能力</th></tr></thead><tbody><tr><td>90–100</td><td><strong>可讲</strong></td><td>能对外开讲座，被追问不慌</td></tr><tr><td>70–89</td><td><strong>可用</strong></td><td>能独立做项目，复杂追问会卡</td></tr><tr><td>50–69</td><td><strong>知道</strong></td><td>名词都听过，推理链断了</td></tr><tr><td>&lt;50</td><td><strong>看过</strong></td><td>需要重读精讲稿</td></tr></tbody></table>
+
+<h2>关联</h2>
+<ul><li><span style="color:#0b6bcb">课程精讲_16周逐周知识卡</span></li><li><span style="color:#0b6bcb">五大作业_家庭版可跑清单</span></li><li><span style="color:#0b6bcb">_code/README</span></li><li><span style="color:#0b6bcb">唐杰_演讲思想编年_2019到2026</span></li></ul>
+
+</body></html>

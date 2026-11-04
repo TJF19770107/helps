@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>清华《高级机器学习》16周逐周精讲（分身学习主稿）</title><style>
+body{font-family:-apple-system,"Microsoft YaHei",sans-serif;line-height:1.75;
+     max-width:900px;margin:0 auto;padding:24px;color:#1a1a1a;background:#fff;font-size:15px}
+h1{font-size:26px;border-bottom:2px solid #0b6bcb;padding-bottom:8px;margin-top:28px}
+h2{font-size:21px;margin-top:28px;color:#0b3d91}
+h3{font-size:17px;margin-top:20px;color:#222}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid #d0d7de;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#f2f6fb;font-weight:600}
+tr:nth-child(even) td{background:#fafbfc}
+code{background:#f3f4f6;padding:1px 5px;border-radius:3px;font-size:13px;
+     font-family:Consolas,monospace;color:#b5314a}
+pre{background:#f6f8fa;padding:14px;border-radius:6px;overflow-x:auto;border:1px solid #e1e4e8}
+pre code{background:none;color:#24292e;font-size:12.5px;line-height:1.5}
+blockquote{border-left:4px solid #0b6bcb;background:#f2f6fb;margin:12px 0;
+           padding:10px 16px;color:#333}
+hr{border:none;border-top:1px solid #e1e4e8;margin:24px 0}
+ul{padding-left:24px}
+li{margin:4px 0}
+.meta{color:#666;font-size:12.5px;background:#f7f7f7;padding:8px 12px;
+      border-radius:4px;margin-bottom:18px}
+details{background:#fafbfc;border:1px solid #e1e4e8;border-radius:4px;padding:10px 14px;margin:10px 0}
+summary{cursor:pointer;font-weight:600;color:#0b3d91}
+a{color:#0b6bcb}
+</style></head><body>
+<h1>清华《高级机器学习》16周逐周精讲（分身学习主稿）</h1><div class="meta">来源：课程精讲 ｜ 创建：2026-11-02 ｜ 标签：[清华, 高级机器学习, 唐杰, 大模型, 课程]</div>
+<h1>16 周逐周精讲</h1>
+
+<blockquote>与 <code>课程总览_16周大纲.md</code> 的分工：<strong>那份是大纲（讲什么），这份是精讲（每一讲讲透了什么 + 怎么自检学会了没有）</strong>。</blockquote>
+<blockquote>每讲固定四段：<strong>① 核心问题 ② 必须掌握的概念 ③ 关键洞察（老师的私货）④ 自检题（答不上就是没学会）</strong>。</blockquote>
+<blockquote>置信度：<strong>W1 / W6 / W10 / W16 与五大作业为事实</strong>；中间周次按作业梯度反推，标 <code>[推演]</code>。</blockquote>
+
+<hr>
+
+<h2>全课骨架一句话</h2>
+
+<blockquote>这门课不是「机器学习导论 2.0」，而是<strong>「如何从零造一个大模型，并且证明它真的行」</strong>。</blockquote>
+<blockquote>主线：<strong>数据 → 结构 → 规模 → 对齐 → 做事 → 证明</strong>。</blockquote>
+<blockquote>它的独特性在于：<strong>五个作业串起来 = 一个完整的大模型研发闭环</strong>，而不是五个孤立实验。</blockquote>
+
+<hr>
+
+<h2>第一阶段：从零造出一个小模型（W1–W5）</h2>
+
+<h3>W1 · 导论：这门课到底在教什么 <code>[事实]</code></h3>
+
+<p><strong>核心问题</strong>：为什么在 2026 年，还要从零写 Tokenizer 和 Transformer？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>大模型技术栈的五层：数据 → 结构 → 训练 → 对齐 → 系统</li><li>「能力」与「可验证性」的区别（贯穿全课的主轴）</li><li>为什么 0.1B 的小模型能验证 100B 的思路（<strong>缩放验证法</strong>）</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote>唐杰在第一课就定了调：<strong>你要能自己造一个，才有资格评价别人的。</strong></blockquote>
+<blockquote>0.1B 不是为了省钱，是为了<strong>建立可复现的对照组</strong>。没有对照组，所有结论都是玄学。</blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>为什么 0.1B 模型上的结论不能直接外推到 100B？失效可能在哪几个环节？（提示：六维）</li><li>「从零实现」和「调库微调」在认知上差在哪？各能学到什么、学不到什么？</li></ul>
+
+<hr>
+
+<h3>W2 · 数据：Tokenizer 与语料工程</h3>
+
+<p><strong>核心问题</strong>：为什么 BPE 的 vocab size 是一个<strong>架构决策</strong>，不是超参数？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>BPE / WordPiece / Unigram 的算法差异与适用场景</li><li>vocab size 如何同时影响：<strong>序列长度 × embedding 参数量 × 推理成本 × 多语言公平性</strong></li><li>语料清洗四件套：去重（MinHash/LSH）、质量过滤、毒性过滤、PII 脱敏</li><li>数据配比与「课程学习」：什么先喂、什么后喂</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote>Tokenizer 是<strong>唯一一个「训练完就冻结、但决定了后面一切」</strong>的组件。</blockquote>
+<blockquote>分词错了，模型再大也在补偿一个错误的表示。中文尤其明显：词表偏英文，中文一个字被切成 2~3 个 token，<strong>同样的语义你要付 2~3 倍的钱</strong>。</blockquote>
+<blockquote>→ <strong>这是「为什么国产模型必须自建 tokenizer」的根本原因，不是民族情绪，是成本结构。</strong></blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>两个模型参数量相同但 vocab 不同（32K vs 128K），推理成本谁高？为什么答案不是显然的？</li><li>语料去重做到 90% 和 60%，分别会导致什么后果？哪个更可怕？</li></ul>
+
+<hr>
+
+<h3>W3 · 结构：Transformer 与它的现代变体</h3>
+
+<p><strong>核心问题</strong>：Attention 的 O(n²) 到底卡在哪，现代架构各自让了什么步？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>Self-Attention 的完整计算图与显存占用拆解（QKV、scores、softmax、AV）</li><li>MHA → MQA → GQA → MLA 的演进：<strong>每一步在拿什么换什么</strong></li><li>RoPE 的位置编码原理与长度外推（NTK / YaRN）</li><li>MoE：专家数、激活专家数、共享专家、负载均衡损失</li><li>归一化位置（Pre-LN / Post-LN / RMSNorm）对训练稳定性的影响</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote><strong>注意力的每一次优化，本质都是「少算一些不该算的关系」。</strong></blockquote>
+<blockquote>GQA 是「让多个头共享 KV」；稀疏注意力是「只保留 top-k 关系」；MoE 是「只激活部分专家」。</blockquote>
+<blockquote>这和唐杰 2019 讲 GNN 时的 GraphSAGE <strong>是同一个动作：采样邻居</strong>。</blockquote>
+<blockquote>→ <strong>读懂这条线，你就理解了整个架构演进史：不是越来越复杂，是越来越会「挑」。</strong></blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>GQA 里 group 数从 8 降到 1 会发生什么？从 8 升到 32 呢？画出 KV cache 大小的曲线。</li><li>MoE 的负载不均衡会导致什么？为什么必须要 auxiliary loss，它又带来了什么副作用？</li></ul>
+
+<hr>
+
+<h3>W4 · 规模：Scaling Law 与它的失效</h3>
+
+<p><strong>核心问题</strong>：Chinchilla 定律说了什么，又错在哪？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>Kaplan vs Chinchilla：<strong>参数与数据的配比之争</strong>（20 token/param 的经验值从哪来）</li><li>幂律拟合方法：怎么用 5 个点的 loss 拟合出一条能外推的曲线</li><li><strong>推演</strong>：scaling law 只拟合 loss，不保证下游任务正确性 —— 这正是唐杰 2026 提出「规模化正确性」的课堂源头</li><li>数据受限时代的应对：多轮 epoch、合成数据、数据质量优先</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote><strong>Scaling Law 是一条「拟合出来的经验规律」，不是「推导出来的物理定律」。</strong></blockquote>
+<blockquote>它告诉你 loss 会降，<strong>没告诉你降了 loss 之后模型会不会骗人、会不会跑不通代码、会不会在长任务里崩</strong>。</blockquote>
+<blockquote>→ 这就是为什么 2026 年唐杰要提「规模化正确性」：<strong>loss 曲线是给投资人看的，可验证通过率才是给用户看的。</strong></blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>给定 3 组 (params, tokens, loss)，怎么拟合出 a、b 指数？如果只有 2 组数据能拟合吗？</li><li>为什么「数据用完了」会打破 Chinchilla 的最优配比？此时应该往哪个方向走？</li></ul>
+
+<hr>
+
+<h3>W5 · 系统：分布式训练与并行策略</h3>
+
+<p><strong>核心问题</strong>：为什么并行不是「加速手段」，而是<strong>改变数值行为</strong>的东西？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>三种并行的切分维度：数据并行（DP）、张量并行（TP）、流水线并行（PP）</li><li>ZeRO 三阶段：优化器状态 / 梯度 / 参数的分片</li><li>通信原语：all-reduce、all-gather、reduce-scatter 的代价模型</li><li>混合精度：BF16 / FP16 / FP8，<strong>loss scaling 与溢出处理</strong></li><li>显存账本：参数 + 梯度 + 优化器状态 + 激活值，各占多少</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote><strong>并行会改变结果。</strong> 浮点加法不满足结合律，切分方式一变，梯度累加顺序就变，loss 曲线的细微差异就出现。</blockquote>
+<blockquote>小规模调试出来的「稳定配置」，在 TP=8 时可能直接崩 —— 这是唐杰六维里「并行与系统工程」那一维。</blockquote>
+<blockquote>→ <strong>凡是没在目标并行度上验证过的超参，都不算调好。</strong></blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>一个 7B 模型用 AdamW 训练，纯参数/梯度/优化器状态各占多少 GB？BF16 下总共多少？</li><li>TP 从 1 到 8，通信量增长几倍？为什么 TP 一般不超过单机 GPU 数？</li></ul>
+
+<hr>
+
+<h2>第二阶段：中期检验（W6）</h2>
+
+<h3>W6 · Proposal：选题与方案设计 <code>[事实]</code></h3>
+
+<p><strong>核心问题</strong>：什么是一个「可被证伪」的研究提案？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>提案的四要素：<strong>问题 / 假设 / 方法 / 判据</strong></li><li>判据必须是<strong>可测量的</strong>，不能是「效果更好」</li><li>2–3 人组队分工模式</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote>唐杰的评分逻辑（作业 40% + Final 60%）说明一件事：</blockquote>
+<blockquote><strong>他给的分数主要不看你做成了什么，看你能不能说清「怎么算成功」。</strong></blockquote>
+<blockquote>这和「自净化」是同一件事：<strong>能不能准确判断这一步是不是进步。</strong></blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>「我的方法比 baseline 好」为什么不是判据？改成可证伪的说法。</li><li>如果你的实验跑出来是负结果，什么样的负结果仍然算成功？</li></ul>
+
+<hr>
+
+<h2>第三阶段：让它变便宜、变听话（W7–W11）</h2>
+
+<h3>W7 · 高效推理：量化、KV Cache、投机解码</h3>
+
+<p><strong>核心问题</strong>：FP8 到底省了什么，代价是什么？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>权重量化 vs 激活量化 vs <strong>KV cache 量化</strong>（三者收益完全不同）</li><li>FP8 的两种格式：<strong>E4M3（权重/激活）vs E5M2（梯度）</strong>，为什么这么分</li><li>per-tensor / per-channel / per-group(128) 的 scale 粒度</li><li>SmoothQuant 的核心：<strong>把激活的离群值「搬」到权重上</strong></li><li>GPTQ / AWQ / GGUF 的适用场景差异</li><li>投机解码：draft model 命中率决定加速比</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote><strong>量化的本质不是「降低精度」，是「重新分配动态范围」。</strong></blockquote>
+<blockquote>离群值（outlier）是万恶之源：一个 100 倍的激活值，会逼你把整个 tensor 的 scale 拉大，其他 99% 的正常值全部精度损失。</blockquote>
+<blockquote>→ SmoothQuant 的聪明之处：<strong>不消除离群值，只把它从难处理的地方搬到好处理的地方。</strong></blockquote>
+<blockquote>→ <strong>这是一种通用的工程思维：遇到局部极端值，不要硬扛，换位置。</strong></blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>为什么 FP8 训练能用 E5M2 存梯度，而推理用 E4M3 存权重？</li><li>KV cache 量化的收益随 batch size 怎么变？为什么长上下文场景收益最大？</li></ul>
+
+<hr>
+
+<h3>W8 · 对齐一：SFT 的工程真相</h3>
+
+<p><strong>核心问题</strong>：SFT 学到的是「知识」还是「格式」？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>SFT 的数据构造：指令多样性 &gt; 数量、loss mask（只算回答部分）</li><li>灾难性遗忘的成因与缓解（数据混比、LoRA、replay）</li><li>多轮对话的数据组织：如何标注「哪一轮该学」</li><li><strong>推演</strong>：SFT 的天花板在哪 —— 它只能模仿，不能超越示范者的水平</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote><strong>SFT 教的是「怎么说话」，不是「怎么想」。</strong></blockquote>
+<blockquote>这就是为什么 SFT 之后模型很流畅但一做实操就废 —— 它学会了语气，没学会推理路径。</blockquote>
+<blockquote>→ 所以必然要走 RL。<strong>SFT 是化妆，RL 是练肌肉。</strong></blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>为什么 SFT 数据的 loss mask 必须只算 assistant 部分？不算会怎样？</li><li>SFT 数据量从 10 万降到 1 万，质量不变，会怎样？从 10 万升到 100 万呢？</li></ul>
+
+<hr>
+
+<h3>W9 · 对齐二：RLHF 与 DPO 的分野</h3>
+
+<p><strong>核心问题</strong>：DPO 号称「不需要奖励模型」，它真的省了那一步吗？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>RLHF 三阶段：SFT → Reward Model → PPO</li><li>PPO 的四个模型（policy / ref / reward / value）与显存代价</li><li><strong>DPO 的数学</strong>：把 reward 隐式表达为 policy 与 ref 的 log-ratio，从而绕开显式 RM</li><li>DPO 的失效场景：<strong>分布外偏好、长度偏置、reward hacking 的变体</strong></li><li>长度偏置从哪来（人类偏好长答案）与怎么治</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote>DPO <strong>没有省掉奖励模型，它把奖励模型「内化」成了 ref model 的一个比值。</strong></blockquote>
+<blockquote>代价是：你失去了「单独训练、单独检查、单独修正」奖励模型的能力。</blockquote>
+<blockquote>→ <strong>这是一个典型的「用一个隐式组件换掉一个显式组件」的交换</strong>，省了工程，丢了可控性。</blockquote>
+<blockquote>→ 判断标准：<strong>你要的是省事，还是要可调试？</strong> toC 选前者，toB 必须选后者。</blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>写出 DPO 的 loss，并解释 β 的作用：β→0 和 β→∞ 分别退化成什么？</li><li>为什么 DPO 会加剧长度偏置？RLHF 会不会？为什么？</li></ul>
+
+<hr>
+
+<h3>W10 · 中期报告 <code>[事实]</code></h3>
+
+<p><strong>核心问题</strong>：怎么在 10 分钟内讲清一个还没做完的实验？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>结构：动机 → 假设 → 当前进度 → <strong>遇到的坑</strong> → 下一步 → 需要的帮助</li><li>关键：<strong>主动暴露问题</strong>比掩盖问题得分高</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote>中期报告考的不是成果，是<strong>判断力</strong>。</blockquote>
+<blockquote>你能不能分清「这个坑值得填」和「这个方向该放弃」—— 这正是「自净化」在项目管理层面的形态。</blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>你的实验复现不出 baseline 的分数，中报该怎么写？</li><li>什么情况下应该主动砍掉一个已经投入三周的方案？</li></ul>
+
+<hr>
+
+<h3>W11 · RLVR：可验证奖励 —— 本课的灵魂 <code>[推演，但与唐杰2026公开演讲强对应]</code></h3>
+
+<p><strong>核心问题</strong>：为什么「可验证」比「人类偏好」更适合训 Agent？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>RLVR 的奖励来源：单元测试通过率、编译器通过、数学答案比对、工具调用成功</li><li>与 RLHF 的本质差异：<strong>reward 是「判定的」不是「学出来的」</strong></li><li>reward hacking 的新形态：模型学会作弊（硬编码测试用例、绕过检查）</li><li>训练环境的重要性：真实 repo、真实 Web、真实执行器</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote>唐杰 2026 原话：「<strong>Benchmark 成绩并不等于用户体验。能不能一次跑通，才是决定模型价值的关键。</strong>」</blockquote>
+<blockquote>RLVR 就是把这句话变成训练信号：<strong>不看你答得像不像，看你跑不跑得通。</strong></blockquote>
+<blockquote>但它有致命弱点：<strong>凡是能被验证的，就能被针对。</strong> 模型会学会「骗过验证器」而不是「真解决问题」。</blockquote>
+<blockquote>→ 所以 RLVR 的核心工程难点不是算法，是<strong>反作弊</strong>。</blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>用单元测试当奖励，模型学会「在代码里 if test_name == 'xxx': return True」怎么办？列出三种防御手段。</li><li>为什么数学题比写作更适合 RLVR？写作要怎么构造可验证性？</li></ul>
+
+<hr>
+
+<h2>第四阶段：让它做事（W12–W15）</h2>
+
+<h3>W12 · Agent 基础：工具调用与规划</h3>
+
+<p><strong>核心问题</strong>：Agent 和「会调函数的 Chatbot」差在哪？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>ReAct 循环：Thought → Action → Observation</li><li>工具 schema 设计：<strong>描述质量决定调用成功率</strong></li><li>Function Calling 的训练数据构造</li><li>失败恢复：重试、回退、降级</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote>姚顺雨（腾讯）说 Agent 难点在<strong>稳定性</strong>不在演示，唐杰说要看<strong>能不能一次跑通</strong> —— 两个人说的是同一件事。</blockquote>
+<blockquote><strong>Demo 是单次成功，产品是连续 100 次不崩。</strong></blockquote>
+<blockquote>→ 衡量 Agent 的正确指标不是「成功率」，是 <strong>「连续 N 步不失败的概率」</strong>。10 步、每步 95%，整体只有 60%。</blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>一个 20 步的任务，单步成功率 99%，整体成功率多少？这说明什么？</li><li>工具描述写「查询用户信息」和写「根据 user_id 查用户，返回 name/email/created_at，user_id 为 8 位数字字符串」，调用成功率差多少？为什么？</li></ul>
+
+<hr>
+
+<h3>W13 · 长程任务：记忆与状态维护</h3>
+
+<p><strong>核心问题</strong>：上下文塞满之后，Agent 靠什么不忘记目标？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>短期（context）/ 长期（外部存储）/ 工作记忆（scratchpad）三层</li><li>上下文压缩策略：摘要、检索、结构化状态</li><li>任务分解与子目标管理</li><li>中断恢复：checkpoint 与幂等</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote><strong>Agent 崩掉的第一原因不是智商不够，是忘了自己在干嘛。</strong></blockquote>
+<blockquote>长任务的关键设计是「<strong>把目标从 context 里搬到 context 外的显式状态里</strong>」——</blockquote>
+<blockquote>因为 context 会被压缩、会被截断，而<strong>写在文件里的状态不会</strong>。</blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>一个跑 2 小时的任务，context 只够 30 分钟，怎么设计？</li><li>为什么「把每一步写进文件」比「让模型记住」更可靠？</li></ul>
+
+<hr>
+
+<h3>W14 · 多模态</h3>
+
+<p><strong>核心问题</strong>：为什么加了视觉，语言能力反而退化？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>视觉编码器（ViT）与 LLM 的对接方式：projector / cross-attention / early fusion</li><li>分辨率与 token 数的权衡</li><li>「视觉增强但语言退化」的成因：<strong>模态竞争与数据配比</strong></li><li>视频理解：时序建模与帧采样</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote>林俊旸（阿里 Qwen）公开讲过这个难题：「视觉增强但语言能力退化」。</blockquote>
+<blockquote>根因是<strong>训练数据配比变了</strong>：加视觉数据必然稀释文本数据，模型容量是有限的。</blockquote>
+<blockquote>→ 解法不是「多喂文本」，而是<strong>让视觉数据也带语言监督</strong>（图像描述、VQA 的答案本身是语言）。</blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>一张 1024×1024 图用 14×14 patch、patch size 14，产生多少 token？这意味什么成本？</li><li>为什么「先训语言再训多模态」比「一起训」效果好？</li></ul>
+
+<hr>
+
+<h3>W15 · 评测：怎么证明它真的行</h3>
+
+<p><strong>核心问题</strong>：Benchmark 分数和真实可用性差多远？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>静态 benchmark 的三大病：<strong>数据污染、饱和、与真实任务脱节</strong></li><li>动态/对抗评测、私有 held-out 集</li><li>人评 vs 模型评（LLM-as-judge 的偏见）</li><li><strong>任务级评测</strong>：端到端通过率 &gt; 单点准确率</li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote>唐杰的「寒冬预警信号」在这里闭环了：</blockquote>
+<blockquote><strong>「基准测试上的分数一直在涨，但真实世界的模型调用量却停住了。」</strong></blockquote>
+<blockquote>为什么？因为<strong>榜单可以被优化，任务不能</strong>。</blockquote>
+<blockquote>→ <strong>给汤哥的判断法则</strong>：客户问「你的方案能打多少分」，正确回答是「我们不看分，看你这个场景的端到端通过率，先跑 50 个真实 case」。</blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>怎么检测一个 benchmark 被污染了？给三个可操作方法。</li><li>LLM-as-judge 有哪些系统性偏见？怎么校正？</li></ul>
+
+<hr>
+
+<h2>第五阶段：Final（W16）</h2>
+
+<h3>W16 · 结题：报告 + 现场 Demo <code>[事实]</code></h3>
+
+<p><strong>核心问题</strong>：NeurIPS 格式的英文报告 + 现场 demo，考的是什么？</p>
+
+<p><strong>必须掌握</strong></p>
+<ul><li>学术写作结构：Abstract / Intro / Related / Method / Experiments / Analysis / Limitation</li><li><strong>Limitation 章节不是自曝短板，是展示你懂边界</strong></li><li>Demo 的稳定性设计：<strong>永远准备 fallback 录屏</strong></li></ul>
+
+<p><strong>关键洞察</strong></p>
+<blockquote>评分 60% 给 Final，其中 demo 是现场跑。</blockquote>
+<blockquote>这门课最后的考点是：<strong>你能不能在有人看着、网络不稳定、时间有限的情况下，让东西跑起来。</strong></blockquote>
+<blockquote><strong>这就是工程能力，也是唐杰说的「一次跑通」。</strong></blockquote>
+
+<p><strong>自检题</strong></p>
+<ul><li>现场 demo 崩了，正确的应对是什么？</li><li>Limitation 要写几条？写太少和写太多分别说明什么？</li></ul>
+
+<hr>
+
+<h2>全课知识地图（一页记住）</h2>
+
+<pre><code>数据 ──→ 结构 ──→ 规模 ──→ 对齐 ──→ 做事 ──→ 证明
+ │        │        │        │        │        │
+Tokenizer  Attention  Scaling  SFT     Agent    评测
+去重       GQA/MoE   并行     DPO    记忆      RLVR
+配比       RoPE      精度     RLVR   工具      Demo
+ │        │        │        │        │        │
+ └────────┴────────┴────────┴────────┴────────┘
+              ▼
+        每一层都问同一个问题：
+        「规模放大 10 倍，这个结论还成立吗？」
+                    （规模化正确性）</code></pre>
+
+<h2>与五个作业的对应关系</h2>
+
+<table><thead><tr><th>作业</th><th>覆盖周次</th><th>核心能力</th><th>家庭版可行性</th></tr></thead><tbody><tr><td>HW1 从零写 Tokenizer + Transformer 训 0.1B</td><td>W2–W4</td><td>完整闭环理解</td><td>✅ 单卡 CPU 可缩到 0.01B</td></tr><tr><td>HW2 手写 Triton attention kernel</td><td>W5, W7</td><td>性能直觉</td><td>⚠️ 需 CUDA，无卡只能读代码</td></tr><tr><td>HW3 raw dump 洗语料拟合 scaling law</td><td>W2, W4</td><td>数据 + 拟合</td><td>✅ 纯 CPU</td></tr><tr><td>HW4 SFT/DPO/RLVR 三路对照</td><td>W8–W11</td><td>对齐判断力</td><td>✅ 小模型 + API</td></tr><tr><td>HW5 Agent harness + self-judge</td><td>W12–W15</td><td>系统工程</td><td>✅ 纯 CPU + API</td></tr></tbody></table>
+
+<blockquote>详见 <span style="color:#0b6bcb">五大作业_家庭版可跑清单</span> 与 <code>_code/</code> 下的可跑骨架。</blockquote>
+
+<hr>
+
+<h2>关联</h2>
+<ul><li><span style="color:#0b6bcb">课程总览_16周大纲</span> — 官方大纲版</li><li><span style="color:#0b6bcb">课程配套论文清单</span> — 每讲必读</li><li><span style="color:#0b6bcb">五大作业_家庭版可跑清单</span> — 作业拆解</li><li><span style="color:#0b6bcb">掌握度验收_100问</span> — 学完自测</li><li><span style="color:#0b6bcb">唐杰_演讲思想编年_2019到2026</span> — 这些内容他对外怎么讲</li><li><span style="color:#0b6bcb">00_🗺️P15总索引_MOC</span></li></ul>
+
+</body></html>

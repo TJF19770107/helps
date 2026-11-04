@@ -1,0 +1,47 @@
+[
+ {
+  "name": "周易参同契",
+  "units": 92,
+  "unit_label": "段",
+  "chars": 8031,
+  "md_bytes": 30636,
+  "variants": 3,
+  "md_path": "E:\\龙虾AI主控中心\\我的AI分身\\Obsidian知识库\\P14_汤小龙灵魂篇\\01_丹道经典原文\\周易参同契.md"
+ },
+ {
+  "name": "悟真篇",
+  "units": 18,
+  "unit_label": "节",
+  "chars": 13094,
+  "md_bytes": 37325,
+  "variants": 2,
+  "md_path": "E:\\龙虾AI主控中心\\我的AI分身\\Obsidian知识库\\P14_汤小龙灵魂篇\\01_丹道经典原文\\悟真篇.md"
+ },
+ {
+  "name": "钟吕传道集",
+  "units": 18,
+  "unit_label": "论",
+  "chars": 31702,
+  "md_bytes": 93572,
+  "variants": 1,
+  "md_path": "E:\\龙虾AI主控中心\\我的AI分身\\Obsidian知识库\\P14_汤小龙灵魂篇\\01_丹道经典原文\\钟吕传道集.md"
+ },
+ {
+  "name": "太乙金华宗旨",
+  "units": 13,
+  "unit_label": "章",
+  "chars": 10430,
+  "md_bytes": 32412,
+  "variants": 3,
+  "md_path": "E:\\龙虾AI主控中心\\我的AI分身\\Obsidian知识库\\P14_汤小龙灵魂篇\\01_丹道经典原文\\太乙金华宗旨.md"
+ },
+ {
+  "name": "性命圭旨",
+  "units": 4,
+  "unit_label": "集",
+  "chars": 71947,
+  "md_bytes": 203464,
+  "variants": 1,
+  "md_path": "E:\\龙虾AI主控中心\\我的AI分身\\Obsidian知识库\\P14_汤小龙灵魂篇\\01_丹道经典原文\\性命圭旨.md"
+ }
+]

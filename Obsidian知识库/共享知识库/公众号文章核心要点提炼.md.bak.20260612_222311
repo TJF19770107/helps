@@ -1,0 +1,199 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: cf54d54c59baa0ada35a5ecb7c73a584_6f3f49a3665a11f1a99c5254007bceed
+    ReservedCode1: FILm+W1PK//IfDEOp8z5C4iBcvJ7WOvVJX29ebMk1ysZdhF5Iaw45AkIfXzZCT7TIgK3hIqFVyrz0/TTLJSS7jn6xhHEH6AN6qKLCcdDZFcNoejK58dZ6awxdlPbp9Jur/gZ6STI99dC0o19uH76Y6ITAO0eEE/ZQU/LcZYB3EquQSS60o4x120duIA=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: cf54d54c59baa0ada35a5ecb7c73a584_6f3f49a3665a11f1a99c5254007bceed
+    ReservedCode2: FILm+W1PK//IfDEOp8z5C4iBcvJ7WOvVJX29ebMk1ysZdhF5Iaw45AkIfXzZCT7TIgK3hIqFVyrz0/TTLJSS7jn6xhHEH6AN6qKLCcdDZFcNoejK58dZ6awxdlPbp9Jur/gZ6STI99dC0o19uH76Y6ITAO0eEE/ZQU/LcZYB3EquQSS60o4x120duIA=
+---
+
+
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: cf54d54c59baa0ada35a5ecb7c73a584_r85_v13_20260612
+    ReservedCode1: r85_v13_lobster_keypoints_fscli_codex_20260612_2023
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: cf54d54c59baa0ada35a5ecb7c73a584_r85_v13_20260612
+    ReservedCode2: r85_v13_lobster_keypoints_fscli_codex_20260612_2023
+---
+
+# 公众号文章核心要点提炼：Codex × 飞书 CLI 接入
+
+> 来源文章：如何通过 Codex 对话接入飞书完整版来了！（微信公众号）+ 飞书官方CLI教程 + 全网生态全貌
+> 提炼日期：2026-06-12 20:23 | 版本：v1.3 (R85)
+> 归档位置：E:\龙虾AI主控中心\我的AI分身\Obsidian知识库\共享知识库\
+> 模板基准：龙虾全域官方模板 v3.83 Final · SHA256: 65B0A329FE27514776557D4D6064D5323AD33CA130F6834ACC40FB9669C60AD8
+
+---
+
+## 一、文章核心论点
+
+飞书 CLI 是 AI 与飞书之间的"桥梁"——通过 CLI 让 Codex/Claude Code 等 AI Agent 能够直接操作飞书中的一切数据和功能。核心理念：**自然语言 → AI 理解意图 → 飞书 CLI 执行命令 → 飞书 API 调用**。飞书不再是聊天软件，而是多个 Agent 共用的持久数据层——Claude Code 有 memory/skills/hooks，Codex 有 Goals/sandbox/remote SSH，通过飞书 CLI 三者串联，手机端即可操控全部。
+
+## 二、四步接入 SOP（文章重点）
+
+| 步骤 | 操作 | 关键检查 |
+|------|------|----------|
+| 1 | 安装 CLI：`npm install -g @larksuite/cli` | `lark-cli --version` |
+| 2 | 安装 Skills（关键）：`npx skills add larksuite/cli -y -g` | 19个Skills全部安装 |
+| 3 | 配置应用 + OAuth 授权：`lark-cli config init --new` → `lark-cli auth login --recommend` | `lark-cli auth status --verify` → verified: true |
+| 4 | 重启 AI Agent 工具（不可省略） | 必须完全退出再重启，否则 Skills 不生效 |
+
+## 三、三层命令体系架构（v1.2 新增）
+
+| 层级 | 命令前缀 | 示例 | 说明 |
+|------|---------|------|------|
+| 快捷命令 | `+` | `lark-cli calendar +agenda` | 人类与AI友好，智能默认值、dry-run预览 |
+| API命令 | 模块名 | `lark-cli calendar events instance_view` | 100+精选命令，与飞书OAPI一一对应 |
+| 原始API | `api GET/POST` | `lark-cli api GET /open-apis/calendar/v4/calendars` | 直接调用2500+API端点，完全灵活 |
+
+## 四、19 Skills 能力全景（v1.3 升级：原11域 → 19 Skills）
+
+| 序号 | Skills名称 | 核心能力 |
+|------|-----------|----------|
+| 1 | lark-im | 即时消息：发送/回复/群聊搜索/群组管理/文件上传下载 |
+| 2 | lark-doc | 云文档：创建/读取/Markdown更新/搜索/媒体插入/下载 |
+| 3 | lark-base | 多维表格：表格/记录/字段/视图/仪表盘/工作流自动化（60条命令） |
+| 4 | lark-calendar | 日历：日程查询/创建/忙闲/空闲推荐（含跨时区） |
+| 5 | lark-mail | 邮件：发送/回复/转发/分类/监控/批量/草稿 |
+| 6 | lark-task | 任务：创建/分配/完成/提醒/搜索/子任务 |
+| 7 | lark-drive | 云空间：上传/下载/权限管理 |
+| 8 | lark-sheets | 电子表格：读取/写入/追加/查找/导出 |
+| 9 | lark-wiki | 知识库：空间管理/节点创建与管理/层级浏览 |
+| 10 | lark-vc | 视频会议：搜索记录/查询纪要/逐字稿 |
+| 11 | lark-contact | 通讯录：搜索用户/组织架构查询 |
+| 12 | lark-minutes | **v1.3 新增**：妙记 — 会议摘要/待办提取/逐字稿/章节结构 |
+| 13 | lark-event | **v1.3 新增**：事件订阅 — WebSocket实时推送/Wake Word正则路由 |
+| 14 | lark-whiteboard | **v1.3 新增**：白板 — 白板创建与图表绘制 |
+| 15 | lark-search | **v1.3 新增**：跨域搜索 — 跨业务域统一搜索群聊/消息/文档 |
+| 16 | lark-shared | **v1.3 新增**：共享配置 — 基础配置与初始化 |
+| 17-19 | 持续扩展 | 飞书CLI Skill体系持续演进 |
+
+## 五、Codex 四种权限模式（v1.2 新增）
+
+| 模式 | 风险 | 说明 |
+|------|------|------|
+| suggest | 🟢 低 | 仅建议操作，需用户确认每一步 |
+| auto-edit | 🟡 中 | 自动编辑文件，关键操作仍需确认 |
+| full-auto | 🟡 中 | 自动执行大部分操作 |
+| yolo | 🔴 高 | 绕过所有确认和沙箱，全自动执行 |
+
+## 六、四种 Codex-飞书桥接方案（v1.2 新增）
+
+| 方案 | 一句话特点 |
+|------|-----------|
+| cc-connect | WebSocket长连接，5分钟配置，四种权限模式 |
+| lark-coding-agent-bridge | npx一键启动，飞书卡片交互，移动端优化 |
+| feishu-codex-bridge | WebSocket流式卡片，多项目管理 |
+| Larkspur | tui/exec双模式，远程Vibe Coding控制台 |
+
+## 七、权限配置与身份模式要点（v1.3 扩展）
+
+- **两种身份模式**（详见技能手册 §六）
+  - **应用身份**（默认）：以应用自身身份操作 — 发消息、创建文档 — 不需要用户授权
+  - **用户身份**：以用户本人身份操作 — 访问个人日历/私信/收件箱 — 需额外 OAuth 授权
+- 推荐使用 `lark-cli auth login --recommend` 获取常用安全权限集
+- 企业账号建议选「测试企业」避开管理员审批
+- 重要操作前使用 `--dry-run` 预览（代码/API调用/权限都会中止）
+- 输出格式支持：JSON / Pretty / Table / NDJSON / CSV 五种状态
+- **事件订阅与 Wake Word**（v1.3 新增）：飞书 CLI 支持 WebSocket 长连接实时监听，配合正则表达式 Wake Word（如"龙虾龙虾"）实现语音触发自动化
+
+## 八、九大自动化场景（v1.3 扩展至9项）
+
+### 场景1：会后即办（会议纪要自动化）
+会议结束 → AI读取妙记 → 提炼待办+决策 → 写入飞书文档 → 同步多维表格 → 群聊通知
+
+### 场景2：人-AI共创文档
+用户描述需求 → AI搜索知识库 → 生成初稿 → 写入飞书文档 → 用户审阅反馈 → AI迭代
+
+### 场景3：跨时区智能约会
+"安排会议" → AI查日历+时区 → 搜索通讯录 → 对比空闲 → 创建会议+发送邀请
+
+### 场景4：批量数据导入多维表格
+CSV/JSON/Excel数据 → 字段映射 → 批量创建记录 → 确认入库
+
+### 场景5：邮件智能分类与自动回复
+拉取未读邮件列表 → AI分类 → 标记优先级 → 草拟回复
+
+### 场景6：周报自动生成
+收集飞书任务+GitHub提交 → AI生成周报 → 创建飞书文档 → 群聊分享
+
+### 场景7：群消息智能总结与知识归档
+获取群消息列表 → LLM提炼要点 → 创建知识库节点
+
+### 场景8：Wake Word 会议即办（v1.3 新增）
+开会时语音唤醒 → WebSocket监听正则匹配 → 妙记逐字稿提取上下文 → AI解析指令 → 生成文档 → IM回传结果
+
+### 场景9：跨域统一搜索（v1.3 新增）
+lark-search 跨域搜索 → 汇总群聊+文档+知识库结果 → AI去重排序 → 结构化输出
+
+## 九、常见问题与解决
+
+| 问题 | 解决 |
+|------|------|
+| Skills 不生效 | 必须完全退出并重启 Agent |
+| npm 安装失败 | 使用国内镜像 `--registry=https://registry.npmmirror.com` |
+| 应用审批被拒 | 仅选必要权限，不勾 OKR 相关；或使用测试企业 |
+| 授权过期 | `lark-cli auth login --recommend` 重新授权 |
+| 云盘读不到文件 | 检查 drive 权限是否已添加 |
+| 二维码不显示 | 复制授权链接到浏览器打开 |
+
+## 十、文章关键洞察
+
+1. **飞书 CLI 是 AI 自动化的分水岭**：从"AI只能建议"到"AI能执行"
+2. **Skills 是命脉**：不装 Skills 等于白装 CLI，19个Skills = 19个Agent能力入口
+3. **重启不可省略**：Agent 在新会话启动时才加载本地 Skills
+4. **三层体系**：快捷命令→API命令→原始API，根据任务复杂度选择合适的抽象层级
+5. **桥接生态已成型**：cc-connect / lark-coding-agent-bridge / feishu-codex-bridge / Larkspur / OpenClaw官方插件 五种方案各有适用场景
+6. **飞书是Agent共享数据层**：Claude Code + Codex + OpenClaw 通过飞书 CLI 共享数据、任务和上下文
+7. **不止于飞书**：CLI 范式可扩展至钉钉/企业微信/Notion/Slack 等协作平台
+8. **Wake Word + 事件订阅开启语音触发自动化**（v1.3 新增）：WebSocket 实时推送 → 正则匹配 → LLM解析 → 自动执行
+9. **19 Skills 构建完整 Agent 能力图谱**（v1.3 新增）：从基础操作到高级自动化，全业务域覆盖
+
+## 十一、可复用 SOP 模板提炼
+
+### 模板 A：飞书 CLI 快速接入检查清单（v1.3 更新）
+```
+□ Node.js 环境可用（node --version >= 18）
+□ npm 全局安装 @larksuite/cli（lark-cli --version >= 1.0.41）
+□ Skills 全部安装（npx skills add larksuite/cli -y -g）
+□ lark-cli doctor 全部通过
+□ 飞书开放平台应用已创建（获取 App ID + App Secret）
+□ lark-cli config init --new --brand feishu --lang zh 完成
+□ lark-cli auth login --recommend 完成
+□ lark-cli auth status --verify 返回 verified: true + tokenStatus valid
+□ AI Agent 工具已完全退出并重启
+□ 验证命令执行成功（如"帮我列出你能通过飞书CLI操作的所有能力"）
+□ 可选：配置 Wake Word 与 WebSocket 事件订阅
+```
+
+### 模板 B：会议纪要自动化触发链（v1.3 新增）
+```
+1. lark-event 建立 WebSocket 长连接
+2. 正则匹配 Wake Word（如"龙虾龙虾"）→ 分离唤醒词和目标指令
+3. lark-minutes 读取妙记逐字稿
+4. LLM 解析上下文 + 目标指令 → 生成文档/待办
+5. lark-doc / lark-base 写入结果
+6. lark-im 回传群聊确认
+```
+
+## 十二、本次学习迭代成果（R85）
+
+1. v1.3 技能手册：19 Skills 能力全景矩阵（新增5大Skills详解）
+2. Wake Word 唤醒词机制与 lark-event WebSocket 事件订阅
+3. 两种身份模式（应用/用户）完整详解
+4. 五种输出格式（JSON/Pretty/Table/NDJSON/CSV）说明
+5. OpenClaw 官方插件预告 + feishucli.net 社区站点
+6. 自动化场景扩展至9项（新增 Wake Word 会议即办、跨域统一搜索）
+7. 全部19个业务域能力矩阵 + 社区资源索引
+
+---
+
+> 提炼者：龙虾AI主控中心 · 全域学习迭代系统
+> 技能协议编号：SKILL-CLI-001 | 关联协议：#201/#202/#203/#204/#205/#206/#207/#208/#209/#210/#211/#212/#213
+> 模板基准：龙虾全域官方模板 v3.83 Final · SHA256: 65B0A329FE27514776557D4D6064D5323AD33CA130F6834ACC40FB9669C60AD8
+*（内容由AI生成，仅供参考）*
