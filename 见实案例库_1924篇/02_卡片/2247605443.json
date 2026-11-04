@@ -1,0 +1,22 @@
+{
+ "id": "2247605443",
+ "title": "腾讯上线操作系统层级AI助手",
+ "author": "",
+ "pubdate": "",
+ "url": "https://mp.weixin.qq.com/s?__biz=MzU3NTU5NDc0NA==&mid=2247605443&idx=1&sn=dc651132ea9b7c6fe1ef0057b5eb8aa7&scene=21#wechat_redirect",
+ "chars": 1085,
+ "topics": [
+  "AI与智能体",
+  "工具与产品"
+ ],
+ "signals": [
+  "方法论框架",
+  "实操步骤",
+  "踩坑反思"
+ ],
+ "quotes": [
+  "你下载Marvis了吗？用起来是否流畅？"
+ ],
+ "file": "E:/博主学习库/_tmp_shot/text/2247605443.txt",
+ "head": "昨日，腾讯正式上线AI助手Marvis，开放Windows、Mac、安卓三端下载（官网Marvis.qq.com），免邀请码，目前每人每天提供1000万免费Token。\n\n区别于市面上常见的网页对话框或单一应用层AI，Marvis的核心定位是“操作系统层级”的AI中间层。这意味着它跳出了单纯的文本生成，直接获取了对电脑系统设置、本地文件、应用软件和底层算力的调用权限。\n\n在实际操作中，用户无需寻找"
+}

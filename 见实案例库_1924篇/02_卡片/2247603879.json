@@ -1,0 +1,22 @@
+{
+ "id": "2247603879",
+ "title": "腾讯发布QClaw V2大版本：让龙虾从“单兵作战”到“团队协作”",
+ "author": "见实",
+ "pubdate": "",
+ "url": "https://mp.weixin.qq.com/s?__biz=MzU3NTU5NDc0NA==&mid=2247603879&idx=1&sn=32ecab556e73e896817855692c5d771f&scene=21#wechat_redirect",
+ "chars": 2074,
+ "topics": [
+  "AI与智能体",
+  "私域运营"
+ ],
+ "signals": [
+  "数据引用",
+  "方法论框架",
+  "实操步骤"
+ ],
+ "quotes": [
+  "夜半官宣企微开源 CLI：任何AI Agent 都可用文字命令调用核心功能"
+ ],
+ "file": "E:/博主学习库/_tmp_shot/text/2247603879.txt",
+ "head": "今天，腾讯宣布QClaw V2大版本上线。\n\n\n新版本（V0.2.5）实现多Agent、应用连接器和龙虾管家三大核心能力，支持用户创建多个Agent，每个Agent可自定义不同的专长、技能和权限；同时打通众多第三方应用，让单任务操作步骤减少60%以上。\n\n\n\n针对用户最为关注的安全问题，QClaw上线“龙虾管家”功能，率先实现原生安全防护。在QClaw可一键开启安全防护环境，拦截恶意prompt、"
+}
