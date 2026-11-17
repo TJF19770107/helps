@@ -3,3 +3,9 @@
 技能库/CC-Switch/gstack-lobster_claude_mem_gstack_bridge_v1.0/
 **/lobster_claude_mem_gstack_bridge_v1.0/lobster_claude_mem_gstack_bridge_v1.0/**
 技能库/CC-Switch/lobster_claude_mem_gstack_bridge_v1.0/lobster_claude_mem_gstack_bridge_v1.0/**
+
+# 得到大脑 OAuth Device Flow 一次性凭据（40位hex 会被 secret scanning 误判）
+oauth_device_state.json
+getnote_web_token.json
+getnote_storage_state.json
+getnote_login_state.json
