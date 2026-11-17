@@ -1,0 +1,118 @@
+{
+  "ts": "20261117_112315",
+  "snapshot": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315",
+  "files": [
+    {
+      "label": "obsidian.json",
+      "src": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\obsidian.json",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\obsidian.json",
+      "size": 228,
+      "sha256": "007e7bb4de5c92116875f436a01488c1e94c73d1e8598e86655b44461ee1a309"
+    },
+    {
+      "label": "Preferences",
+      "src": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\Preferences",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\Preferences",
+      "size": 2475,
+      "sha256": "a29aac283bdfeb1cc135a4bd707bb6d506e52995d3fd5739ba66aac5d1c16c64"
+    },
+    {
+      "label": "Local State",
+      "src": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\Local State",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\Local State",
+      "size": 490,
+      "sha256": "b68460a6ee72ca7a3697e4a7e40f436ca312b76395e81ea0b13d7922394aa810"
+    },
+    {
+      "label": "Desktop_Obsidian知识库.cmd",
+      "src": "C:\\Users\\Public\\Desktop\\Obsidian知识库.cmd",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\Desktop_Obsidian知识库.cmd",
+      "size": 347,
+      "sha256": "00d8881c13256234ea70f6d80c5ce5bba23277acfe6213f5cb867f7b77902056"
+    },
+    {
+      "label": "Desktop_Obsidian知识库.url",
+      "src": "C:\\Users\\Public\\Desktop\\Obsidian知识库.url",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\Desktop_Obsidian知识库.url",
+      "size": 102,
+      "sha256": "a46ac54a5a207dd74b617e25c71cc504b407e3109db61eca57414c80897988b4"
+    },
+    {
+      "label": "plugin_data.json",
+      "src": "E:\\龙虾AI主控中心\\我的AI分身\\Obsidian知识库\\.obsidian\\plugins\\obsidian-local-rest-api\\data.json",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\plugin_data.json",
+      "size": 3844,
+      "sha256": "7515ef20e4a87f7288b9b6d5385eae6cd52f84f0908785d007a26f3e06eb7b9b"
+    },
+    {
+      "label": "obsidian_rest.py",
+      "src": "E:\\博主学习库\\_tools\\obsidian_rest.py",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\obsidian_rest.py",
+      "size": 8800,
+      "sha256": "e6b9b6945f8636cbf7d6420e9c48358719aad60e547ce5ce0d13ff566d2d24ff"
+    },
+    {
+      "label": "dedao_bridge.py",
+      "src": "E:\\博主学习库\\_tools\\dedao_bridge.py",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\dedao_bridge.py",
+      "size": 10504,
+      "sha256": "fa4d7b18ad54b578499c68461efb08f51b931a4ad0bf887de685dd2ebef1ae74"
+    },
+    {
+      "label": "media_transcribe.py",
+      "src": "E:\\博主学习库\\_tools\\media_transcribe.py",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\media_transcribe.py",
+      "size": 7012,
+      "sha256": "accb610a791d98c5f76a48af8a27f8cb5f0b470318ae2442a0e6447d62aa2eae"
+    },
+    {
+      "label": "getnote_session.py",
+      "src": "E:\\博主学习库\\_tools\\getnote_session.py",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\getnote_session.py",
+      "size": 3839,
+      "sha256": "eff78d5edea2562e9966c3a818414d8a69518dc1ea30958eaab2f5f48c3e0991"
+    },
+    {
+      "label": "member_wall_probe.py",
+      "src": "E:\\博主学习库\\_tools\\member_wall_probe.py",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\member_wall_probe.py",
+      "size": 3270,
+      "sha256": "ca12478d186cf21af77191c464a6b9dd39aa7aa0b7adfad836f3f98f6f368841"
+    },
+    {
+      "label": "rest_l4_put.py",
+      "src": "E:\\博主学习库\\_tools\\rest_l4_put.py",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\rest_l4_put.py",
+      "size": 5953,
+      "sha256": "88f281e97b481738d886d73f41ebab257e7b05c6b3ebd0ccefc63af54478d0b1"
+    },
+    {
+      "label": "getnote_login.py",
+      "src": "E:\\博主学习库\\_tools\\getnote_login.py",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\getnote_login.py",
+      "size": 6259,
+      "sha256": "2e74a1a664d9e9b197a5124817820a2844af29c9748c3e6199218615e6a6d291"
+    },
+    {
+      "label": "launch_login_detached.py",
+      "src": "E:\\博主学习库\\_tools\\launch_login_detached.py",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\launch_login_detached.py",
+      "size": 1568,
+      "sha256": "8b9b6f125633bc53945cf918d0895c978f272cc2e827bdceb713a6d0e17044a6"
+    },
+    {
+      "label": "四化迭代主文档.md",
+      "src": "E:\\博主学习库\\四化迭代知识库_20261117_得到大脑⇄Obsidian链路打通与Obsidian复活.md",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\四化迭代主文档.md",
+      "size": 10337,
+      "sha256": "149c678d64b4f31dd7351289d4ef15d7a510198ce1139563c7675556c0cf7f04"
+    },
+    {
+      "label": "SKILL_v2.0.0.md",
+      "src": "E:\\龙虾AI主控中心\\我的AI分身\\技能库\\lobster_task_standard_workflow_v3.0\\得到大脑Obsidian四化拆解\\SKILL_v2.0.0.md",
+      "snap": "E:\\博主学习库\\_snapshot\\obsidian_getnote_20261117_112315\\files\\SKILL_v2.0.0.md",
+      "size": 11324,
+      "sha256": "0149b1b1ffa265c72eb6cd3e2d6720ee1ea35e63fec48996ee2a16b7b026348d"
+    }
+  ]
+}
