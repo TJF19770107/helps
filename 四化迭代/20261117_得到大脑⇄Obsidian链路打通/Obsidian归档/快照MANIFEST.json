@@ -1,0 +1,62 @@
+{
+  "ts": "20261117_102202",
+  "root": "E:\\博主学习库\\_snapshot\\obsidian_repair_20261117_102202",
+  "files": [
+    {
+      "label": "AppData/Roaming/obsidian/obsidian.json",
+      "orig": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\obsidian.json",
+      "backup": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\obsidian.bak_pre_20261117_102202.json",
+      "size": 203,
+      "sha256": "042beeb94d2c9b0ab27378e5330033bc132968ce52433f91aea70f8dc46ab89f"
+    },
+    {
+      "label": "AppData/Roaming/obsidian/obsidian.log",
+      "orig": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\obsidian.log",
+      "backup": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\obsidian.bak_pre_20261117_102202.log",
+      "size": 72547,
+      "sha256": "b36fb6519a4cd21d79f08a2eaba17d1e2e9d12ccad92dcbdda2070bbcea21568"
+    },
+    {
+      "label": "AppData/Roaming/obsidian/Preferences",
+      "orig": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\Preferences",
+      "backup": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\Preferences.bak_pre_20261117_102202",
+      "size": 2475,
+      "sha256": "a29aac283bdfeb1cc135a4bd707bb6d506e52995d3fd5739ba66aac5d1c16c64"
+    },
+    {
+      "label": "AppData/Roaming/obsidian/Local State",
+      "orig": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\Local State",
+      "backup": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\Local State.bak_pre_20261117_102202",
+      "size": 490,
+      "sha256": "b68460a6ee72ca7a3697e4a7e40f436ca312b76395e81ea0b13d7922394aa810"
+    },
+    {
+      "label": "LNK Obsidian知识库.lnk",
+      "orig": "C:\\Users\\Public\\Desktop\\Obsidian知识库.lnk",
+      "backup": "C:\\Users\\Public\\Desktop\\Obsidian知识库.bak_pre_20261117_102202.lnk",
+      "size": 731,
+      "sha256": "14c6490ca554a10fe5209a8398885a908a7d273c458a3005274332354ae26a97"
+    },
+    {
+      "label": "LNK Obsidian知识库.lnk",
+      "orig": "C:\\Users\\Administrator\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Obsidian知识库.lnk",
+      "backup": "C:\\Users\\Administrator\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Obsidian知识库.bak_pre_20261117_102202.lnk",
+      "size": 731,
+      "sha256": "14c6490ca554a10fe5209a8398885a908a7d273c458a3005274332354ae26a97"
+    },
+    {
+      "label": "obsidian-local-rest-api/data.json",
+      "orig": "E:\\龙虾AI主控中心\\我的AI分身\\Obsidian知识库\\.obsidian\\plugins\\obsidian-local-rest-api\\data.json",
+      "backup": "E:\\龙虾AI主控中心\\我的AI分身\\Obsidian知识库\\.obsidian\\plugins\\obsidian-local-rest-api\\data.bak_pre_20261117_102202.json",
+      "size": 19,
+      "sha256": "809dcdee9dea8620908d1e93e637e827951ba37f4e3daeac04884c2f222a5d5f"
+    },
+    {
+      "label": "obsidian.json.bak_20260902",
+      "orig": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\obsidian.json.bak_20260902",
+      "backup": "C:\\Users\\Administrator\\AppData\\Roaming\\obsidian\\obsidian.json.bak_pre_20261117_102202.bak_20260902",
+      "size": 125,
+      "sha256": "78b377961d0b9ef56206ff1814991c8377f7bb0365573c9d87f6e6cd49ed9cb5"
+    }
+  ]
+}
