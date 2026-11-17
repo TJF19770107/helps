@@ -15,7 +15,7 @@ dedao_web_writer.py —— 得到大脑「网页通道」写入器（收藏网�
   python dedao_web_writer.py --file 采集箱里的 md 文件（取其中的 url/title）
   python dedao_web_writer.py --check          # 只验 token 可用性
 """
-import os, sys, json, time, argparse, urllib.request, urllib.error
+import os, sys, json, time, argparse, urllib.request, urllib.error, urllib.parse
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -36,7 +36,10 @@ def load_token():
 
 
 def call(method, path, token, payload=None, query=""):
-    url = BASE + path + query
+    # urllib 的 URL 必须全 ASCII —— 非 ASCII 路径段需先 percent-encode
+    # （实测踩坑：path 含中文时直接 UnicodeEncodeError）
+    safe_path = urllib.parse.quote(path, safe="/-_~.")
+    url = BASE + safe_path + query
     h = {"User-Agent": UA, "Accept": "application/json",
          "Content-Type": "application/json", "Authorization": "Bearer " + token}
     data = json.dumps(payload, ensure_ascii=False).encode("utf-8") if payload is not None else None
